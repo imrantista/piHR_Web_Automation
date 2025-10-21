@@ -1,0 +1,80 @@
+# ==============================
+# OS / System files
+# ==============================
+.DS_Store
+Thumbs.db
+
+# ==============================
+# Node.js dependencies & locks
+# ==============================
+node_modules/
+# package-lock.json
+yarn.lock
+pnpm-lock.yaml
+locks/
+
+# ==============================
+# Playwright artifacts
+# ==============================
+playwright-report/
+test-results/
+blob-report/
+trace.zip
+*.trace.zip
+*.trace
+.playwright/
+playwright/
+artifacts/
+
+# ==============================
+# Allure reports
+# ==============================
+allure-results/
+allure-report/
+
+# ==============================
+# Coverage reports
+# ==============================
+coverage/
+.nyc_output/
+
+# ==============================
+# Env & tokens
+# ==============================
+.env
+tokens&cookies_PIHR_PROD/
+tokens&cookies_PIHR_QA/
+tokens_PIHR_PROD/
+tokens_PIHR_QA/
+tokens_PIHR_DEV/
+LoginAuth_default.json
+
+# ==============================
+# Custom / project specific
+# ==============================
+utils/setup-completed.lock
+locks/
+.qodo/
+storedValue/
+coverage.json
+
+# ==============================
+# Logs & temp files
+# ==============================
+*.log
+*.tmp
+*.swp
+*.pid
+
+# ==============================
+# IDE / Editor configs
+# ==============================
+.vscode/
+*.code-workspace
+.idea/
+
+# ==============================
+# ESLint cache
+# ==============================
+.eslintcache
+.prettiercache

@@ -1,0 +1,10 @@
+node_modules
+.git
+allure-results
+allure-report
+allure-history
+playwright-report
+test-results
+coverage
+.env
+*.log

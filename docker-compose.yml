@@ -1,0 +1,59 @@
+services:
+  e2e:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: pihr-playwright:local
+    container_name: PIHR-e2e
+    working_dir: /app
+    ipc: host
+    shm_size: "2gb"
+    env_file:
+      - .env
+    user: ${E2E_USER:-pwuser} 
+    volumes:
+      - ./:/app:rw
+      - ${ALLURE_RESULTS_MOUNT:-allure-results}:/app/allure-results
+      - ${PLAYWRIGHT_REPORT_MOUNT:-playwright-report}:/app/playwright-report
+
+    command: ["sh","-lc","${RUN_NPM_CI:+npm ci && } npx playwright test --reporter=line,allure-playwright"]
+
+  allure:
+    image: frankescobar/allure-docker-service:2.27.0
+    container_name: PIHR-allure
+    environment:
+      CHECK_RESULTS_EVERY_SECONDS: "3"
+      KEEP_HISTORY: "true"
+      KEEP_HISTORY_LATEST: "20"
+      ALLURE_RESULTS_DIRECTORY: /app/allure-results
+    volumes:
+      # - allure-results:/app/allure-results
+      # - allure-report:/app/allure-report
+      # - allure-history:/app/allure-history
+      - ${ALLURE_RESULTS_MOUNT:-allure-results}:/app/allure-results
+      - ${ALLURE_REPORT_MOUNT:-allure-report}:/app/allure-report
+      - ${ALLURE_HISTORY_MOUNT:-allure-history}:/app/allure-history
+    ports:
+      # host:container — API is on 5050 inside the container
+      - "5252:5050"
+      # (optional) expose the built-in static report server
+      # - "4040:4040"
+
+  allure-ui:
+    image: frankescobar/allure-docker-service-ui:7.0.3
+    container_name: PIHR-allure-ui
+    depends_on: [allure]
+    environment:
+      # What your BROWSER calls (host-accessible)
+      ALLURE_DOCKER_PUBLIC_API_URL: "http://localhost:5252"
+      # What the UI CONTAINER calls over the docker network
+      ALLURE_DOCKER_API_URL: "http://localhost:5252"
+      PROJECT_ID: "default"
+    ports:
+      - "5253:5252"
+
+volumes:
+  allure-results:
+  playwright-report:
+  allure-report:
+  allure-history:
