@@ -14,8 +14,15 @@ export class LoginPage extends BasePage {
     this.myScreenTxt= page.getByRole('heading', { name: 'My Screen' });
   }
 
-  async visit() {
-    await this.page.goto('/',{waitUntil:'networkidle'} );
+  async visit(slugKeyOrPath = '') {
+    let path = '';
+    if (config.slug[slugKeyOrPath]) {
+      path = config.slug[slugKeyOrPath];
+    } else {
+      path = slugKeyOrPath;
+    }
+    const finalPath = path.startsWith('/') ? path : `/${path}`;
+    await this.page.goto(finalPath, { waitUntil: 'networkidle' });
   }
 
   async globalLogin(username,password) {
