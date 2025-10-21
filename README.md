@@ -41,7 +41,7 @@
 
 # Testcase-Automation-plan-you-can-find-here
 ```
-https://docs.google.com/spreadsheets/d/16fnrdXbXpV1eSJgLBmWRLfrqAbtk1gcuFDp7reBpbhw/edit?gid=2110326883#gid=2110326883
+Add the testcases doc
 
 ```
 
@@ -231,6 +231,3 @@ This helps keep test scripts clean and maintainable.
  Playwright has proven to be the most suitable choice. The selection between Playwright and Cypress depends on the system's requirements, considering factors such as browser support and the complexity of testing scenarios. Playwright's versatility and comprehensive browser compatibility make it ideal for diverse testing needs, while Cypress offers simplicity and ease of use for straightforward scenarios. It is crucial to evaluate these frameworks in relation to your project's unique demands to make an informed decision.
 
  Based on the specific scope of my web application, my application opens multipletab instance so playwright can handle that seamlessly.
-
-## License
-This project is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
