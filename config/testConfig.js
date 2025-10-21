@@ -14,6 +14,9 @@ export const config = {
     "employeeEmail": process.env.EMPLOYEE_EMAIL,
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
   },
+  "slug":{
+    "dashboard":'selfservice/mydashboard'
+  },
   "data": {
   
   }
