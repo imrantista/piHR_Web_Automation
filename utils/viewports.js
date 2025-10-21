@@ -1,7 +1,7 @@
 // utils/viewports.js
 
 export const allViewports = {
-  Desktop: { width: 1440, height: 1000 },
+  Desktop: { width: 1920, height: 1000 },
   Laptop:  { width: 1230, height: 1000 },
   Tablet:  { width: 768,  height: 1000 },
   Mobile:  { width: 412,  height: 1000 }
