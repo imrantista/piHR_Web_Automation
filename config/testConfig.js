@@ -15,10 +15,14 @@ export const config = {
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
   },
   "slug":{
-    "dashboard":'selfservice/mydashboard'
+    "leavepage":'leave/leave?page_size=10&page_number=1'
   },
   "data": {
-  
+     "emplyeeName":"Golam Mostafa Imran",
+     "leaveType":"Annual Leave",
+     "leaveStartDate":"28-12-2025",
+     "leaveEndDate":"30-12-2025",
+     "leavePurpose":"Family Vacation"
   }
 }
 

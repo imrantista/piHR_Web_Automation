@@ -12,12 +12,11 @@ const defaultMethods = {
 
 const apiMap = {
   "PIHR_PROD": {
-    loginApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods },
-    }
-  },
+    loginApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods }},
+    leaveApi: { url: "https://api.pihr.xyz/api/v2/countries",methods: { ...defaultMethods }},
+    leaveCreateApi: { url: "https://api.pihr.xyz/api/v2/leave/admin-apply-leave",methods: { ...defaultMethods }}},
   "PIHR_QA": {
-    loginApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods },
-    }
+    loginApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods }}
   }
 };
 

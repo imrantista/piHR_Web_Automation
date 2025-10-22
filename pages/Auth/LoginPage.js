@@ -1,4 +1,5 @@
-import BasePage from './BasePage';
+import BasePage from '../BasePage';
+import {config} from '../../config/testConfig.js';    
 
 export class LoginPage extends BasePage {
   constructor(page, context) {
