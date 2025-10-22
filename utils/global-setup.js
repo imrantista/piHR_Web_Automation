@@ -3,7 +3,7 @@ import { config } from '../config/testConfig.js';
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
-import { LoginPage } from '../pages/LoginPage.js';
+import { LoginPage } from '../pages/Auth/LoginPage.js';
 import pwConfig, { ENV, BASE_URL } from '../playwright.config.js';
 
 const __filename = fileURLToPath(import.meta.url);
