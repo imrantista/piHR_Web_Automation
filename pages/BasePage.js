@@ -104,70 +104,99 @@ async expectAndClick(
           (await locator.getAttribute("alt").catch(() => "")) ||
           stepAlias;
 
-        if (detectApi && i === locators.length - 1) {
-          // Detect API only on the final click
-          try {
-            const waitForResponseFn = apiAssertion
-              ? (res) =>
-                  res.url().startsWith(apiAssertion.url) &&
-                  res.request().method().toUpperCase() === apiAssertion.method
-              : (res) => {
-                  const u = new URL(res.url());
-                  const pathIsApi = u.pathname.replace(/^\//, "").toLowerCase().startsWith("api");
-                  const firstLabel = u.hostname.split(".")[0].toLowerCase();
-                  const hostIsApi = /^api(\d+)?(?:$|-)/.test(firstLabel) || /-api$/.test(firstLabel);
-                  return pathIsApi || hostIsApi;
-                };
+  if (detectApi && i === locators.length - 1) {
+    try {
+      if (apiAssertion) {
+        // Keep single API logic for apiAssertion
+        const waitForResponseFn = (response) =>
+          response.url().startsWith(apiAssertion.url) &&
+          response.request().method().toUpperCase() === apiAssertion.method;
 
-            const results = await Promise.allSettled([
-              locator.click(),
-              this.page.waitForResponse(waitForResponseFn, { timeout }),
-            ]);
-            response = results.find((r) => r.status === "fulfilled" && r.value?.url)?.value || null;
-          } catch {
-            response = null;
-          }
-        } else {
-          await locator.click();
-        }
+        const results = await Promise.allSettled([
+          locator.click(),
+          this.page.waitForResponse(waitForResponseFn, { timeout }),
+        ]);
+        response = results.find((r) => r.status === "fulfilled" && r.value?.url)?.value || null;
+
+      } else {
+        // --- CHANGE: capture ALL APIs
+        const collectedResponses = [];
+        const listener = (response) => {
+          const u = new URL(response.url());
+          if (u.hostname.includes("cdn.80.lv")) return;
+          if (u.hostname.includes("consent-api.xsolla.com")) return;
+          if (u.href.includes("/api/updpromos")) return;
+          if (u.href.includes("/upload/promo")) return;
+          if (u.href.includes("/upload/post")) return;
+          if (u.href.includes("/upload/vendor")) return;
+          if (u.href.includes("/updpromos")) return;
+          if (u.href.includes("/upload")) return;
+          const pathIsApi = u.pathname.replace(/^\//, "").toLowerCase().startsWith("api");
+          const firstLabel = u.hostname.split(".")[0].toLowerCase();
+          const hostIsApi = /^api(\d+)?(?:$|-)/.test(firstLabel) || /-api$/.test(firstLabel);
+          if (pathIsApi || hostIsApi) collectedResponses.push(response);
+        };
+
+        this.page.on("response", listener);
+        await locator.click();
+        await this.page.waitForTimeout(1000); // small wait to catch all APIs
+        this.page.off("response", listener);
+
+        response = collectedResponses;
+      }
+    } catch {
+      response = null;
+    }
+  } else {
+    await locator.click();
+  }
+
 
         console.log(`✅ Clicked [${stepAlias} @ ${vp}] → "${text}"`);
       }
 
-      // --- API assertion and Allure logging
       if (response && apiAssertion) {
-        const actualStatus = response.status();
-        console.log(`🌐 Captured API: ${response.url()} → Method: ${response.request().method()} | Status: ${actualStatus}`); 
-        console.log(`🔗 Expected API: ${apiAssertion.url} → Method: ${apiAssertion.method} | Status: ${apiAssertion.expectedStatus}`); 
-        const passed = actualStatus === apiAssertion.expectedStatus; 
-        console.log(`✅Assertion API: ${passed ? "Passed " : "Failed ❌"}`);
-        if (!passed) throw new Error(`API assertion failed for ${apiAssertion.url}`);
-      } else if (response) {
-        console.log(`🌐 Captured API → ${response.request().method()} ${response.url()} | Status: ${response.status()}`);
-      }
+  // single API assertion
+  const actualStatus = response.status();
+  console.log(`🌐 Captured API: ${response.url()} → Method: ${response.request().method()} | Status: ${actualStatus}`); 
+  console.log(`🔗 Expected API: ${apiAssertion.url} → Method: ${apiAssertion.method} | Status: ${apiAssertion.expectedStatus}`); 
+  const passed = actualStatus === apiAssertion.expectedStatus; 
+  console.log(`✅Assertion API: ${passed ? "Passed " : "Failed ❌"}`);
+  if (!passed) throw new Error(`API assertion failed for ${apiAssertion.url}`);
+} else if (response) {
+  // --- FIX: handle array of responses
+  const responses = Array.isArray(response) ? response : [response];
+  responses.forEach((res) => {
+    console.log(`🌐 Captured API → ${res.request().method()} ${res.url()} | Status: ${res.status()}`);
+  });
+}
 
       // --- Allure attachments
-      if (response) {
-        const req = response.request();
-        const curl = [
-          `curl -X ${req.method()}`,
-          ...Object.entries(req.headers()).map(([k, v]) => `-H "${k}: ${v}"`),
-          req.postData() ? `-d '${req.postData()}'` : "",
-          `'${response.url()}'`,
-        ]
-          .filter(Boolean)
-          .join(" \\\n  ");
+if (response) {
+  const responses = Array.isArray(response) ? response : [response];
 
-        await allure.attachment("API Request (cURL)", Buffer.from(curl, "utf-8"), "text/plain");
+  for (const res of responses) {
+    const req = res.request();
+    const curl = [
+      `curl -X ${req.method()}`,
+      ...Object.entries(req.headers()).map(([k, v]) => `-H "${k}: ${v}"`),
+      req.postData() ? `-d '${req.postData()}'` : "",
+      `'${res.url()}'`,
+    ]
+      .filter(Boolean)
+      .join(" \\\n  ");
 
-        let bodyText = null;
-        try { bodyText = await response.text(); } catch {}
-        if (bodyText) {
-          let pretty;
-          try { pretty = JSON.stringify(JSON.parse(bodyText), null, 2); } catch { pretty = bodyText; }
-          await allure.attachment("API Response", Buffer.from(pretty, "utf-8"), "application/json");
-        }
-      }
+    await allure.attachment("API Request (cURL)", Buffer.from(curl, "utf-8"), "text/plain");
+
+    let bodyText = null;
+    try { bodyText = await res.text(); } catch {}
+    if (bodyText) {
+      let pretty;
+      try { pretty = JSON.stringify(JSON.parse(bodyText), null, 2); } catch { pretty = bodyText; }
+      await allure.attachment("API Response", Buffer.from(pretty, "utf-8"), "application/json");
+    }
+  }
+}
 
       return true;
     } catch (err) {
