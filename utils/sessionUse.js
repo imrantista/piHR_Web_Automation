@@ -2,24 +2,29 @@ import { test as base } from '../lib/BaseTest.js';
 import fs from 'fs';
 import path from 'path';
 import pwConfig, { ENV } from '../playwright.config.js';
+import { ensureTokens } from './global-setup.js'; // ✅ import token helper
 
 // Helper: get domain host
 function getHost() {
   const baseURL = pwConfig?.use?.baseURL;
   if (!baseURL) throw new Error('playwright.config.js → use.baseURL is missing.');
-  return { host: new URL(baseURL).host, baseURL }; // 🟢 CHANGED: return baseURL too
+  return { host: new URL(baseURL).host, baseURL };
 }
 
 // Helper: read saved session
-function readSession(role) {
+export async function readSession(role) {
   const tokenPath = path.resolve(`./tokens&cookies_${ENV}/${role}.json`);
+
   if (!fs.existsSync(tokenPath)) {
-    throw new Error(`Token file not found for role: ${role}. Run globalSetup first.`);
+    console.warn(`⚠️ Token file not found for role: ${role}. Creating it...`);
+    await ensureTokens(); // ✅ create missing token without tracing
   }
 
-  // 🟢 CHANGED: read localStorage & sessionStorage too
-  const { token, cookies, localStorage, sessionStorage } = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
+  if (!fs.existsSync(tokenPath)) {
+    throw new Error(`❌ Token file still not found for role: ${role} after running ensureTokens.`);
+  }
 
+  const { token, cookies, localStorage, sessionStorage } = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
   if (!cookies || !Array.isArray(cookies)) throw new Error(`Invalid session cookies for role: ${role}.`);
   return { token, cookies, localStorage: localStorage || {}, sessionStorage: sessionStorage || {} };
 }
@@ -28,24 +33,20 @@ function readSession(role) {
 export const test = base.extend({
   useSession: async ({ context, page }, use) => {
     const fn = async (role = 'talent') => {
-      const { host, baseURL } = getHost();
+      const { host } = getHost();
 
       if (role === 'noSession' || role === 'none') {
         await context.clearCookies();
-        await page.addInitScript(() => {
-          try { localStorage.clear(); sessionStorage.clear(); } catch {}
-        });
+        await page.addInitScript(() => { try { localStorage.clear(); sessionStorage.clear(); } catch {} });
         console.log(`🚪 Started as guest (no session) on ${host}`);
         return;
       }
 
-      // 🟢 CHANGED: load storage
-      const { cookies, localStorage, sessionStorage } = readSession(role);
+      const { cookies, localStorage, sessionStorage } = await readSession(role);
 
       await context.clearCookies();
-      await context.addCookies(cookies); // `auth` cookie gets restored here
+      await context.addCookies(cookies);
 
-      // 🟢 CHANGED: set **the same** LocalStorage/SessionStorage keys used by the app
       await page.addInitScript((ls, ss) => {
         try {
           for (const [k, v] of Object.entries(ls || {})) localStorage.setItem(k, v);
@@ -59,7 +60,3 @@ export const test = base.extend({
     await use(fn);
   },
 });
-
-
-
-

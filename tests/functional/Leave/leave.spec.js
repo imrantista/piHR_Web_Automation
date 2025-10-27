@@ -20,7 +20,7 @@ test.describe('Leave test', () => {
     });
   }
   for (const vp of [Desktop]) {
-    test.only(`${vp.name} Create New Leave : @regression TC_002`, async ({ page, loginPage, createleave, useSession}) => {
+    test.skip(`${vp.name} Create New Leave : @regression TC_002`, async ({ page, loginPage, createleave, useSession}) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit(config.slug.leavepage);
