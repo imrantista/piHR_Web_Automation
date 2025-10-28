@@ -11,7 +11,7 @@ test.describe('Dashboard component', () => {
     });
   }
    for (const vp of [Desktop]) {
-    test.only(`${vp.name} Dashboard Api response Check : @regression TC_002`, async ({ page, loginPage, dashboardApis, useSession}) => {
+    test(`${vp.name} Dashboard Api response Check : @regression TC_002`, async ({ page, loginPage, dashboardApis, useSession}) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit();
