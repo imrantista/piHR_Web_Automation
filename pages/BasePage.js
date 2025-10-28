@@ -369,4 +369,52 @@ const target = (locators && locators.length) ? locators[locators.length - 1] : n
     console.log(`✅ Assert: page URL is "${toHaveURL}"`);
   }
 }
+// Automatically scrolls until element is visible or reaches page bottom
+   
+  async scrollUntilVisible(locator, alias, options = {}) {
+    const {
+      maxScrollAttempts = 10,
+      scrollPixels = 300,
+      scrollWaitTime = 200
+    } = options;
+
+    for (let i = 0; i < maxScrollAttempts; i++) {
+      // Check if element is already visible
+      const isVisible = await locator.isVisible({ timeout: 1000 }).catch(() => false);
+      if (isVisible) {
+        return true;
+      }
+
+      // Scroll down
+      await this.page.evaluate((pixels) => {
+        window.scrollBy(0, pixels);
+      }, scrollPixels);
+      
+      await this.page.waitForTimeout(scrollWaitTime);
+
+      // Check if we've hit bottom of page
+      const isAtBottom = await this.page.evaluate(() => {
+        return window.innerHeight + window.pageYOffset >= document.documentElement.scrollHeight;
+      });
+
+      if (isAtBottom && !isVisible) {
+        throw new Error(`Element "${alias}" not found after scrolling entire page`);
+      }
+    }
+    throw new Error(`Element "${alias}" not found after ${maxScrollAttempts} scroll attempts`);
+  }
+
+  //Asserts element visibility with auto-scrolling
+  
+  async assertWithScroll(params, scrollOptions = {}) {
+    await this.scrollUntilVisible(params.locator.default, params.alias, scrollOptions);
+    await this.assert(params);
+  }
+
+  //Reset page scroll to top
+  async scrollToTop() {
+    await this.page.evaluate(() => {
+      window.scrollTo(0, 0);
+    });
+  }
 }

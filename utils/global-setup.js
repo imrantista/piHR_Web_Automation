@@ -4,7 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import { LoginPage } from '../pages/Auth/LoginPage.js';
-import pwConfig, { ENV, BASE_URL } from '../playwright.config.js';
+import { ENV, BASE_URL } from '../playwright.config.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -15,7 +15,6 @@ async function loginAndSaveToken(context, role, email, password, tokenPath, lock
 
   for (let attempt = 1; attempt <= retries; attempt++) {
     console.log(`🔐 [${role}] Attempt ${attempt}/${retries}`);
-
     try {
       await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 });
       await loginPage.globalLogin(email, password);
@@ -33,7 +32,7 @@ async function loginAndSaveToken(context, role, email, password, tokenPath, lock
 
       const token = tokenCookie.value;
 
-      // 🟢 CHANGED: capture LocalStorage & SessionStorage used by the app
+      // Capture LocalStorage & SessionStorage
       const localStorageData = await page.evaluate(() => {
         const out = {};
         for (let i = 0; i < localStorage.length; i++) {
@@ -54,7 +53,7 @@ async function loginAndSaveToken(context, role, email, password, tokenPath, lock
 
       fs.mkdirSync(path.dirname(tokenPath), { recursive: true });
 
-      // 🟢 CHANGED: store cookie + LS + SS
+      // Save token + storage
       fs.writeFileSync(
         tokenPath,
         JSON.stringify({ token, cookies, localStorage: localStorageData, sessionStorage: sessionStorageData }, null, 2)
@@ -76,15 +75,13 @@ async function loginAndSaveToken(context, role, email, password, tokenPath, lock
     }
   }
 }
+
+// Pre-test global setup (with tracing)
 async function globalSetup() {
   console.log('Global setup---------');
   console.log(`🌍 Using ENV: ${ENV}, baseURL: ${BASE_URL}`);
 
-  const browser = await chromium.launch({
-    headless: !!process.env.CI,
-    ignoreHTTPSErrors: true,
-  });
-
+  const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
   const usersToLogin = ['admin', 'employee'];
 
   for (const role of usersToLogin) {
@@ -101,8 +98,6 @@ async function globalSetup() {
     }
 
     console.log(`🔐 Logging in as ${role}: ${email}`);
-
-    // per-role artifact folders
     const artBase = path.resolve(`./artifacts/global-setup/${role}`);
     fs.mkdirSync(artBase, { recursive: true });
 
@@ -111,27 +106,16 @@ async function globalSetup() {
       recordVideo: { dir: path.join(artBase, 'video') },
     });
 
+    // ✅ Start tracing only here
     await context.tracing.start({ screenshots: true, snapshots: true, sources: true });
 
     try {
-      // 🔄 changed: wrapped login + cookie handling in retry function
       await loginAndSaveToken(context, role, email, password, tokenPath, lockFilePath, artBase, 3);
-
-      try {
-        await context.tracing.stop({ path: path.join(artBase, 'trace.zip') });
-      } catch {}
+      await context.tracing.stop({ path: path.join(artBase, 'trace.zip') });
       await context.close();
     } catch (err) {
       console.error(`❌ Global setup failed for ${role}:`, err?.message || err);
-
-      try {
-        const page = await context.newPage();
-        await page.screenshot({ path: path.join(artBase, 'page.png'), fullPage: true });
-        fs.writeFileSync(path.join(artBase, 'page.html'), await page.content());
-      } catch {}
-      try {
-        await context.tracing.stop({ path: path.join(artBase, 'trace.zip') });
-      } catch {}
+      try { await context.tracing.stop({ path: path.join(artBase, 'trace.zip') }); } catch {}
       await context.close();
       throw err;
     }
@@ -140,5 +124,26 @@ async function globalSetup() {
   await browser.close();
 }
 
-export default globalSetup;
+// ✅ Token creation without tracing (used by readSession)
+export async function ensureTokens() {
+  const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
+  const usersToLogin = ['admin', 'employee'];
 
+  for (const role of usersToLogin) {
+    const email = config.credentials[`${role}Email`];
+    const password = config.credentials[`${role}Password`];
+
+    const tokenDir = path.resolve(`./tokens&cookies_${ENV}`);
+    const tokenPath = path.join(tokenDir, `${role}.json`);
+    const lockFilePath = path.resolve(`./locks/setup-${role}.lock`);
+
+    if (!fs.existsSync(tokenPath)) {
+      const context = await browser.newContext({ ignoreHTTPSErrors: true });
+      await loginAndSaveToken(context, role, email, password, tokenPath, lockFilePath, null, 3);
+      await context.close();
+    }
+  }
+  await browser.close();
+}
+
+export default globalSetup;

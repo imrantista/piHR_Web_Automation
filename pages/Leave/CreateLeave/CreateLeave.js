@@ -16,7 +16,7 @@ export class CreateLeave extends BasePage {
   }
 
   async createNewLeave( employeeName, leaveType, leaveStartDate, leaveEndDate, leavePurpose) {
-    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveApi:GET");
+    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveAddButtonApi:GET");
     // Employee
     await this.expectAndClick(this.employeeField, "Employee Field");
     await this.waitAndFill(this.employeeField, employeeName, "Employee Field");

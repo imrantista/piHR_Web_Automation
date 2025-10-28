@@ -15,7 +15,8 @@ export const config = {
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
   },
   "slug":{
-    "leavepage":'leave/leave?page_size=10&page_number=1'
+    "leavepage":'leave/leave?page_size=10&page_number=1',
+    "dashboard":'dashboard',
   },
   "data": {
      "emplyeeName":"Golam Mostafa Imran",
