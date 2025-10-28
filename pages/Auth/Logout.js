@@ -11,7 +11,7 @@ export class Logout extends BasePage {
 
   async logoutFunc() {
     await this.expectAndClick(this.profileMenu, "Profile Menu");
-    await this.expectAndClick(this.logoutText, "Logout Text");
+    await this.expectAndClick(this.logoutText, "Logout Text", "logoutApi:POST");
     const loginFrame = await this.page.locator('iframe[title="Login Page"]').contentFrame();
     const loginButton = loginFrame.getByRole('button', { name: 'Login' });
 

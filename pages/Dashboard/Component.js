@@ -29,7 +29,20 @@ export class ComponentPage extends BasePage {
     this.statusText = page.getByText('Status', { exact: true });
     this.actionText = page.getByText("Action").first();
     this.attendanceSummaryText = page.getByText('Attendance Summary', { exact: true })
-    this.currentLeaveBalanceText = page.getByText("Current Leave Balance");
+    this.noticeText = page.getByText('Notice', { exact: true });
+    this.currentLeaveBalanceText = page.getByText('Current Leave Balance');
+    this.nameText = page.getByText('Name').nth(1);
+    this.designationText = page.getByText('Designation').nth(4);
+    this.leaveGroupText = page.getByRole('cell', { name: 'Leave Group' }).locator('span');
+    this.remainingLeaveText = page.getByText('Remaining Leave');
+    this.leaveTakenText = page.getByText('Leave Taken');
+    this.attendanceMissedText = page.getByText('Attendance Missed');
+    this.dateText = page.getByText('Date', { exact: true });
+    this.nameText = page.getByText('Name').nth(2);
+    this.inTimeText = page.getByText("In Time").nth(1);
+    this.outTimeText = page.getByText("Out Time").nth(1);
+    this.actionText = page.getByText("Action").nth(1);
+    this.currentLeaveBalanceText = page.getByText("Current Leave Balance").nth(1);
     this.leaveCalendarText = page.getByText("Leave Calendar");
 
   }
@@ -61,8 +74,20 @@ async componentCheckAdmin(){
       { locator: this.statusText, alias: 'Status Text visible' },
       { locator: this.actionText, alias: 'Action Text visible' },
       { locator: this.attendanceSummaryText, alias: 'Attendance Summary Text visible' },
+      { locator: this.noticeText, alias: 'Notice Text visible' },
       { locator: this.currentLeaveBalanceText, alias: 'Current Leave Balance Text visible' },
-      { locator: this.leaveCalendarText, alias: 'Leave Calendar Text visible' }
+      { locator: this.nameText, alias: 'Name Text visible' },
+      { locator: this.designationText, alias: 'Designation Text visible' },
+      { locator: this.leaveGroupText, alias: 'Leave Group Text visible' },
+      { locator: this.remainingLeaveText, alias: 'Remaining Leave Text visible' },
+      { locator: this.leaveTakenText, alias: 'Leave Taken Text visible' },
+      { locator: this.attendanceMissedText, alias: 'Attendance Missed Text visible' },
+      { locator: this.dateText, alias: 'Date Text visible' },
+      { locator: this.nameText, alias: 'Name Text visible' },
+      { locator: this.inTimeText, alias: 'In Time Text visible' },
+      { locator: this.outTimeText, alias: 'Out Time Text visible' },
+      { locator: this.actionText, alias: 'Action Text visible' },
+      { locator: this.leaveCalendarText, alias: 'Leave Calendar Text visible' },
 
     ];
     for (const el of elements) {
