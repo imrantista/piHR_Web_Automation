@@ -32,7 +32,9 @@ const apiMap = {
     leaveTypesDropdownApi: { url: "https://api.pihr.xyz/api/v2/leave-types/dropdown",methods: { ...defaultMethods }},
     dashboardsLeaveCalendarApi: { url: "https://api.pihr.xyz/api/v2/leave-dashboards/leave-calendar",methods: { ...defaultMethods }},
     leaveAddButtonApi: { url: "https://api.pihr.xyz/api/v2/employee",methods: { ...defaultMethods }},
-    leaveCreateApi: { url: "https://api.pihr.xyz/api/v2/leave/admin-apply-leave",methods: { ...defaultMethods }}},
+    leaveCreateApi: { url: "https://api.pihr.xyz/api/v2/leave/admin-apply-leave",methods: { ...defaultMethods }},
+    leaveDeleteApi: { url: "https://api.pihr.xyz/api/v2/leave",methods: { ...defaultMethods }},
+  },
   "PIHR_QA": {
     loginApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods }}
   }

@@ -23,7 +23,8 @@ export const config = {
      "leaveType":"Annual Leave",
      "leaveStartDate":"28-12-2025",
      "leaveEndDate":"30-12-2025",
-     "leavePurpose":"Family Vacation"
+     "leavePurpose":"Family Vacation",
+     "deleteEmployeeName":"Golam"
   }
 }
 

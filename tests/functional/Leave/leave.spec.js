@@ -12,7 +12,7 @@ test.describe('Leave test', () => {
     });
   }
   for (const vp of [Desktop]) {
-    test(`${vp.name} Varify the leave create modal's required filed : @regression TC_003  `, async ({ page, loginPage, requiredfiled , useSession}) => {
+    test(`${vp.name} Varify the leave create modal's required filed : @regression TC_002  `, async ({ page, loginPage, requiredfiled , useSession}) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit(config.slug.leavepage);
@@ -20,12 +20,21 @@ test.describe('Leave test', () => {
     });
   }
   for (const vp of [Desktop]) {
-    test(`${vp.name} Create New Leave : @regression TC_002`, async ({ page, loginPage, createleave, useSession}) => {
+    test(`${vp.name} Create New Leave : @regression TC_003`, async ({ page, loginPage, createleave, useSession}) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit(config.slug.leavepage);
       await createleave.createNewLeave(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
     });
   }
+   for (const vp of [Desktop]) {
+    test(`${vp.name} Delete Leave : @regression TC_004`, async ({ page, loginPage, deleteleave, useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession('admin');
+      await loginPage.visit(config.slug.leavepage);
+      await deleteleave.deleteLeave(config.data.deleteEmployeeName);
+    });
+  }
+  
   
 });

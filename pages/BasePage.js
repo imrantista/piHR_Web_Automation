@@ -130,7 +130,7 @@ export default class BasePage {
 /*await this.expectAndClick(
   {
     default: this.loginBtnDesktop,
-    Tablet:  this.loginBtnTablet,
+    Tablet: this.threedot, this.loginBtnTablet,
     Mobile:  this.loginBtnMobile,
   },
   'Login Button'

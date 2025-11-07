@@ -39,7 +39,7 @@ export class CreateLeave extends BasePage {
    
     await this.assert({
       locator: {
-        default: this.successMessage,
+        locator: this.successMessage,
       },
       state: 'visible',
       alias: 'Leave creation success message visible'
