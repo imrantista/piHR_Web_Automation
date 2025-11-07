@@ -25,8 +25,7 @@ export class DashboardApis extends BasePage {
         this.waitForAndVerifyApi('employeeCurrentLeaveStatusApi', 'GET', /leave-dashboards\/employee-current-leave-status/),
         this.waitForAndVerifyApi('missedAttendancesApi', 'GET', /attendance-dashboards\/missed-attendances/),
         this.waitForAndVerifyApi('leaveTypesDropdownApi', 'GET', /leave-types\/dropdown/),
-        this.waitForAndVerifyApi('dashboardsLeaveCalendarApi', 'GET', /leave-dashboards\/leave-calendar/)
-    ,
+        this.waitForAndVerifyApi('dashboardsLeaveCalendarApi', 'GET', /leave-dashboards\/leave-calendar/),
         this.page.reload({ waitUntil: 'networkidle' })
     ]);
   }
