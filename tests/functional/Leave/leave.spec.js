@@ -27,8 +27,16 @@ test.describe('Leave test', () => {
       await createleave.createNewLeave(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
     });
   }
+  for (const vp of [Desktop]) {
+    test(`${vp.name} Try to Create a Leave Application for an Already Applied Date : @regression TC_004`, async ({ page, loginPage, applyinsamedate, useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession('admin');
+      await loginPage.visit(config.slug.leavepage);
+      await applyinsamedate.applyLeaveInSameDate(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
+    });
+  }
    for (const vp of [Desktop]) {
-    test(`${vp.name} Delete Leave : @regression TC_004`, async ({ page, loginPage, deleteleave, useSession}) => {
+    test(`${vp.name} Delete Leave : @regression TC_005`, async ({ page, loginPage, deleteleave, useSession}) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit(config.slug.leavepage);
