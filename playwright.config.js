@@ -57,7 +57,8 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
      extraHTTPHeaders: {
-      'X-Test-Env': ENV, // optional: handy in debugging
+      'X-Test-Env': ENV,
+      baseURL: process.env.BASE_URL, // optional: handy in debugging
     },
     env: ENV,           // 👈 expose ENV
     baseURL: BASE_URL,

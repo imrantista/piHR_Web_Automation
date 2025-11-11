@@ -12,7 +12,7 @@ test.describe('Leave test', () => {
     });
   }
   for (const vp of [Desktop]) {
-    test(`${vp.name} Varify the leave create modal's required filed : @regression TC_002  `, async ({ page, loginPage, requiredfiled , useSession}) => {
+    test.only(`${vp.name} Varify the leave create modal's required filed : @regression TC_002  `, async ({ page, loginPage, requiredfiled , useSession}) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit(config.slug.leavepage);
