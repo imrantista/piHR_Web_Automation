@@ -36,7 +36,12 @@ const apiMap = {
     leaveDeleteApi: { url: "https://api.pihr.xyz/api/v2/leave",methods: { ...defaultMethods }},
   },
   "PIHR_QA": {
-    loginApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods }}
+    loginApi: { url: "http://live.pisales.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods }},
+    logoutApi: { url: "http://live.pisales.xyz/v2/api/log-out",methods: { ...defaultMethods }},
+    userSessionApi: { url: "http://live.pisales.xyz/api/v2/pihr-web/user-sessions",methods: { ...defaultMethods }},
+    leaveAddButtonApi: { url: "http://live.pisales.xyz/api/v2/employee",methods: { ...defaultMethods }},
+    leaveCreateApi: { url: "http://live.pisales.xyz/api/v2/leave/admin-apply-leave",methods: { ...defaultMethods }},
+    leaveDeleteApi: { url: "http://live.pisales.xyz/api/v2/leave",methods: { ...defaultMethods }},
   }
 };
 
