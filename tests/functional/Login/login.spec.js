@@ -8,7 +8,7 @@ import { readdirSync } from 'fs';
 test.describe('Login to PIHR', () => {
   
   for (const vp of [Desktop]) {
-    test(`${vp.name}  @regression TC_001:Successful admin login `, async ({ page, loginPage}) => {
+    test(`${vp.name}  Successful admin login @regression TC_001:`, async ({ page, loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.doLogin(config.credentials.adminEmail,config.credentials.adminPassword);
@@ -16,7 +16,7 @@ test.describe('Login to PIHR', () => {
     });
   }
   for (const vp of [Desktop]) {
-    test(`${vp.name}  @regression TC_002:Successful employee login`, async ({ page, loginPage }) => {
+    test(`${vp.name}  Successful employee login @regression TC_002:`, async ({ page, loginPage }) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.doLogin(config.credentials.employeeEmail,config.credentials.employeePassword);
@@ -24,7 +24,7 @@ test.describe('Login to PIHR', () => {
     });
   }
   for (const vp of [Desktop]) {
-    test(`${vp.name}  @regression TC_003:Successful admin login with session`, async ({ page, loginPage ,useSession}) => {
+    test(`${vp.name}  Successful admin login with session @regression TC_003:`, async ({ page, loginPage ,useSession}) => {
       await setViewport(page, vp.size);
        await useSession('admin');
       await loginPage.visit();
@@ -32,7 +32,7 @@ test.describe('Login to PIHR', () => {
     });
   }
   for (const vp of [Desktop]) {
-    test(`${vp.name}  @regression TC_004:Successful employee login with session`, async ({ page, loginPage ,useSession}) => {
+    test(`${vp.name}  Successful employee login with session @regression TC_004:`, async ({ page, loginPage ,useSession}) => {
       await setViewport(page, vp.size);
        await useSession('employee');
       await loginPage.visit();

@@ -1,54 +1,61 @@
-// api/apiMap.js
 const ENV = process.env.ENV || 'PIHR_PROD';
 
-// Default methods with expectedStatus
 const defaultMethods = {
-  GET:    { expectedStatus: 200 },
-  POST:   { expectedStatus: 200 },
-  PUT:    { expectedStatus: 200 },
-  PATCH:  { expectedStatus: 200 },
+  GET: { expectedStatus: 200 },
+  POST: { expectedStatus: 200 },
+  PUT: { expectedStatus: 200 },
+  PATCH: { expectedStatus: 200 },
   DELETE: { expectedStatus: 200 },
 };
-
-const apiMap = {
-  "PIHR_PROD": {
-    loginApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods }},
-    logoutApi: { url: "https://sso.pihr.xyz/v2/api/log-out",methods: { ...defaultMethods }},
-    validSubdomainApi: { url: "https://sso.pihr.xyz/v2/api/is-valid-subdomain",methods: { ...defaultMethods }},
-    userSessionApi: { url: "https://api.pihr.xyz/api/v2/pihr-web/user-sessions",methods: { ...defaultMethods }},
-    notificationsApi: { url: "https://api.pihr.xyz/api/v2/notifications",methods: { ...defaultMethods }},
-    widgetsApi: { url: "https://api.pihr.xyz/api/v2/dashboard/widgets",methods: { ...defaultMethods }},
-    userQuickLinksApi: { url: "https://api.pihr.xyz/api/v2/users/user-quick-links",methods: { ...defaultMethods }},
-    wingSliApi: { url: "https://api.pihr.xyz/api/v2/wings/wing-sli",methods: { ...defaultMethods }},
-    cardWiseSummariesApi: { url: "https://api.pihr.xyz/api/v2/dashboard/card-wise-summaries",methods: { ...defaultMethods }},
-    todayAttendancesApi: { url: "https://api.pihr.xyz/api/v2/attendance-dashboards/today-attendances",methods: { ...defaultMethods }},
-    monthWiseClaimInformationApi: { url: "https://api.pihr.xyz/api/v2/dashboard/month-wise-claim-information",methods: { ...defaultMethods }},
-    attendanceSummariesbyDateRangeApi: { url: "https://api.pihr.xyz/api/v2/attendance-dashboards/attendance-summaries-by-date-range",methods: { ...defaultMethods }},
-    noticeApi: { url: "https://api.pihr.xyz/api/v2/dashboard/notices",methods: { ...defaultMethods }},
-    branchesDropdownApi: { url: "https://api.pihr.xyz/api/v2/branches/dropdown",methods: { ...defaultMethods }},
-    departmentSliApi: { url: "https://api.pihr.xyz/api/v2/departments/department-sli",methods: { ...defaultMethods }},
-    employeeCurrentLeaveStatusApi: { url: "https://api.pihr.xyz/api/v2/leave-dashboards/employee-current-leave-status",methods: { ...defaultMethods }},
-    missedAttendancesApi: { url: "https://api.pihr.xyz/api/v2/attendance-dashboards/missed-attendances",methods: { ...defaultMethods }},
-    leaveTypesDropdownApi: { url: "https://api.pihr.xyz/api/v2/leave-types/dropdown",methods: { ...defaultMethods }},
-    dashboardsLeaveCalendarApi: { url: "https://api.pihr.xyz/api/v2/leave-dashboards/leave-calendar",methods: { ...defaultMethods }},
-    leaveAddButtonApi: { url: "https://api.pihr.xyz/api/v2/employee",methods: { ...defaultMethods }},
-    leaveCreateApi: { url: "https://api.pihr.xyz/api/v2/leave/admin-apply-leave",methods: { ...defaultMethods }},
-    leaveDeleteApi: { url: "https://api.pihr.xyz/api/v2/leave",methods: { ...defaultMethods }},
-  },
-  "PIHR_QA": {
-    loginApi: { url: "http://live.pisales.xyz/api/v2/pihr-web/user-screen-permissions",methods: { ...defaultMethods }},
-    logoutApi: { url: "http://live.pisales.xyz/v2/api/log-out",methods: { ...defaultMethods }},
-    userSessionApi: { url: "http://live.pisales.xyz/api/v2/pihr-web/user-sessions",methods: { ...defaultMethods }},
-    leaveAddButtonApi: { url: "http://live.pisales.xyz/api/v2/employee",methods: { ...defaultMethods }},
-    leaveCreateApi: { url: "http://live.pisales.xyz/api/v2/leave/admin-apply-leave",methods: { ...defaultMethods }},
-    leaveDeleteApi: { url: "http://live.pisales.xyz/api/v2/leave",methods: { ...defaultMethods }},
-  }
+const baseUrlMap = {
+  PIHR_PROD: 'https://api.pihr.xyz',
+  PIHR_QA: 'http://live.pisales.xyz',
+};
+const subdomianUrlMap = {
+  PIHR_PROD: 'https://sso.pihr.xyz',
+  PIHR_QA: 'http://accounts.pisales.xyz',
 };
 
-// Export only the current environment APIs
-const currentApiMap = apiMap[ENV];
-if (!currentApiMap) {
-  throw new Error(`No API mapping found for environment: ${ENV}`);
+const BASE_URL = baseUrlMap[ENV];
+const SubDomain_URL = subdomianUrlMap[ENV];
+
+if (!BASE_URL) throw new Error(`BASE_URL not defined for ENV=${ENV}`);
+
+// API map with **endpoint paths only**
+const apiPaths = {
+  loginApi: '/api/v2/pihr-web/user-screen-permissions',
+  logoutApi: '/v2/api/log-out',
+  validSubdomainApi: '/v2/api/is-valid-subdomain',
+  userSessionApi: '/api/v2/pihr-web/user-sessions',
+  notificationsApi: '/api/v2/notifications',
+  widgetsApi: '/api/v2/dashboard/widgets',
+  userQuickLinksApi: '/api/v2/users/user-quick-links',
+  wingSliApi: '/api/v2/wings/wing-sli',
+  cardWiseSummariesApi: '/api/v2/dashboard/card-wise-summaries',
+  todayAttendancesApi: '/api/v2/attendance-dashboards/today-attendances',
+  monthWiseClaimInformationApi: '/api/v2/dashboard/month-wise-claim-information',
+  attendanceSummariesbyDateRangeApi: '/api/v2/attendance-dashboards/attendance-summaries-by-date-range',
+  noticeApi: '/api/v2/dashboard/notices',
+  branchesDropdownApi: '/api/v2/branches/dropdown',
+  departmentSliApi: '/api/v2/departments/department-sli',
+  employeeCurrentLeaveStatusApi: '/api/v2/leave-dashboards/employee-current-leave-status',
+  missedAttendancesApi: '/api/v2/attendance-dashboards/missed-attendances',
+  leaveTypesDropdownApi: '/api/v2/leave-types/dropdown',
+  dashboardsLeaveCalendarApi: '/api/v2/leave-dashboards/leave-calendar',
+  leaveAddButtonApi: '/api/v2/employee',
+  leaveCreateApi: '/api/v2/leave/admin-apply-leave',
+  leaveDeleteApi: '/api/v2/leave',
+};
+
+// Build final API map for current environment
+const apiMap = {};
+for (const [key, path] of Object.entries(apiPaths)) {
+  // Determine which base URL to use (you can customize per API if needed)
+  const prefix = key === 'logoutApi' || key === 'validSubdomainApi' ? SubDomain_URL : BASE_URL;
+  apiMap[key] = {
+    url: `${prefix}${path}`,
+    methods: { ...defaultMethods },
+  };
 }
 
-export default currentApiMap;
+export default apiMap;
