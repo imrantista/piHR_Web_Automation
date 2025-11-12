@@ -1,8 +1,7 @@
-import { defineConfig} from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import { config as fallback } from './config/testConfig.js';
 import dotenv from 'dotenv';
 import os from 'os';
-
 dotenv.config();
 
 const ENV = process.env.ENV || 'PIHR_PROD';
@@ -86,15 +85,24 @@ export default defineConfig({
       ],
     },
   },
-
-  /* Configure projects for major browsers */
+ /* Configure projects for major browsers */
+  // projects: [
+  //   {
+  //     name: "PIHR Automation",
+  //     // use: { ...devices["Desktop Chrome"], 
+  //       use: { 
+  //       baseURL: BASE_URL,
+  //   }},
   projects: [
     {
-      name: "PIHR Automation",
-      // use: { ...devices["Desktop Chrome"], 
-        use: { 
+      name: 'PIHR Automation',
+      use: {
         baseURL: BASE_URL,
-    }},
+        launchOptions: {
+          args: ['--disable-web-security'],
+        },
+      },
+    },
   ],
 });
 
