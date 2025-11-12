@@ -85,21 +85,15 @@ export default defineConfig({
       ],
     },
   },
- /* Configure projects for major browsers */
-  // projects: [
-  //   {
-  //     name: "PIHR Automation",
-  //     // use: { ...devices["Desktop Chrome"], 
-  //       use: { 
-  //       baseURL: BASE_URL,
-  //   }},
   projects: [
     {
       name: 'PIHR Automation',
       use: {
         baseURL: BASE_URL,
         launchOptions: {
-          args: ['--disable-web-security'],
+          args: ['--disable-web-security',
+            '--start-maximized',
+          ],
         },
       },
     },
