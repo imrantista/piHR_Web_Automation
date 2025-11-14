@@ -9,30 +9,48 @@ import { ENV, BASE_URL } from '../playwright.config.js';
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
+// Login page detection
+const LOGIN_URL_PATTERN = /\/auth\/login|\/login/i;
+
+async function isSessionValid(context, role) {
+  const page = await context.newPage();
+  try {
+    console.log(`[Check] [${role}] Validating session → ${BASE_URL}`);
+    await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30_000 }); // 30s max
+
+    const currentUrl = page.url();
+    console.log(`[Check] [${role}] Current URL: ${currentUrl}`);
+
+    if (LOGIN_URL_PATTERN.test(currentUrl)) {
+      console.warn(`[Check] [${role}] Session expired – at login page.`);
+      await page.close();
+      return false;
+    }
+
+    console.log(`[Check] [${role}] Session valid!`);
+    await page.close();
+    return true;
+  } catch (err) {
+    console.error(`[Check] [${role}] Validation failed: ${err.message}`);
+    try { await page.close(); } catch {}
+    return false;
+  }
+}
+
 async function loginAndSaveToken(context, role, email, password, tokenPath, lockFilePath, artBase, retries = 3) {
   const page = await context.newPage();
   const loginPage = new LoginPage(page);
 
   for (let attempt = 1; attempt <= retries; attempt++) {
-    console.log(`🔐 [${role}] Attempt ${attempt}/${retries}`);
+    console.log(`[Login] [${role}] Attempt ${attempt}/${retries}`);
     try {
-      await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30000 });
+      await page.goto(BASE_URL, { waitUntil: 'networkidle', timeout: 30_000 });
       await loginPage.globalLogin(email, password);
 
-      await page.waitForFunction(() => document.cookie.includes('auth='), { timeout: 10000 });
+      // Faster auth check
+      await page.waitForFunction(() => document.cookie.includes('auth='), { timeout: 10_000 });
 
       const cookies = await context.cookies();
-      const tokenCookie = cookies.find(c => c.name === 'auth');
-      if (!tokenCookie) {
-        if (attempt === retries) throw new Error(`❌ Token cookie not found for ${role} after ${retries} retries`);
-        console.warn(`⚠️ Token not found, retrying in 2s...`);
-        await page.waitForTimeout(2000);
-        continue;
-      }
-
-      const token = tokenCookie.value;
-
-      // Capture LocalStorage & SessionStorage
       const localStorageData = await page.evaluate(() => {
         const out = {};
         for (let i = 0; i < localStorage.length; i++) {
@@ -41,7 +59,6 @@ async function loginAndSaveToken(context, role, email, password, tokenPath, lock
         }
         return out;
       });
-
       const sessionStorageData = await page.evaluate(() => {
         const out = {};
         for (let i = 0; i < sessionStorage.length; i++) {
@@ -52,79 +69,112 @@ async function loginAndSaveToken(context, role, email, password, tokenPath, lock
       });
 
       fs.mkdirSync(path.dirname(tokenPath), { recursive: true });
-
-      // Save token + storage
       fs.writeFileSync(
         tokenPath,
-        JSON.stringify({ token, cookies, localStorage: localStorageData, sessionStorage: sessionStorageData }, null, 2)
+        JSON.stringify({ cookies, localStorage: localStorageData, sessionStorage: sessionStorageData }, null, 2)
       );
 
       fs.mkdirSync(path.dirname(lockFilePath), { recursive: true });
       fs.writeFileSync(lockFilePath, 'done');
 
-      console.log(`✅ Token, cookies, storage saved for ${role}`);
+      console.log(`[Login] [${role}] Session saved → ${tokenPath}`);
       await page.close();
-      return;
+      return true;
     } catch (err) {
+      console.warn(`[Login] [${role}] Attempt ${attempt} failed: ${err.message}`);
       if (attempt === retries) {
-        console.error(`❌ Failed after ${retries} attempts: ${err.message}`);
-        throw err;
+        console.error(`[Login] [${role}] All attempts failed.`);
+        try { await page.close(); } catch {}
+        return false;
       }
-      console.warn(`⚠️ Login attempt ${attempt} failed for ${role}, retrying...`);
       await page.waitForTimeout(2000);
     }
   }
+  return false;
 }
 
-// Pre-test global setup (with tracing)
-async function globalSetup() {
-  console.log('Global setup---------');
-  console.log(`🌍 Using ENV: ${ENV}, baseURL: ${BASE_URL}`);
+async function ensureValidSession(role) {
+  const email = config.credentials[`${role}Email`];
+  const password = config.credentials[`${role}Password`];
+  const tokenDir = path.resolve(`./tokens&cookies_${ENV}`);
+  const tokenPath = path.join(tokenDir, `${role}.json`);
+  const lockFilePath = path.resolve(`./locks/setup-${role}.lock`);
+  const artBase = path.resolve(`./artifacts/global-setup/${role}`);
 
-  const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
-  const usersToLogin = ['admin', 'employee'];
+  // Clean broken state
+  if (!fs.existsSync(tokenPath) && fs.existsSync(lockFilePath)) {
+    fs.unlinkSync(lockFilePath);
+  }
 
-  for (const role of usersToLogin) {
-    const email = config.credentials[`${role}Email`];
-    const password = config.credentials[`${role}Password`];
+  // Validate existing session
+  if (fs.existsSync(tokenPath) && fs.existsSync(lockFilePath)) {
+    console.log(`[Reuse] [${role}] Validating saved session...`);
+    const saved = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
 
-    const tokenDir = path.resolve(`./tokens&cookies_${ENV}`);
-    const tokenPath = path.join(tokenDir, `${role}.json`);
-    const lockFilePath = path.resolve(`./locks/setup-${role}.lock`);
-
-    if (fs.existsSync(tokenPath) && fs.existsSync(lockFilePath)) {
-      console.log(`✅ ${role}: Token already exists. Skipping.`);
-      continue;
-    }
-
-    console.log(`🔐 Logging in as ${role}: ${email}`);
-    const artBase = path.resolve(`./artifacts/global-setup/${role}`);
-    fs.mkdirSync(artBase, { recursive: true });
-
+    const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
     const context = await browser.newContext({
+      storageState: saved,
       ignoreHTTPSErrors: true,
       recordVideo: { dir: path.join(artBase, 'video') },
     });
-
-    // ✅ Start tracing only here
     await context.tracing.start({ screenshots: true, snapshots: true, sources: true });
 
     try {
-      await loginAndSaveToken(context, role, email, password, tokenPath, lockFilePath, artBase, 3);
-      await context.tracing.stop({ path: path.join(artBase, 'trace.zip') });
+      if (await isSessionValid(context, role)) {
+        console.log(`[Reuse] [${role}] Session valid – reusing.`);
+        await context.tracing.stop({ path: path.join(artBase, 'trace.zip') });
+        await context.close();
+        await browser.close();
+        return;
+      }
+      console.log(`[Reuse] [${role}] Session expired – re-login.`);
+    } catch (e) {
+      console.error(`[Reuse] [${role}] Validation error: ${e.message}`);
+    } finally {
+      await context.tracing.stop({ path: path.join(artBase, 'trace.zip') }).catch(() => {});
       await context.close();
-    } catch (err) {
-      console.error(`❌ Global setup failed for ${role}:`, err?.message || err);
-      try { await context.tracing.stop({ path: path.join(artBase, 'trace.zip') }); } catch {}
-      await context.close();
-      throw err;
+      await browser.close();
     }
   }
 
-  await browser.close();
+  // Fresh login
+  console.log(`[Fresh] [${role}] Performing fresh login...`);
+  const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
+  const context = await browser.newContext({
+    ignoreHTTPSErrors: true,
+    recordVideo: { dir: path.join(artBase, 'video') },
+  });
+  fs.mkdirSync(artBase, { recursive: true });
+  await context.tracing.start({ screenshots: true, snapshots: true, sources: true });
+
+  try {
+    const ok = await loginAndSaveToken(context, role, email, password, tokenPath, lockFilePath, artBase, 3);
+    if (!ok) throw new Error(`Login failed for ${role}`);
+    await context.tracing.stop({ path: path.join(artBase, 'trace.zip') });
+    await context.close();
+    await browser.close();
+    console.log(`[Fresh] [${role}] Session saved & locked.`);
+  } catch (err) {
+    await context.tracing.stop({ path: path.join(artBase, 'trace.zip') }).catch(() => {});
+    await context.close();
+    await browser.close();
+    throw err;
+  }
 }
 
-// ✅ Token creation without tracing (used by readSession)
+async function globalSetup() {
+  console.log('=== Global Setup Start ===');
+  console.log(`ENV: ${ENV} | BASE_URL: ${BASE_URL}`);
+
+  const usersToLogin = ['admin', 'employee'];
+  for (const role of usersToLogin) {
+    console.log(`\n--- ${role.toUpperCase()} ---`);
+    await ensureValidSession(role);
+  }
+
+  console.log('=== Global Setup Complete ===');
+}
+
 export async function ensureTokens() {
   const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
   const usersToLogin = ['admin', 'employee'];
@@ -132,7 +182,6 @@ export async function ensureTokens() {
   for (const role of usersToLogin) {
     const email = config.credentials[`${role}Email`];
     const password = config.credentials[`${role}Password`];
-
     const tokenDir = path.resolve(`./tokens&cookies_${ENV}`);
     const tokenPath = path.join(tokenDir, `${role}.json`);
     const lockFilePath = path.resolve(`./locks/setup-${role}.lock`);
