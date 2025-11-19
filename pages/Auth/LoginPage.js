@@ -13,6 +13,9 @@ export class LoginPage extends BasePage {
     this.profileLoggedIn= page.getByRole('img', { name: 'profile' });
     this.welcomeBackTxt= page.getByRole('heading', { name: 'Welcome Back' });
     this.myScreenTxt= page.getByRole('heading', { name: 'My Screen' });
+    this.rememberMe = page.locator('iframe[title="Login Page"]').contentFrame().getByRole('checkbox', { name: 'Remember me' })
+    this.revealPasswordBtn = page.locator('iframe[title="Login Page"]').contentFrame().locator('#reveal-password');
+    this.closePasswordBtn = page.locator('iframe[title="Login Page"]').contentFrame().locator('#close-password')
   }
 
   async visit(slugKeyOrPath = '') {
@@ -57,4 +60,17 @@ export class LoginPage extends BasePage {
         alias: 'Welcome back Text visible'
       });
   }
+
+  async clickRememberMe(){
+    console.log("Attempting to click on Remember Me checkbox.");
+    await this.rememberMe.click();
+    console.log("Clicked on Remember Me checkbox.");
+  }
+
+  async fillPassword(password){
+    console.log("Filling password field.");
+    await this.waitAndFill(this.passwordTxt, password,'Password');
+  }
+
+
 }
