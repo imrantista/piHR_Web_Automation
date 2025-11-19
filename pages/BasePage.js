@@ -7,12 +7,93 @@ export default class BasePage {
   constructor(page, context) {
     this.page = page;
     this.context = context;
-    this.defaultTimeout = 10000;
+    this.defaultTimeout = 20000;
   }
-  // 🔹 Get the friendly viewport name using the shared util
-  #_viewportName() {
-    return getViewportNameFromPage(this.page); // 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile'
+// verify API response against expected values from apiMap
+  async verifyApiResponse(apiEndpoint, method, actualResponse, requestBody = null) {
+    const env = process.env.ENV || 'PIHR_PROD';
+    //const expectedApi = apiMap[env][apiEndpoint];
+    const expectedApi = apiMap[apiEndpoint];
+    
+    if (!expectedApi) {
+      throw new Error(`API endpoint "${apiEndpoint}" not found in apiMap for environment ${env}`);
+    }
+
+    if (!method || !expectedApi.methods[method]) {
+      throw new Error(`Method "${method}" not supported for API endpoint "${apiEndpoint}"`);
+    }
+
+    const expectedStatus = expectedApi.methods[method].expectedStatus;
+    let actualResponseBody;
+    
+    try {
+      actualResponseBody = await actualResponse.json();
+    } catch (e) {
+      actualResponseBody = await actualResponse.text();
+    }
+
+    // Prepare detailed response information
+    const responseDetails = {
+      request: {
+        endpoint: expectedApi.url,
+        method: method,
+        body: requestBody
+      },
+      expected: {
+        status: expectedStatus,
+        ...expectedApi.methods[method]
+      },
+      actual: {
+        status: actualResponse.status(),
+        headers: actualResponse.headers(),
+        body: actualResponseBody
+      },
+      timestamp: new Date().toISOString()
+    };
+
+    console.log(`\n🔍 API Response Comparison:`);
+    console.log(`🌐 Captured API: ${actualResponse.url()} → Method: ${method}`);
+    console.log(`🔗 Expected API: ${expectedApi.url} → Method: ${method}`);
+    console.log('📌 Expected Status:', expectedStatus);
+    console.log('📌 Actual Status:', actualResponse.status());
+
+    // Method-specific status code validation
+    expect(actualResponse.status(), `Expected ${expectedStatus} but got ${actualResponse.status()} for ${method} ${expectedApi.url}`)
+      .toBe(expectedStatus);
+
+    // Add detailed report to Allure
+    await allure.attachment(
+      `API Response Details - ${method} ${apiEndpoint}`,
+      JSON.stringify(responseDetails, null, 2),
+      'application/json'
+    );
+
+    // Return the response details for any additional custom validations
+    return responseDetails;
   }
+
+  // Helper method to wait for and verify API response
+  async waitForAndVerifyApi(apiEndpoint, method, urlPattern, requestBody = null) {
+    console.log(` Waiting for API response → ${apiEndpoint} (${method})`);
+
+    let response;
+    try {
+      response = await this.page.waitForResponse(
+        res => res.url().match(urlPattern) && res.request().method() === method,
+        { timeout: this.defaultTimeout }
+      );
+    } catch {
+      throw new Error(`⏱ Timeout waiting for API "${apiEndpoint}" after ${this.defaultTimeout}ms.`);
+    }
+
+    console.log(` API Captured → ${response.url()} (${response.status()})`);
+    return this.verifyApiResponse(apiEndpoint, method, response, requestBody);
+  }
+
+// 🔹 Get the friendly viewport name using the shared util
+ #_viewportName() {
+  return getViewportNameFromPage(this.page); // 'Desktop' | 'Laptop' | 'Tablet' | 'Mobile'
+}
 
   // 🔹 Accepts:
   //   - a single locator
@@ -46,14 +127,14 @@ export default class BasePage {
   /* ---------------------------
    * 🔹 Core Actions
    * --------------------------- */
-  /*await this.expectAndClick(
-    {
-      default: this.loginBtnDesktop,
-      Tablet:  this.loginBtnTablet,
-      Mobile:  this.loginBtnMobile,
-    },
-    'Login Button'
-  );*/
+/*await this.expectAndClick(
+  {
+    default: this.loginBtnDesktop,
+    Tablet: this.threedot, this.loginBtnTablet,
+    Mobile:  this.loginBtnMobile,
+  },
+  'Login Button'
+);*/
 
   async expectAndClick(
     locatorOrMap,

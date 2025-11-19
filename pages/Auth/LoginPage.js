@@ -23,7 +23,7 @@ export class LoginPage extends BasePage {
       path = slugKeyOrPath;
     }
     const finalPath = path.startsWith('/') ? path : `/${path}`;
-    await this.page.goto(finalPath, { waitUntil: 'networkidle' });
+    await this.page.goto(finalPath, { waitUntil: 'networkidle' , ignoreHTTPSErrors: true });
   }
 
   async globalLogin(username,password) {
