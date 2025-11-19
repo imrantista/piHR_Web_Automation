@@ -13,10 +13,15 @@ export const config = {
     "adminPassword": process.env.ADMIN_PASSWORD,
     "employeeEmail": process.env.EMPLOYEE_EMAIL,
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
+    "systemAdmin": process.env.SYSTEM_ADMIN,
+    "systemAdminPassword": process.env.SYSTEM_ADMIN_PASSWORD,
+    "deactivatedAdmin": process.env.DEACTIVATED_ADMIN,
+    "deactivatedPassword": process.env.DEACTIVATED_PASSWORD
   },
   "slug":{
     "leavepage":'leave/leave?page_size=10&page_number=1',
     "dashboard":'dashboard',
+    "attendanceDashboard":'attendance/attendancedashboard',
   },
   "data": {
      "emplyeeName":"Golam Mostafa Imran",
