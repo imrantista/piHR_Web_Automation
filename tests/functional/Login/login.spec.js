@@ -68,4 +68,11 @@ test.describe('Login to PIHR', () => {
         }
     });
   }
+    for (const vp of [Desktop]) {
+    test(`${vp.name}  Invalid Login test @regression TC_0020:`, async ({ page, loginPage, invalidlogin }) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await invalidlogin.invalidLogin(config.credentials.employeeEmail);
+    });
+  }
 });

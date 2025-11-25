@@ -1,5 +1,6 @@
 import BasePage from '../BasePage';
 import {config} from '../../config/testConfig.js';    
+import { ensureTokens } from '../../utils/global-setup.js';
 
 export class LoginPage extends BasePage {
   constructor(page, context) {
@@ -58,3 +59,4 @@ export class LoginPage extends BasePage {
       });
   }
 }
+
