@@ -70,3 +70,12 @@ export const invalidCredentials = [
     expectedError: "Please enter username & password"
   }
 ];
+
+export const deactivatedUsers = [
+  { name: 'Admin', username: config.credentials.deactivatedAdmin, password: config.credentials.deactivatedPassword },
+];
+export const validUsers = [
+  { name: 'Admin', email: config.credentials.adminEmail, password: config.credentials.adminPassword },
+  { name: 'Employee', email: config.credentials.employeeEmail, password: config.credentials.employeePassword },
+  { name: 'System Admin', email: config.credentials.systemAdmin, password: config.credentials.systemAdminPassword },
+];
