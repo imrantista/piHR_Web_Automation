@@ -72,5 +72,14 @@ export class LoginPage extends BasePage {
     await this.waitAndFill(this.passwordTxt, password,'Password');
   }
 
+  async getEmailInputValue(){
+    console.log("Getting email input value.");
+    return await this.emailTxt.inputValue();
+  }
+
+  async getPasswordInputValue(){
+    console.log("Getting password input value.");
+    return await this.passwordTxt.inputValue();
+  }
 
 }
