@@ -1,6 +1,6 @@
 import { setViewport, Laptop, Mobile, Desktop, Tablet } from '../../../utils/viewports.js';
 import { test } from '../../../utils/sessionUse.js';
-import { config } from '../../../config/testConfig.js';
+import { config, invalidCredentials } from '../../../config/testConfig.js';
 import { unlink } from 'fs/promises';
 import { join } from 'path';
 import { readdirSync } from 'fs';
@@ -116,44 +116,6 @@ const users = [
 });
 
 test.describe('Invalid Login Verification', () => {
-  const invalidCredentials = [
-    {
-      name: "invalid email & invalid password",
-      email: "wrong@example.com",
-      password: "wrongpass",
-      expectedError: "Invalid user name or password"
-    },
-    {
-      name: "valid email & invalid password",
-      email: config.credentials.adminEmail,
-      password: "wrongpass",
-      expectedError: "Invalid user name or password"
-    },
-    {
-      name: "invalid email & valid password",
-      email: "wrongemail",
-      password: config.credentials.adminPassword,
-      expectedError: "Invalid user name or password"
-    },
-    {
-      name: "empty email & empty password",
-      email: "",
-      password: "",
-      expectedError: "Please enter username & password"
-    },
-    {
-      name: "empty email & valid password",
-      email: "",
-      password: config.credentials.adminPassword,
-      expectedError: "Please enter username & password"
-    },
-    {
-      name: "valid email & empty password",
-      email: config.credentials.adminEmail,
-      password: "",
-      expectedError: "Please enter username & password"
-    }
-  ];
 
   test.beforeEach(async ({ page, loginPage }) => {
     await setViewport(page, Desktop.size);
