@@ -1,4 +1,8 @@
 import BasePage from '../BasePage';
+import { unlink } from 'fs/promises';
+import { join } from 'path';
+import { readdirSync } from 'fs';
+
 
 export class Logout extends BasePage {
   constructor(page, context) {
@@ -22,5 +26,26 @@ export class Logout extends BasePage {
       state: 'visible',
       alias: 'Login button visible after logout'
     });
+      const PREFIX = 'tokens&cookies_';
+        const rootDir = process.cwd();
+        const sessionDirs = readdirSync(rootDir, { withFileTypes: true })
+            .filter(dirent => dirent.isDirectory() && dirent.name.startsWith(PREFIX))
+            .map(dirent => dirent.name);
+        const sessionFiles = ['admin.json', 'employee.json'];
+        for (const dir of sessionDirs) {
+            for (const fileName of sessionFiles) {
+                const sessionFilePath = join(rootDir, dir, fileName);
+                try {
+                    await unlink(sessionFilePath);
+                    console.log(`Deleted session file: ${sessionFilePath}`);
+                } catch (err) {
+                    if (err.code === 'ENOENT') {
+                        console.log(`Session file not found (skipping): ${sessionFilePath}`);
+                    } else {
+                        console.error(`Failed to delete session file ${sessionFilePath}:`, err);
+                    }
+                }
+            }
+        }
   }
 }
