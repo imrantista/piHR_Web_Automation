@@ -14,34 +14,29 @@ export class CreateLeave extends BasePage {
     this.saveBtn = page.getByRole("button", { name: "Save" });
     this.successMessage = page.getByText('Leave application added successfully');
   }
-
-  async createNewLeave( employeeName, leaveType, leaveStartDate, leaveEndDate, leavePurpose) {
+  async createNewLeave(employeeName, leaveType, leaveStartDate, leaveEndDate, leavePurpose, saveAfterFill = true) {
     await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveAddButtonApi:GET");
-    // Employee
     await this.expectAndClick(this.employeeField, "Employee Field");
     await this.waitAndFill(this.employeeField, employeeName, "Employee Field");
     await this.expectAndClick(this.page.getByRole('main').getByText(employeeName), "Select Employee Option");
-    // Leave Type
     await this.expectAndClick(this.leaveTypeDropdown, "Leave Type Dropdown");
     await this.expectAndClick(this.page.locator('div').filter({ hasText: new RegExp(`^${leaveType}$`) }), "Select Leave Type");
-    // From Date
     await this.expectAndClick(this.fromDateInput, "From Date Input");
     await this.waitAndFill(this.fromDateInput, leaveStartDate, "From Date Input");
-    // To Date
     await this.expectAndClick(this.toDateInput, "To Date Input");
     await this.waitAndFill(this.toDateInput, leaveEndDate, "To Date Input");
-    // Purpose
     await this.expectAndClick(this.purposeField, "Purpose Field");
     await this.waitAndFill(this.purposeField, leavePurpose, "Purpose Field");
-    // Save
+    if (saveAfterFill) {
+      await this.clickSaveAndVerifyApi();
+      await this.assert({
+        locator: this.successMessage,
+        state: 'visible',
+        alias: 'Leave creation success message visible'
+      });
+    }
+  }
+  async clickSaveAndVerifyApi() {
     await this.expectAndClick(this.saveBtn, "Save Button", "leaveCreateApi:POST");
-
-   
-    await this.assert({
-      locator: {
-        default: this.successMessage,
-      },
-      state: 'visible',
-      alias: 'Leave creation success message visible'
-    });
-}}
+  }
+}

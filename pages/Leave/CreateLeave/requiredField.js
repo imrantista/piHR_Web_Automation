@@ -16,7 +16,7 @@ export class RequiredField extends BasePage {
   }
 
   async requiredFieldValidation() {
-    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveApi:GET");
+    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveAddButtonApi:GET");
     await this.expectAndClick(this.saveBtn, "Save Button");
     const errors = [
       { locator: this.employeeError, alias: 'Employee required error visible' },

@@ -42,7 +42,6 @@ export class ComponentPage extends BasePage {
     this.inTimeText = page.getByText("In Time").nth(1);
     this.outTimeText = page.getByText("Out Time").nth(1);
     this.actionText = page.getByText("Action").nth(1);
-    this.currentLeaveBalanceText = page.getByText("Current Leave Balance").nth(1);
     this.leaveCalendarText = page.getByText("Leave Calendar");
 
   }

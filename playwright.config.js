@@ -1,8 +1,7 @@
-import { defineConfig} from '@playwright/test';
+import { defineConfig, devices } from '@playwright/test';
 import { config as fallback } from './config/testConfig.js';
 import dotenv from 'dotenv';
 import os from 'os';
-
 dotenv.config();
 
 const ENV = process.env.ENV || 'PIHR_QA';
@@ -65,7 +64,8 @@ export default defineConfig({
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   use: {
      extraHTTPHeaders: {
-      'X-Test-Env': ENV, // optional: handy in debugging
+      'X-Test-Env': ENV,
+      baseURL: process.env.BASE_URL, // optional: handy in debugging
     },
     env: ENV,           // 👈 expose ENV
     baseURL: BASE_URL,
@@ -93,15 +93,18 @@ export default defineConfig({
       ],
     },
   },
-
-  /* Configure projects for major browsers */
   projects: [
     {
-      name: "PIHR Automation",
-      // use: { ...devices["Desktop Chrome"], 
-        use: { 
+      name: 'PIHR Automation',
+      use: {
         baseURL: BASE_URL,
-    }},
+        launchOptions: {
+          args: ['--disable-web-security',
+            '--start-maximized',
+          ],
+        },
+      },
+    },
   ],
 });
 

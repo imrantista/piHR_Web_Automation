@@ -1,5 +1,6 @@
 import BasePage from '../BasePage';
 import {config} from '../../config/testConfig.js';    
+import { ensureTokens } from '../../utils/global-setup.js';
 
 export class LoginPage extends BasePage {
   constructor(page, context) {
@@ -26,7 +27,7 @@ export class LoginPage extends BasePage {
       path = slugKeyOrPath;
     }
     const finalPath = path.startsWith('/') ? path : `/${path}`;
-    await this.page.goto(finalPath, { waitUntil: 'networkidle' });
+    await this.page.goto(finalPath, { waitUntil: 'networkidle' , ignoreHTTPSErrors: true });
   }
 
   async globalLogin(username,password) {
@@ -83,3 +84,4 @@ export class LoginPage extends BasePage {
   }
 
 }
+

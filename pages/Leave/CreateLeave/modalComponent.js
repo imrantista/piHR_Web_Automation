@@ -20,7 +20,7 @@ export class ModalComponent extends BasePage {
   }
 
   async checkModalComponent() {
-    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveApi:GET");
+    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveAddButtonApi:GET");
     await this.assert({
       locator: { default: this.modalTitle },
       state: 'visible',
