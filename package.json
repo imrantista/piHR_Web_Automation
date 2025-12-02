@@ -36,6 +36,10 @@
   "dependencies": {
     "@faker-js/faker": "^9.0.3",
     "cross-env": "^7.0.3",
+    "googleapis": "^166.0.0",
+    "imap": "^0.8.19",
+    "jsdom": "^27.2.0",
+    "mailparser": "^3.9.0",
     "mailslurp-client": "^15.20.2"
   },
   "c8": {
