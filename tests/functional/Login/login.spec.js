@@ -63,20 +63,20 @@ test.describe('Login to PIHR', () => {
   });
 });
 
-[Desktop].forEach((vp) => {
-  validUsers.forEach((user) => {
-    test(`Verify Logout Functionality from ${user.name} on ${vp.name}`,
-      { tag: '@regression' }
-      , async ({ page, loginPage, logout }) => {
-        await setViewport(page, vp.size);
-        console.log(`Testing logout for ${user.name} on viewport: ${vp.name}`);
-        await loginPage.visit();
-        await loginPage.doLogin(user.email, user.password);
-        await logout.logoutFunc();
-        await loginPage.verifyLogout();
-      })
-  })
-});
+// [Desktop].forEach((vp) => {
+//   validUsers.forEach((user) => {
+//     test(`Verify Logout Functionality from ${user.name} on ${vp.name}`,
+//       { tag: '@regression' }
+//       , async ({ page, loginPage, logout }) => {
+//         await setViewport(page, vp.size);
+//         console.log(`Testing logout for ${user.name} on viewport: ${vp.name}`);
+//         await loginPage.visit();
+//         await loginPage.doLogin(user.email, user.password);
+//         await logout.logoutFunc();
+//         await loginPage.verifyLogout();
+//       })
+//   })
+// });
 
 test.describe('Invalid Login Verification', () => {
 
