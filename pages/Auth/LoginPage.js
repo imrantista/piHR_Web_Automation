@@ -1,6 +1,6 @@
-import BasePage from '../BasePage';
-import {config} from '../../config/testConfig.js';    
-import { ensureTokens } from '../../utils/global-setup.js';
+import BasePage from "../BasePage";
+import { config } from "../../config/testConfig.js";
+import { ensureTokens } from "../../utils/global-setup.js";
 
 export class LoginPage extends BasePage {
   constructor(page, context) {
@@ -8,26 +8,42 @@ export class LoginPage extends BasePage {
     this.page = page;
     this.context = context;
     this.loginFrame = page.locator('iframe[title="Login Page"]');
-    this.emailTxt = page.locator('iframe[title="Login Page"]').contentFrame().getByRole('textbox', { name: 'Username/ Mobile' });
-    this.passwordTxt = page.locator('iframe[title="Login Page"]').contentFrame().getByRole('textbox', { name: 'Password' });
-    this.loginBtn = page.locator('iframe[title="Login Page"]').contentFrame().getByRole('button', { name: 'Login' });
-    this.profileLoggedIn= page.getByRole('img', { name: 'profile' });
-    this.welcomeBackTxt= page.getByRole('heading', { name: 'Welcome Back' });
-    this.myScreenTxt= page.getByRole('heading', { name: 'My Screen' });
+    this.emailTxt = page
+      .locator('iframe[title="Login Page"]')
+      .contentFrame()
+      .getByRole("textbox", { name: "Username/ Mobile" });
+    this.passwordTxt = page
+      .locator('iframe[title="Login Page"]')
+      .contentFrame()
+      .getByRole("textbox", { name: "Password" });
+    this.loginBtn = page
+      .locator('iframe[title="Login Page"]')
+      .contentFrame()
+      .getByRole("button", { name: "Login" });
+    this.profileLoggedIn = page.getByRole("img", { name: "profile" });
+    this.welcomeBackTxt = page.getByRole("heading", { name: "Welcome Back" });
+    this.myScreenTxt = page.getByRole("heading", { name: "My Screen" });
+    this.errorMsg = page
+      .locator('iframe[title="Login Page"]')
+      .contentFrame()
+      .getByText("Invalid user name or password");
   }
 
-  async visit(slugKeyOrPath = '') {
-    let path = '';
+  async visit(slugKeyOrPath = "") {
+    let path = "";
     if (config.slug[slugKeyOrPath]) {
       path = config.slug[slugKeyOrPath];
     } else {
       path = slugKeyOrPath;
     }
-    const finalPath = path.startsWith('/') ? path : `/${path}`;
-    await this.page.goto(finalPath, { waitUntil: 'networkidle' , ignoreHTTPSErrors: true });
+    const finalPath = path.startsWith("/") ? path : `/${path}`;
+    await this.page.goto(finalPath, {
+      waitUntil: "networkidle",
+      ignoreHTTPSErrors: true,
+    });
   }
 
-  async globalLogin(username,password) {
+  async globalLogin(username, password) {
     await this.emailTxt.fill(username);
     console.log("Email entered.");
     await this.passwordTxt.fill(password);
@@ -35,28 +51,38 @@ export class LoginPage extends BasePage {
     await this.loginBtn.click();
     console.log("Login button clicked.");
   }
-  async doLogin(username,password) {
-    await this.waitAndFill(this.emailTxt,username,'Email');
-    await this.waitAndFill(this.passwordTxt, password,'Password');
-    await this.expectAndClick(this.loginBtn,'Login Button','loginApi:GET');
+  async doLogin(username, password) {
+    await this.waitAndFill(this.emailTxt, username, "Email");
+    await this.waitAndFill(this.passwordTxt, password, "Password");
+    await this.expectAndClick(this.loginBtn, "Login Button", "loginApi:GET");
   }
-  async assertLoginAdmin(){
+  async assertLoginAdmin() {
     await this.assert({
-        locator: {
-          default: this.welcomeBackTxt,
-        },
-        state: 'visible',
-        alias: 'Welcome back Text visible'
-      });
+      locator: {
+        default: this.welcomeBackTxt,
+      },
+      state: "visible",
+      alias: "Welcome back Text visible",
+    });
   }
-    async assertLoginEmployee(){
+  async assertLoginEmployee() {
     await this.assert({
-        locator: {
-          default: this.myScreenTxt,
-        },
-        state: 'visible',
-        alias: 'Welcome back Text visible'
-      });
+      locator: {
+        default: this.myScreenTxt,
+      },
+      state: "visible",
+      alias: "Welcome back Text visible",
+    });
+  }
+  async invalidLogin() {
+    await this.waitAndFill(this.emailTxt, "wrongUserName");
+    await this.waitAndFill(this.passwordTxt, "wrongPassword");
+    await this.expectAndClick(this.loginBtn, "Login Button");
+
+    await this.assert({
+      locator: { default: this.errorMsg },
+      state: "visible",
+      alias: "Invalid login error message",
+    });
   }
 }
-
