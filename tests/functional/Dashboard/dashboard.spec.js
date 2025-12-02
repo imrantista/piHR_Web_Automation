@@ -6,7 +6,7 @@ test.describe('Dashboard component', () => {
 
   // Loop over viewports if needed, currently only Desktop
   for (const vp of [Desktop]) {
-    test.only(`${vp.name} Dashboard Component Check : @regression TC_001`, async ({ page, loginPage, componentPage, useSession }) => {
+    test(`${vp.name} Dashboard Component Check : @regression TC_001`, async ({ page, loginPage, componentPage, useSession }) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit(config.slug.dashboard);

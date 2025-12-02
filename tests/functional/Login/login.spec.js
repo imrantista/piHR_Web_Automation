@@ -44,4 +44,11 @@ test.describe('Login to PIHR', () => {
         await logout.logoutFunc();
     });
   }
+   for (const vp of [Desktop]) {
+ test(`${vp.name} Try to login with invalid username and password @regression TC_006 `, async ({ page, loginPage }, testInfo) => {
+        await setViewport(page, vp.size);
+        await loginPage.visit();
+        await loginPage.invalidLogin();
+    });
+  }
 });
