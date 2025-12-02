@@ -5,7 +5,7 @@ import { test } from '../../../utils/sessionUse.js';
 
 test.describe('ForgotPassword to PIHR', () => {
   
-  for (const vp of [Laptop]) {
+  for (const vp of [Desktop]) {
     test(`${vp.name}  Password Reset Successful @regression Auth-1023`, async ({ page, forgotPasswordPage,loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
