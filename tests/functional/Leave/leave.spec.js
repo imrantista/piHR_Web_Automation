@@ -20,24 +20,24 @@ test.describe('Leave test', () => {
       await requiredfiled.requiredFieldValidation();
     });
   }
+  }
+  for (const Admin of admin) {
   for (const vp of [Desktop]) {
-    test(`${bothAdmin}-${vp.name} Create New Leave : @regression TC_003`, async ({ page, loginPage, createleave, useSession}) => {
+    test(`${Admin}-${vp.name} Create New Leave : @regression TC_003`, async ({ page, loginPage, createleave, useSession}) => {
       await setViewport(page, vp.size);
-      await useSession(bothAdmin);
+      await useSession(Admin);
       await loginPage.visit(config.slug.leavepage);
       await createleave.createNewLeave(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
     });
   }
   for (const vp of [Desktop]) {
-    test(`${bothAdmin}-${vp.name} Try to Create a Leave Application for an Already Applied Date : @regression TC_004`, async ({ page, loginPage, applyinsamedate, useSession}) => {
+    test(`${Admin}-${vp.name} Try to Create a Leave Application for an Already Applied Date : @regression TC_004`, async ({ page, loginPage, applyinsamedate, useSession}) => {
       await setViewport(page, vp.size);
-      await useSession(bothAdmin);
+      await useSession(Admin);
       await loginPage.visit(config.slug.leavepage);
       await applyinsamedate.applyLeaveInSameDate(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
     });
   }
-}
-  for (const Admin of admin) {
    for (const vp of [Desktop]) {
     test(`${Admin}-${vp.name} Delete Leave : @regression TC_005`, async ({ page, loginPage, deleteleave, useSession}) => {
       await setViewport(page, vp.size);
