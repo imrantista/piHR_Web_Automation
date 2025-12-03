@@ -4,6 +4,7 @@ import { branches, config } from '../../../config/testConfig.js';
 import { getEmployeeID } from '../../../api/employeeApi.js';
 import { getCurrentLeaveBalance } from '../../../api/leaveApi.js';
 import { expect } from '@playwright/test';
+import { captureApiJson } from '../../../utils/apiUtils.js';
 
 test.describe('Dashboard component', () => {
   for (const role of allAdmin) {
@@ -72,33 +73,8 @@ allAdmin.forEach(role => {
     });
 
     test(`Verify Employee Branch, Role, and Leave Group Display in Current Leave Balance Section ${role}`, async ({ page, dashboard }) => {
-      const [apiResponse] = await Promise.all([
-        page.waitForResponse(response =>
-          response.url().includes('/api/v2/leave-dashboards/employee-current-leave-status') &&
-          response.status() === 200
-        ),
-        page.reload() // reload page to trigger API
-      ]);
-
-      // Get the JSON data from API
-      const responseData = await apiResponse.json();
-      const employeesFromApi = responseData.data;
-      console.log(`API returned ${employeesFromApi.length} records.`);
-      const apiMap = new Map();
-      employeesFromApi.forEach(emp => apiMap.set(emp.employee_name.trim(), emp));
-
-      const tableData = await dashboard.getAllCurrentLeaveTableRows();
-
-
-      tableData.forEach(row => {
-        const empData = apiMap.get(row.employeeName);
-        if (empData) {
-          expect(row.branch).toBe(empData.branch_name);
-          expect(row.role).toBe(empData.designation_name);
-          expect(row.leaveGroup).toBe(empData.leave_group_name);
-        }
-      });
-
+      const data = await captureApiJson(page, 'employeeCurrentLeaveStatusApi');
+      await dashboard.verifyEmployeeLeaveData(data);
       console.log('✅ All table rows match API data for Branch, Role, and Leave Group.');
 
     });
