@@ -5,14 +5,12 @@ import { config } from '../../../config/testConfig.js';
 test.describe('Dashboard component', () => {
   for (const role of allAdmin) {
     for (const vp of [Desktop]) {
-
       test(`${role} - ${vp.name} Dashboard Component Check : @regression TC_001`, async ({ page, loginPage, componentPage, useSession }) => {
         await setViewport(page, vp.size);
         await useSession(role);
         await loginPage.visit(config.slug.dashboard);
         await componentPage.componentCheckAdmin();
       });
-
     }
     }
   for (const role of admin) {
