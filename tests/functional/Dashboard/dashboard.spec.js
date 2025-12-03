@@ -19,7 +19,7 @@ test.describe('Dashboard component', () => {
       await setViewport(page, vp.size);
       await useSession(role);   
       await loginPage.visit(config.slug.dashboard);
-      await dashboardApis.dashboardAllApis();
+      await dashboardApis.dashboardAllApis("default");
     });
   }
 }
