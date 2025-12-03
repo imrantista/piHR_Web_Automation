@@ -1,3 +1,4 @@
+import { expect } from '@playwright/test';
 import { getRowsAsArray, getSplitTableColumnData, getTableColumnData } from '../../utils/tableHelper';
 import BasePage from '../BasePage';
 export class DashboardPage extends BasePage {
@@ -75,5 +76,22 @@ export class DashboardPage extends BasePage {
         }
 
         return imagesInfo;
+    }
+
+    async verifyEmployeeLeaveData(responseData) {
+        const employeesFromApi = responseData.data;
+        console.log(`API returned ${employeesFromApi.length} records.`);
+        const apiMap = new Map();
+        employeesFromApi.forEach(emp => apiMap.set(emp.employee_name.replace(/\s+/g, ' ').trim(), emp));
+
+        const tableData = await this.getAllCurrentLeaveTableRows();
+        tableData.forEach(row => {
+            const empData = apiMap.get(row.employeeName);
+            if (empData) {
+                expect(row.branch).toBe(empData.branch_name);
+                expect(row.designation).toBe(empData.designation_name);
+                expect(row.leaveGroup).toBe(empData.leave_group_name);
+            }
+        });
     }
 }
