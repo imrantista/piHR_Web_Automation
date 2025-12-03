@@ -57,6 +57,8 @@ locks/
 .qodo/
 storedValue/
 coverage.json
+SaveData/
+user.json/
 
 # ==============================
 # Logs & temp files
