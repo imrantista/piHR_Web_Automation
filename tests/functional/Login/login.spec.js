@@ -38,14 +38,6 @@ test.describe('Login to PIHR', () => {
       await loginPage.assertLoginEmployee();
     });
   }
-  for (const vp of [Desktop]) {
- test.skip(`${vp.name} Successful Admin Logout @regression TC_005 `, async ({ page, loginPage, logout, useSession }, testInfo) => {
-        await setViewport(page, vp.size);
-        await useSession('admin');
-        await loginPage.visit(config.slug.dashboard);
-        await logout.logoutFunc();
-    });
-  }
 });
 
 [Desktop].forEach((vp) => {
