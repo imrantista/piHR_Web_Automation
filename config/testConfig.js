@@ -80,3 +80,5 @@ export const validUsers = [
   { name: 'Employee', email: config.credentials.employeeEmail, password: config.credentials.employeePassword },
   { name: 'Emplyee Admin', email: config.credentials.employeeAdminEmail, password: config.credentials.employeeAdminPassword },
 ];
+
+export const branches = ['Banani', 'bKash', 'PiHR', 'Financfy', 'Kathmandu', 'Klikit', 'Mirpur DOHS', 'PiHR Support Rajshahi', 'Rajshahi'];
