@@ -111,7 +111,7 @@ async function ensureValidSession(role) {
     console.log(`[Reuse] [${role}] Validating saved session...`);
     const saved = JSON.parse(fs.readFileSync(tokenPath, 'utf-8'));
 
-    const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
+    const browser = await chromium.launch({ headless: true, ignoreHTTPSErrors: true });
     const context = await browser.newContext({
       storageState: saved,
       ignoreHTTPSErrors: true,
@@ -166,7 +166,7 @@ async function globalSetup() {
   console.log('=== Global Setup Start ===');
   console.log(`ENV: ${ENV} | BASE_URL: ${BASE_URL}`);
 
-  const usersToLogin = ['admin', 'employee'];
+  const usersToLogin = ['admin', 'employee', 'employeeAdmin'];
   for (const role of usersToLogin) {
     console.log(`\n--- ${role.toUpperCase()} ---`);
     await ensureValidSession(role);
@@ -176,8 +176,8 @@ async function globalSetup() {
 }
 
 export async function ensureTokens() {
-  const browser = await chromium.launch({ headless: !!process.env.CI, ignoreHTTPSErrors: true });
-  const usersToLogin = ['admin', 'employee'];
+  const browser = await chromium.launch({ headless: true, ignoreHTTPSErrors: true });
+  const usersToLogin = ['admin', 'employee' ,'employeeAdmin'];
 
   for (const role of usersToLogin) {
     const email = config.credentials[`${role}Email`];
