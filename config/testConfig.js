@@ -9,14 +9,19 @@ export const config = {
   "ADMIN_QA": "",
 
   "credentials": {
-    "adminEmail": process.env.ADMIN_EMAIL, 
+    "adminEmail": process.env.ADMIN_EMAIL,
     "adminPassword": process.env.ADMIN_PASSWORD,
     "employeeEmail": process.env.EMPLOYEE_EMAIL,
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
+    "employeeAdminEmail": process.env.EMPLOYEE_ADMIN_EMAIL,
+    "employeeAdminPassword": process.env.EMPLOYEE_ADMIN_PASSWORD,
+    "deactivatedAdmin": process.env.DEACTIVATED_ADMIN,
+    "deactivatedPassword": process.env.DEACTIVATED_PASSWORD
   },
-  "slug":{
-    "leavepage":'leave/leave?page_size=10&page_number=1',
-    "dashboard":'dashboard',
+  "slug": {
+    "leavepage": 'leave/leave?page_size=10&page_number=1',
+    "dashboard": 'dashboard',
+    "attendanceDashboard": 'attendance/attendancedashboard',
   },
   "data": {
      "emplyeeName":"Golam Mostafa Imran",
@@ -28,3 +33,50 @@ export const config = {
   }
 }
 
+export const invalidCredentials = [
+  {
+    name: "invalid email & invalid password",
+    email: "wrong@example.com",
+    password: "wrongpass",
+    expectedError: "Invalid user name or password"
+  },
+  {
+    name: "valid email & invalid password",
+    email: config.credentials.adminEmail,
+    password: "wrongpass",
+    expectedError: "Invalid user name or password"
+  },
+  {
+    name: "invalid email & valid password",
+    email: "wrongemail",
+    password: config.credentials.adminPassword,
+    expectedError: "Invalid user name or password"
+  },
+  {
+    name: "empty email & empty password",
+    email: "",
+    password: "",
+    expectedError: "Please enter username & password"
+  },
+  {
+    name: "empty email & valid password",
+    email: "",
+    password: config.credentials.adminPassword,
+    expectedError: "Please enter username & password"
+  },
+  {
+    name: "valid email & empty password",
+    email: config.credentials.adminEmail,
+    password: "",
+    expectedError: "Please enter username & password"
+  }
+];
+
+export const deactivatedUsers = [
+  { name: 'Admin', username: config.credentials.deactivatedAdmin, password: config.credentials.deactivatedPassword },
+];
+export const validUsers = [
+  { name: 'Admin', email: config.credentials.adminEmail, password: config.credentials.adminPassword },
+  { name: 'Employee', email: config.credentials.employeeEmail, password: config.credentials.employeePassword },
+  { name: 'Emplyee Admin', email: config.credentials.employeeAdminEmail, password: config.credentials.employeeAdminPassword },
+];

@@ -31,7 +31,7 @@ export class Logout extends BasePage {
         const sessionDirs = readdirSync(rootDir, { withFileTypes: true })
             .filter(dirent => dirent.isDirectory() && dirent.name.startsWith(PREFIX))
             .map(dirent => dirent.name);
-        const sessionFiles = ['admin.json', 'employee.json'];
+        const sessionFiles = ['admin.json', 'employee.json', 'employeeAdmin.json'];
         for (const dir of sessionDirs) {
             for (const fileName of sessionFiles) {
                 const sessionFilePath = join(rootDir, dir, fileName);
