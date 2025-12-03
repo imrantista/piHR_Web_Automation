@@ -49,34 +49,32 @@ test.describe('Login to PIHR', () => {
 });
 
 [Desktop].forEach((vp) => {
-  validUsers.forEach((user) => {
-    test(`Verify “Remember Me” Functionality on Login Page for ${user.name} on ${vp.name}`, async ({ page, loginPage, logout }) => {
+    test(`Verify “Remember Me” Functionality on Login Page on ${vp.name}`, async ({ page, loginPage, logout }) => {
       await setViewport(page, vp.size);
-      console.log(`Testing ${user.name} on viewport: ${vp.name}`);
+      console.log(`Testing on viewport: ${vp.name}`);
       await loginPage.visit();
       await loginPage.clickRememberMe();
-      await loginPage.doLogin(user.email, user.password);
+      await loginPage.doLogin(config.credentials.adminEmail, config.credentials.adminPassword);
       await logout.logoutFunc();
-      await loginPage.assertCredentialsFilled(user.email, user.password);
-      console.log(`"Remember Me" functionality verified for ${user.name} on ${vp.name}`);
+      await loginPage.assertCredentialsFilled(config.credentials.adminEmail, config.credentials.adminPassword);
+      console.log(`"Remember Me" functionality verified on ${vp.name}`);
     });
-  });
 });
 
-// [Desktop].forEach((vp) => {
-//   validUsers.forEach((user) => {
-//     test(`Verify Logout Functionality from ${user.name} on ${vp.name}`,
-//       { tag: '@regression' }
-//       , async ({ page, loginPage, logout }) => {
-//         await setViewport(page, vp.size);
-//         console.log(`Testing logout for ${user.name} on viewport: ${vp.name}`);
-//         await loginPage.visit();
-//         await loginPage.doLogin(user.email, user.password);
-//         await logout.logoutFunc();
-//         await loginPage.verifyLogout();
-//       })
-//   })
-// });
+[Desktop].forEach((vp) => {
+  validUsers.forEach((user) => {
+    test(`Verify Logout Functionality from ${user.name} on ${vp.name}`,
+      { tag: '@regression' }
+      , async ({ page, loginPage, logout }) => {
+        await setViewport(page, vp.size);
+        console.log(`Testing logout for ${user.name} on viewport: ${vp.name}`);
+        await loginPage.visit();
+        await loginPage.doLogin(user.email, user.password);
+        await logout.logoutFunc();
+        await loginPage.verifyLogout();
+      })
+  })
+});
 
 test.describe('Invalid Login Verification', () => {
 

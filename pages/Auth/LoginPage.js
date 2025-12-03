@@ -114,11 +114,9 @@ export class LoginPage extends BasePage {
     await this.verifyLoginError(expectedError);
   }
 
-  // async verifyLogout() {
-  //   await this.page.goto('/dashboard');
-  //   await expect(this.page.getByText('Access Denied')).toBeVisible();
-  //   await expect(this.page.getByText('Sorry, it seems you are not permitted to see this.')).toBeVisible();
-  // }
+  async verifyLogout() {
+    await expect(this.page.locator('iframe[title="Login Page"]').contentFrame().getByRole('heading', { name: 'Login To Your Account' })).toBeVisible();
+  }
 
   async assertCredentialsFilled(expectedEmail, expectedPassword) {
     const emailValue = await this.getEmailInputValue();
