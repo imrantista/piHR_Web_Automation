@@ -3,6 +3,10 @@ import fs from 'fs';
 import path from 'path';
 import pwConfig, { ENV } from '../playwright.config.js';
 import { ensureTokens } from './global-setup.js'; // ✅ import token helper
+// Define roles
+export const allAdmin = ['admin', 'employeeAdmin'];
+export const admin = ['admin'];
+export const employee = ['employee'];
 
 // Helper: get domain host
 function getHost() {

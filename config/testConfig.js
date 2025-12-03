@@ -13,8 +13,8 @@ export const config = {
     "adminPassword": process.env.ADMIN_PASSWORD,
     "employeeEmail": process.env.EMPLOYEE_EMAIL,
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
-    "systemAdmin": process.env.SYSTEM_ADMIN,
-    "systemAdminPassword": process.env.SYSTEM_ADMIN_PASSWORD,
+    "employeeAdminEmail": process.env.EMPLOYEE_ADMIN_EMAIL,
+    "employeeAdminPassword": process.env.EMPLOYEE_ADMIN_PASSWORD,
     "deactivatedAdmin": process.env.DEACTIVATED_ADMIN,
     "deactivatedPassword": process.env.DEACTIVATED_PASSWORD
   },
@@ -78,5 +78,5 @@ export const deactivatedUsers = [
 export const validUsers = [
   { name: 'Admin', email: config.credentials.adminEmail, password: config.credentials.adminPassword },
   { name: 'Employee', email: config.credentials.employeeEmail, password: config.credentials.employeePassword },
-  { name: 'System Admin', email: config.credentials.systemAdmin, password: config.credentials.systemAdminPassword },
+  { name: 'Emplyee Admin', email: config.credentials.employeeAdminEmail, password: config.credentials.employeeAdminPassword },
 ];
