@@ -249,6 +249,42 @@ export async function getLatestEmailDetailsUnified(
  * Poll until an email arrives whose subject contains expectedSubject.
  * Works with any method (API / APP_PASSWORD / OAUTH).
  */
+// export async function waitForEmailSubjectUnified({
+//   method = "APP_PASSWORD",
+//   request,
+//   expectedSubject,
+//   timeoutMs = 30000,
+//   intervalMs = 2000,
+// } = {}) {
+//   const start = Date.now();
+
+//   while (Date.now() - start < timeoutMs) {
+//     try {
+//       const { subject, body, link, buttonName, otp } =
+//         await getLatestEmailDetailsUnified({ method, request });
+
+//       if (subject && subject.includes(expectedSubject)) {
+//         console.log("Email subject:", subject);
+//         console.log("Email body:", body?.slice?.(0, 200) || "(body omitted)");
+//         return { subject, body, link, buttonName, otp };
+//       }
+//     } catch (err) {
+//       // same behavior as your old code: ignore "No emails found" only
+//       if (!String(err.message || "").includes("No emails found")) {
+//         throw err;
+//       }
+//     }
+
+//     await new Promise((r) => setTimeout(r, intervalMs));
+//   }
+
+//   throw new Error(
+//     `Email with subject containing "${expectedSubject}" not received within ${
+//       timeoutMs / 1000
+//     }s`
+//   );
+// }
+
 export async function waitForEmailSubjectUnified({
   method = "APP_PASSWORD",
   request,
@@ -258,18 +294,72 @@ export async function waitForEmailSubjectUnified({
 } = {}) {
   const start = Date.now();
 
+  // keywords that indicate logos or branding images
+  const brandingIndicators = [
+    "Vivasoft", 
+    "mail-header",
+    "Download Sincerely",
+    "img",              // generic, safe for hiding logs
+    "<img",            // HTML logo
+  ];
+
   while (Date.now() - start < timeoutMs) {
     try {
       const { subject, body, link, buttonName, otp } =
         await getLatestEmailDetailsUnified({ method, request });
 
-      if (subject && subject.includes(expectedSubject)) {
-        console.log("Email subject:", subject);
-        console.log("Email body:", body?.slice?.(0, 200) || "(body omitted)");
-        return { subject, body, link, buttonName, otp };
-      }
+     if (subject && subject.includes(expectedSubject)) {
+  console.log("Email subject:", subject);
+
+  const emailBody = body || "";
+  const lower = emailBody.toLowerCase();
+
+  // Detect Images / Logo
+  const imageRegex = /<img[^>]+src="([^">]+)"/gi;
+  const images = [...emailBody.matchAll(imageRegex)].map(m => m[1]);
+
+  console.log("🧪 Image sources found:", images);
+
+
+const hasLogo =
+  images.length > 0 &&
+  images.some(src =>
+    src.toLowerCase().includes("logo") ||
+    src.toLowerCase().includes("brand") ||
+    src.toLowerCase().includes("header") ||
+    src.toLowerCase().includes("image") ||
+    src.toLowerCase().includes("cid:") ||                 // embedded email logos
+    src.toLowerCase().includes("vivasoft")               // ✅ your company name
+  );
+
+
+  // ✅ Log Email Body
+  console.log("Email body:\n", emailBody);
+  const hasAnyImage = images.length > 0;
+
+if (hasAnyImage) {
+  console.log("✅ Image(s) detected in email.");
+} else {
+  console.log("❌ No images found in email.");
+}
+
+if (hasLogo) {
+  console.log("✅ Logo matched.");
+} else {
+  console.log("⚠️ Images found, but none matched logo pattern.");
+}
+
+  // ✅ Log Logo Result
+  if (hasLogo) {
+    console.log("✅ Logo detected in email.");
+    console.log("🖼 Logo URL(s):", images);
+  } else {
+    console.log("❌ No logo detected in email.");
+  }
+
+  return { subject, body, link, buttonName, otp, images };
+}
     } catch (err) {
-      // same behavior as your old code: ignore "No emails found" only
       if (!String(err.message || "").includes("No emails found")) {
         throw err;
       }
@@ -284,6 +374,7 @@ export async function waitForEmailSubjectUnified({
     }s`
   );
 }
+
 
 /**
  * Wait for an email with expectedSubject AND a link present.
