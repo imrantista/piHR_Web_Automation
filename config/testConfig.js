@@ -1,4 +1,5 @@
 import dotenv from 'dotenv';
+import {generateRandomId} from '../utils/generateRandomNumber.js';
 dotenv.config();
 
 export const config = {
@@ -13,6 +14,8 @@ export const config = {
     "adminPassword": process.env.ADMIN_PASSWORD,
     "employeeEmail": process.env.EMPLOYEE_EMAIL,
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
+    "resetPasswordEmail": 'shabitalahi123@gmail.com',
+    "newPassword":'Pihr@' + generateRandomId(100,999),
     "employeeAdminEmail": process.env.EMPLOYEE_ADMIN_EMAIL,
     "employeeAdminPassword": process.env.EMPLOYEE_ADMIN_PASSWORD,
     "deactivatedAdmin": process.env.DEACTIVATED_ADMIN,

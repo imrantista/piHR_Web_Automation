@@ -119,3 +119,75 @@ test.describe('Deactivated User Login Verification', () => {
   });
 
 });
+
+test.describe('ForgotPassword to PIHR', () => {
+  
+  for (const vp of [Desktop]) {
+    test(`${vp.name}  Password Reset Successful @regression Auth-1023`, async ({ page, loginPage}) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
+      await loginPage.getResetPasswordLink();
+      await loginPage.doLoginWithNewPassword(config.credentials.employeeEmail);
+    });
+
+    test(`${vp.name} Forgot Password Component Check @regression Auth-1024`, async ({page, loginPage})=>{
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.forgotPasswordPageComponenetCheck();
+    });
+
+    test(`${vp.name} Validate Cancel Button on Forgot Password Page @regression Auth-1025`, async ({page, loginPage})=>{
+      await setViewport(page,vp.size);
+      await loginPage.visit();
+      await loginPage.validateCancelButton(config.credentials.employeeEmail);
+    });
+
+    test(`${vp.name} Empty field Validation on Forgot Password Page @regression Auth-1026`, async ({page, loginPage})=>{
+      await setViewport(page,vp.size);
+      await loginPage.visit();
+      await loginPage.emptyFieldValidation();
+    });
+
+     test(`${vp.name} Wrong Email Format Validation on Forgot Password Page @regression Auth-1027`, async ({page, loginPage})=>{
+      await setViewport(page,vp.size);
+      await loginPage.visit();
+      await loginPage.isInvalidEmailFormat();
+    });
+
+    test(`${vp.name} Unregister Email Validation on Forgot Password Page @regression Auth-1028`, async ({page, loginPage})=>{
+      await setViewport(page,vp.size);
+      await loginPage.visit();
+      await loginPage.validateUnregisteredEmail();
+    });
+
+     test(`${vp.name} Validate Login with Old Password @regression Auth-1029`, async ({page, loginPage})=>{
+      await setViewport(page,vp.size);
+      await loginPage.loginWithOldPassword(config.credentials.employeeEmail,config.credentials.employeePassword);
+    });
+
+    test(`${vp.name}  Password Reset using Old Password @regression Auth-1030`, async ({ page,loginPage}) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
+      await loginPage.validateOldPasswordNotAllowed();
+    });
+
+    test(`${vp.name}  Validate Reset Password Link Expiry @regression Auth-1034`, async ({ page,loginPage}) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.validateResetLinkExpiryAndResend();
+      // await loginPage.visit();
+      // await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
+      // await loginPage.getResetPasswordLink();
+      
+    });
+
+    test(`${vp.name}  Validate Email Body and Company Branding  @regression Auth-1034`, async ({ page,loginPage}) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.validateEmailBody(config.credentials.resetPasswordEmail);
+      
+    });
+  }
+});
