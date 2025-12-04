@@ -4,7 +4,7 @@ import dotenv from 'dotenv';
 import os from 'os';
 dotenv.config();
 
-const ENV = process.env.ENV || 'PIHR_PROD';
+const ENV = process.env.ENV || 'PIHR_QA';
 const allowed = ['PIHR_PROD', 'PIHR_QA', 'PIHR_DEV', 'ADMIN_PROD', 'ADMIN_QA'];
 if (!allowed.includes(ENV)) {
   console.error('Please provide a correct environment value from testConfig');
@@ -18,13 +18,21 @@ const baseUrlMap = {
   "ADMIN_PROD": process.env.ADMIN_URL_ADMIN_PROD, // if you want admin as primary
   "ADMIN_QA":   process.env.ADMIN_URL_ADMIN_QA,
 };
+
+const apiBaseUrlMap = {
+  "PIHR_PROD": process.env.API_BASE_URL_PIHR_PROD,
+  "PIHR_QA":   process.env.API_BASE_URL_PIHR_QA,
+}
+const API_BASE_URL = apiBaseUrlMap[ENV];
+
 const BASE_URL = baseUrlMap[ENV] || fallback[ENV];
+
 if (!BASE_URL) throw new Error(`BASE_URL not set for ${ENV} in .env`);
 console.log('-----------------' + ENV + '-----------------');
 /**
  * @see https://playwright.dev/docs/test-configuration
  */
-export { ENV, BASE_URL };
+export { ENV, BASE_URL, API_BASE_URL };
 export default defineConfig({
   globalSetup: './utils/global-setup.js',
   testDir: './tests',
