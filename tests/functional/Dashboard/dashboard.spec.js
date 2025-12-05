@@ -9,21 +9,21 @@ import { captureApiJson } from '../../../utils/apiUtils.js';
 test.describe('Dashboard component', () => {
   for (const role of allAdmin) {
     for (const vp of [Desktop]) {
-      test(`${role} - ${vp.name} Dashboard Component Check : @regression TC_001`, async ({ page, loginPage, componentPage, useSession }) => {
+      test(`${role} - ${vp.name} Verify the dashboard UI elements : @regression Dash-1001`, async ({ page, loginPage, dashboard, useSession }) => {
         await setViewport(page, vp.size);
         await useSession(role);
         await loginPage.visit(config.slug.dashboard);
-        await componentPage.componentCheckAdmin();
+        await dashboard.dashboardComponentCheck();
       });
     }
   }
   for (const role of admin) {
     for (const vp of [Desktop]) {
-      test(`${role} - ${vp.name} Dashboard API Response Check : @regression TC_002`, async ({ page, loginPage, dashboardApis, useSession }) => {
+      test(`${role} - ${vp.name} Verify the Dashboard All APIs Response : @regression Dash-1002`, async ({ page, loginPage, dashboard, useSession }) => {
         await setViewport(page, vp.size);
         await useSession(role);
         await loginPage.visit(config.slug.dashboard);
-        await dashboardApis.dashboardAllApis();
+        await dashboard.dashboardAllApis();
       });
     }
   }

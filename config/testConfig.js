@@ -23,6 +23,7 @@ export const config = {
   },
   "slug": {
     "leavepage": 'leave/leave?page_size=10&page_number=1',
+    "leavedashboard": 'leave/leavedashboard',
     "dashboard": 'dashboard',
     "attendanceDashboard": 'attendance/attendancedashboard',
   },
