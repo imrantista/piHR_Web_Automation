@@ -57,6 +57,8 @@ locks/
 .qodo/
 storedValue/
 coverage.json
+SaveData/
+user.json/
 
 # ==============================
 # Logs & temp files
@@ -78,3 +80,4 @@ coverage.json
 # ==============================
 .eslintcache
 .prettiercache
+pages/Leave/Dashboard/LeaveDashboardApi.js
