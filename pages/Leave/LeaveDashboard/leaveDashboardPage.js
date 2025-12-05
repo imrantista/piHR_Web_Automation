@@ -34,6 +34,8 @@ export class leaveDashboardPage extends BasePage {
     this.avatarListItem = 'div.avatar-list img';  // individual avatars in popover
     this.modal = 'div.modal';                     // employee details modal
     this.modalContent = 'div.modal-content';      // content inside modal
+    //Month year selector
+    this.dateSelector = '//span[contains(@class,"min-w-40") and contains(@class,"text-center") and contains(@class,"font-semibold")]';
   }
 
   // ---------------------------------------------
@@ -229,4 +231,20 @@ export class leaveDashboardPage extends BasePage {
     await modalContent.waitFor({ state: 'visible', timeout: 10000 });
     await expect(modalContent).toBeVisible();
   }
+  async getDisplayedDate() {
+        const text = await this.page.textContent(`xpath=${this.dateSelector}`);
+        return text ? text.trim() : '';
+    }
+    async leaveDashboardMonthYearValidation() {
+        const displayedDate = await this.getDisplayedDate();
+        const currentDate = new Date();
+        const expectedDate = `${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
+
+        console.log('Displayed Date:', displayedDate);
+        console.log('Expected Date:', expectedDate);
+
+        if (displayedDate !== expectedDate) {
+            throw new Error(`Displayed date "${displayedDate}" does not match expected date "${expectedDate}"`);
+        }
+    }
 }
