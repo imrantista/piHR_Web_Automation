@@ -1,87 +1,61 @@
-import { Desktop } from '../../../utils/viewports.js';
-import { test, allAdmin, admin } from '../../../utils/sessionUse.js';
+import { setViewport, Laptop, Mobile,Desktop,Tablet } from '../../../utils/viewports.js';
+import { test, allAdmin, admin} from '../../../utils/sessionUse.js';
 import { config } from '../../../config/testConfig.js';
 
-// --------------------------------------------------
-// 🔹 Helper: Setup dashboard for role + viewport
-// --------------------------------------------------
-async function setupDashboard({ page, loginPage, useSession, leaveDashboard }, role = 'admin', vp = Desktop) {
-  await page.setViewportSize(vp.size);
-  await useSession(role);
-  await loginPage.visit(config.slug.leavedashboard);
+test.describe('Leave test', () => {
+  for (const bothAdmin of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${bothAdmin}- ${vp.name} Verify the UI of Leave Create Modal : @regression Leave-1286  `, async ({ page, loginPage, leavepage , useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession(bothAdmin);
+      await loginPage.visit(config.slug.leavepage);
+      await leavepage.checkModalComponent();
+    });
+  }
+  for (const vp of [Desktop]) {
+    test(`${bothAdmin}-${vp.name} Verify Required Fields Validation in Leave Create Modal When Foreign Leave Is Not Checked : @regression Leave-1304  `, async ({ page, loginPage, leavepage , useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession(bothAdmin);
+      await loginPage.visit(config.slug.leavepage);
+      await leavepage.requiredFieldValidation();
+    });
+  }
+  }
+  for (const Admin of admin) {
+  for (const vp of [Desktop]) {
+    test(`${Admin}-${vp.name} Create Leave for an Employee with Pending Status : @regression Leave-1307`, async ({ page, loginPage, leavepage, useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession(Admin);
+      await loginPage.visit(config.slug.leavepage);
+      await leavepage.createNewLeave(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
+    });
+  }
+  for (const vp of [Desktop]) {
+    test(`${Admin}-${vp.name} Verify System Restriction When Creating Multiple Leaves on the Same Date : @regression Leave-1310`, async ({ page, loginPage, leavepage, useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession(Admin);
+      await loginPage.visit(config.slug.leavepage);
+      await leavepage.applyLeaveInSameDate(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
+    });
+  }
+   for (const vp of [Desktop]) {
+    test(`${Admin}-${vp.name} Verify Pending Leave Can Be Deleted : @regression Leave-1349`, async ({ page, loginPage, leavepage, useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession(Admin);
+      await loginPage.visit(config.slug.leavepage);
+      await leavepage.deleteLeave(config.data.deleteEmployeeName);
+    });
+  }
+   for (const vp of [Desktop]) {
+    test.only(`${Admin}-${vp.name} Verify Calendar Displays Correct Month & Year When Navigating Months : @regression Leave-1002`, async ({ page, loginPage, useSession, leaveDashboard }) => {
+      await setViewport(page, vp.size);
+      await useSession(Admin);
+      await loginPage.visit(config.slug.leavedashboard);
+      await leaveDashboard.leaveDashboardMonthYearValidation();
+    });
+  }
 }
 
-// ===================================================
-// 🔹 Leave Page Tests (Leave Create Modal / Leave CRUD)
-// ===================================================
-test.describe('Leave Page Tests', () => {
-  for (const role of allAdmin) {
-    test(`${role} - Verify UI of Leave Create Modal : @regression Leave-1286`, 
-      async ({ loginPage, leavepage, useSession }) => {
-        await useSession(role);
-        await loginPage.visit(config.slug.leavepage);
-        await leavepage.checkModalComponent();
-      }
-    );
-
-    test(`${role} - Verify Required Fields Validation in Leave Create Modal : @regression Leave-1304`, 
-      async ({ loginPage, leavepage, useSession }) => {
-        await useSession(role);
-        await loginPage.visit(config.slug.leavepage);
-        await leavepage.requiredFieldValidation();
-      }
-    );
-  }
-
-  for (const role of admin) {
-    test(`${role} - Create Leave for Employee : @regression Leave-1307`, 
-      async ({ loginPage, leavepage, useSession }) => {
-        await useSession(role);
-        await loginPage.visit(config.slug.leavepage);
-        await leavepage.createNewLeave(
-          config.data.emplyeeName,
-          config.data.leaveType,
-          config.data.leaveStartDate,
-          config.data.leaveEndDate,
-          config.data.leavePurpose
-        );
-      }
-    );
-
-    test(`${role} - Verify System Restriction on Same Date : @regression Leave-1310`, 
-      async ({ loginPage, leavepage, useSession }) => {
-        await useSession(role);
-        await loginPage.visit(config.slug.leavepage);
-        await leavepage.applyLeaveInSameDate(
-          config.data.emplyeeName,
-          config.data.leaveType,
-          config.data.leaveStartDate,
-          config.data.leaveEndDate,
-          config.data.leavePurpose
-        );
-      }
-    );
-
-    test(`${role} - Verify Pending Leave Can Be Deleted : @regression Leave-1349`, 
-      async ({ loginPage, leavepage, useSession }) => {
-        await useSession(role);
-        await loginPage.visit(config.slug.leavepage);
-        await leavepage.deleteLeave(config.data.deleteEmployeeName);
-      }
-    );
-
-    test(`${role} - Verify Calendar Month & Year : @regression Leave-1002`, 
-      async ({ loginPage, leaveDashboard, useSession }) => {
-        await setupDashboard({ loginPage, leaveDashboard, useSession }, role);
-        await leaveDashboard.leaveDashboardMonthYearValidation();
-      }
-    );
-  }
-});
-
-// ===================================================
-// 🔹 Dashboard Leave Tests (API / Component / Holiday / Modal)
-// ===================================================
 test.describe('Dashboard Leave Tests', () => {
 
   // API Validation
@@ -148,4 +122,6 @@ test.describe('Dashboard Leave Tests', () => {
       console.log('🎉 PASS: Employee modal opened successfully and content is visible!');
     }
   );
+});
+  
 });
