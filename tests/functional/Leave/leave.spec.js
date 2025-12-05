@@ -159,6 +159,6 @@ test.describe('Dashboard Leave Tests', () => {
       await leaveDashboard.openRandomEmployeeModal();
       await leaveDashboard.verifyModalContent();
 
-      console.log('🎉 PASS: Employee modal opened successfully and content is visible!');
+      console.log('🎉 PASS: Employee modal opened successfully and content is visible!'); / 
   });
 });
