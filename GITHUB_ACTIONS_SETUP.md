@@ -90,6 +90,27 @@ npx allure open allure-report
   - Published report URL
 - **Best for:** Production runs, final verification, report archiving
 
+## Local Node version requirement
+
+Some transitive dependencies (notably `jsdom` / `webidl-conversions`) rely on newer V8 features (for example, `ArrayBuffer.prototype.resizable`). The Node.js 18 runner can surface a TypeError when these properties are not present.
+
+To avoid this on the GitHub hosted runner and for local development, use **Node.js 20+**. On the runner I updated the Node workflow to use Node 20; locally you can switch with `nvm`:
+
+```bash
+nvm install 20
+nvm use 20
+```
+
+Then run the usual install and test commands:
+
+```bash
+npm ci
+npx playwright install --with-deps
+npx cross-env ENV=PIHR_PROD npx playwright test
+```
+
+If you can't use Node 20 locally, run the Docker-based workflow (`CI_PIHR-docker`) which runs inside a Playwright Docker image and isolates Node/browser dependencies.
+
 ## Environment Defaults
 
 - **Push to `main`** → defaults to `PIHR_PROD`
