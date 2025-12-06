@@ -1,0 +1,83 @@
+name: CI Playwright (Node)
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Target environment"
+        required: true
+        default: "PIHR_PROD"
+        type: choice
+        options: [PIHR_PROD, PIHR_QA, PIHR_DEV]
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  id-token: write
+
+jobs:
+  e2e-node:
+    runs-on: ubuntu-latest
+    env:
+      ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'PIHR_PROD' || github.event.inputs.target_env }}
+      REPORT_ID: ${{ github.run_number }}-${{ github.run_id }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Generate .env for tests
+        shell: bash
+        run: |
+          set -e
+          echo "BASE_URL_PIHR_PROD=${{ vars.BASE_URL_PIHR_PROD }}"   >> .env
+          echo "BASE_URL_PIHR_QA=${{ vars.BASE_URL_PIHR_QA }}"       >> .env
+          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"               >> .env
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"         >> .env
+          echo "EMPLOYEE_EMAIL=${{ secrets.EMPLOEE_EMAIL }}"         >> .env
+          echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}"   >> .env
+          echo "ENV=${ENV}" >> .env
+          echo "----- .env (sanitized) -----"
+          grep -E '^(ENV|BASE_URL)' .env || true
+          echo "----------------------------"
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache npm
+        uses: actions/cache@v4
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install Playwright browsers and deps
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        env:
+          ENV: ${{ env.ENV }}
+        run: |
+          rm -rf allure-results playwright-report || true
+          mkdir -p allure-results playwright-report
+          npx playwright test --reporter=line,allure-playwright
+
+      - name: Upload Allure results
+        uses: actions/upload-artifact@v4
+        with:
+          name: allure-results-${{ env.REPORT_ID }}
+          path: allure-results
+          if-no-files-found: warn
+
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-report-${{ env.REPORT_ID }}
+          path: playwright-report
+          if-no-files-found: warn
