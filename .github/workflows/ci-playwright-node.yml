@@ -26,19 +26,103 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Validate Variables and Secrets
+        env:
+          BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
+          BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          EMPLOEE_EMAIL: ${{ secrets.EMPLOEE_EMAIL }}
+          EMPLOYEE_EMAIL: ${{ secrets.EMPLOYEE_EMAIL }}
+          EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
+        shell: bash
+        run: |
+          echo "🔍 Checking required GitHub repo Variables and Secrets..."
+          MISSING=0
+          
+          # Check Variables
+          if [ -z "$BASE_URL_PIHR_PROD" ]; then
+            echo "❌ Missing Variable: BASE_URL_PIHR_PROD"
+            MISSING=1
+          else
+            echo "✅ Found Variable: BASE_URL_PIHR_PROD"
+          fi
+          
+          if [ -z "$BASE_URL_PIHR_QA" ]; then
+            echo "⚠️  Missing Variable: BASE_URL_PIHR_QA (optional)"
+          else
+            echo "✅ Found Variable: BASE_URL_PIHR_QA"
+          fi
+          
+          # Check Secrets
+          if [ -z "$ADMIN_EMAIL" ]; then
+            echo "❌ Missing Secret: ADMIN_EMAIL"
+            MISSING=1
+          else
+            echo "✅ Found Secret: ADMIN_EMAIL"
+          fi
+          
+          if [ -z "$ADMIN_PASSWORD" ]; then
+            echo "❌ Missing Secret: ADMIN_PASSWORD"
+            MISSING=1
+          else
+            echo "✅ Found Secret: ADMIN_PASSWORD"
+          fi
+          
+          if [ -z "$EMPLOEE_EMAIL" ] && [ -z "$EMPLOYEE_EMAIL" ]; then
+            echo "❌ Missing Secret: EMPLOEE_EMAIL or EMPLOYEE_EMAIL"
+            MISSING=1
+          else
+            echo "✅ Found Secret: EMPLOEE_EMAIL or EMPLOYEE_EMAIL"
+          fi
+          
+          if [ -z "$EMPLOYEE_PASSWORD" ]; then
+            echo "❌ Missing Secret: EMPLOYEE_PASSWORD"
+            MISSING=1
+          else
+            echo "✅ Found Secret: EMPLOYEE_PASSWORD"
+          fi
+          
+          if [ $MISSING -eq 1 ]; then
+            echo ""
+            echo "📋 Required Variables and Secrets are missing!"
+            echo ""
+            echo "Go to: GitHub Repo → Settings → Secrets and variables → Actions"
+            echo ""
+            echo "Add these VARIABLES:"
+            echo "   • BASE_URL_PIHR_PROD"
+            echo "   • BASE_URL_PIHR_QA"
+            echo ""
+            echo "Add these SECRETS:"
+            echo "   • ADMIN_EMAIL"
+            echo "   • ADMIN_PASSWORD"
+            echo "   • EMPLOEE_EMAIL (or EMPLOYEE_EMAIL)"
+            echo "   • EMPLOYEE_PASSWORD"
+            echo ""
+            exit 1
+          fi
+
       - name: Generate .env for tests
+        env:
+          BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
+          BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          EMPLOEE_EMAIL: ${{ secrets.EMPLOEE_EMAIL }}
+          EMPLOYEE_EMAIL: ${{ secrets.EMPLOYEE_EMAIL }}
+          EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
         shell: bash
         run: |
           set -e
-          echo "BASE_URL_PIHR_PROD=${{ vars.BASE_URL_PIHR_PROD }}"   >> .env
-          echo "BASE_URL_PIHR_QA=${{ vars.BASE_URL_PIHR_QA }}"       >> .env
-          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"               >> .env
-          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"         >> .env
-          echo "EMPLOYEE_EMAIL=${{ secrets.EMPLOEE_EMAIL }}"         >> .env
-          echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}"   >> .env
+          echo "BASE_URL_PIHR_PROD=${BASE_URL_PIHR_PROD}"   >> .env
+          echo "BASE_URL_PIHR_QA=${BASE_URL_PIHR_QA}"       >> .env
+          echo "ADMIN_EMAIL=${ADMIN_EMAIL}"               >> .env
+          echo "ADMIN_PASSWORD=${ADMIN_PASSWORD}"         >> .env
+          echo "EMPLOYEE_EMAIL=${EMPLOEE_EMAIL:-$EMPLOYEE_EMAIL}"         >> .env
+          echo "EMPLOYEE_PASSWORD=${EMPLOYEE_PASSWORD}"   >> .env
           echo "ENV=${ENV}" >> .env
           echo "----- .env (sanitized) -----"
-          grep -E '^(ENV|BASE_URL)' .env || true
+          grep -E '^(ENV|BASE_URL|EMPLOYEE_EMAIL|ADMIN_EMAIL)' .env || true
           echo "----------------------------"
 
       - name: Setup Node.js
