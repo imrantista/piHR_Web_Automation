@@ -1,68 +1,130 @@
 name: CI_PIHR-docker
 
 on:
-  workflow_dispatch:
-    inputs:
-      target_env:
-        description: "Target environment"
-        required: true
-        default: "PIHR_PROD"
-        type: choice
-        options: [PIHR_PROD, PIHR_QA, PIHR_DEV]
   push:
-    branches: [main]
-
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
   e2e-docker:
     runs-on: ubuntu-latest
     env:
-      ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'PIHR_PROD' || github.event.inputs.target_env }}
+      # Always set ENV to PIHR_PROD unless workflow_dispatch provides target_env
+      ENV: ${{ github.event.inputs.target_env || 'PIHR_PROD' }}
       PROJECT_ID: docker
       REPORT_ID: ${{ github.run_number }}-${{ github.run_id }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-# ========================================================
-# 🔑 Create a .env for the tests from Variables + Secrets
-# ========================================================
+      - name: Print effective ENV
+        run: |
+          echo "Effective ENV: $ENV"
+
+      - name: Validate Variables and Secrets
+        env:
+          BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
+          BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          EMPLOYEE_ADMIN_EMAIL: ${{ secrets.EMPLOYEE_ADMIN_EMAIL }}
+          EMPLOYEE_ADMIN_PASSWORD: ${{ secrets.EMPLOYEE_ADMIN_PASSWORD }}
+          EMPLOYEE_EMAIL: ${{ secrets.EMPLOYEE_EMAIL }}
+          EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
+          DEACTIVATED_ADMIN: ${{ secrets.DEACTIVATED_ADMIN }}
+          DEACTIVATED_PASSWORD: ${{ secrets.DEACTIVATED_PASSWORD }}
+        shell: bash
+        run: |
+          echo " Checking required GitHub repo Variables and Secrets..."
+          MISSING=0
+          
+          if [ -z "$BASE_URL_PIHR_PROD" ]; then
+            echo " Missing Variable: BASE_URL_PIHR_PROD"
+            MISSING=1
+          else
+            echo " Variable: BASE_URL_PIHR_PROD"
+          fi
+          
+          if [ -z "$ADMIN_EMAIL" ]; then
+            echo " Missing Secret: ADMIN_EMAIL"
+            MISSING=1
+          else
+            echo " Secret: ADMIN_EMAIL"
+          fi
+          
+          if [ -z "$ADMIN_PASSWORD" ]; then
+            echo " Missing Secret: ADMIN_PASSWORD"
+            MISSING=1
+          else
+            echo " Secret: ADMIN_PASSWORD"
+          fi
+          
+          if [ -z "$EMPLOEE_EMAIL" ] && [ -z "$EMPLOYEE_EMAIL" ]; then
+            echo " Missing Secret: EMPLOEE_EMAIL or EMPLOYEE_EMAIL"
+            MISSING=1
+          else
+            echo " Secret: Email"
+          fi
+          
+          if [ -z "$EMPLOYEE_PASSWORD" ]; then
+            echo " Missing Secret: EMPLOYEE_PASSWORD"
+            MISSING=1
+          else
+            echo " Secret: EMPLOYEE_PASSWORD"
+          fi
+          
+          if [ $MISSING -eq 1 ]; then
+            echo ""
+            echo "  See GITHUB_ACTIONS_SETUP.md for setup instructions"
+            exit 1
+          fi
+
+#  Create a .env for the tests from Variables + Secrets
       - name: Generate .env for tests
+        env:
+          BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
+          BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          EMPLOYEE_ADMIN_EMAIL: ${{ secrets.EMPLOYEE_ADMIN_EMAIL }}
+          EMPLOYEE_ADMIN_PASSWORD: ${{ secrets.EMPLOYEE_ADMIN_PASSWORD }}
+          EMPLOYEE_EMAIL: ${{ secrets.EMPLOYEE_EMAIL }}
+          EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
+          DEACTIVATED_ADMIN: ${{ secrets.DEACTIVATED_ADMIN }}
+          DEACTIVATED_PASSWORD: ${{ secrets.DEACTIVATED_PASSWORD }}
         shell: bash
         run: |
           set -e
-          echo "BASE_URL_PIHR_PROD=${{ vars.BASE_URL_PIHR_PROD }}"   >> .env
-          echo "BASE_URL_PIHR_QA=${{ vars.BASE_URL_PIHR_QA }}"       >> .env
-          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"               >> .env
-          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"         >> .env
-          echo "EMPLOYEE_EMAIL=${{ secrets.EMPLOEE_EMAIL }}"         >> .env
-          echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}"   >> .env
+          echo "BASE_URL_PIHR_PROD=${BASE_URL_PIHR_PROD}"   >> .env
+          echo "BASE_URL_PIHR_QA=${BASE_URL_PIHR_QA}"       >> .env
+          echo "ADMIN_EMAIL=${ADMIN_EMAIL}"               >> .env
+          echo "ADMIN_PASSWORD=${ADMIN_PASSWORD}"         >> .env
+          echo "EMPLOYEE_ADMIN_EMAIL=${EMPLOYEE_ADMIN_EMAIL}" >> .env
+          echo "EMPLOYEE_ADMIN_PASSWORD=${EMPLOYEE_ADMIN_PASSWORD}" >> .env
+          echo "EMPLOYEE_EMAIL=${EMPLOEE_EMAIL:-$EMPLOYEE_EMAIL}"         >> .env
+          echo "EMPLOYEE_PASSWORD=${EMPLOYEE_PASSWORD}"   >> .env
           echo "ENV=${ENV}" >> .env
           echo "----- .env (sanitized) -----"
           grep -E '^(ENV|BASE_URL)' .env || true
           echo "----------------------------"
-# ==============================
-# 🔑 Docker build & compose run
-# ==============================
+
+#  Docker build & compose run
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
       - name: Build e2e image (from your Dockerfile)
         run: docker compose -f docker-compose.yml build e2e
-# ============
-# 🔽 Run Test
-# ============
+
+# Run Test
       - name: Run tests in Docker (bind-mount results)
         shell: bash
         run: |
           rm -rf allure-results allure-report playwright-report || true
           mkdir -p allure-results allure-report playwright-report
 
-          # 👇 Tell Compose to use bind mounts in CI
+          # Tell Compose to use bind mounts in CI
           export ALLURE_RESULTS_MOUNT=./allure-results
           export PLAYWRIGHT_REPORT_MOUNT=./playwright-report
           export ALLURE_REPORT_MOUNT=./allure-report
@@ -72,19 +134,18 @@ jobs:
           export E2E_USER=root
 
           ENV="${ENV}" docker compose run --rm e2e
-# =======================================
-# 🔽 Check gh-pages existence & restore
-# =======================================
+
+# Check gh-pages existence & restore
       - name: Check gh-pages existence
         id: has-ghpages
         shell: bash
         run: |
           if git ls-remote --heads "https://github.com/${{ github.repository }}.git" gh-pages | grep gh-pages >/dev/null; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo "✅ gh-pages exists"
+            echo " gh-pages exists"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo "ℹ️ gh-pages does not exist yet (first deploy)"
+            echo " gh-pages does not exist yet (first deploy)"
           fi
 
       - name: Checkout gh-pages (history restore)
@@ -99,17 +160,16 @@ jobs:
         if: always()
         run: |
           if [ -d gh-pages/projects/${PROJECT_ID}/history ]; then
-            echo "🔁 Restoring Allure history for project=${PROJECT_ID}"
+            echo "Restoring Allure history for project=${PROJECT_ID}"
             rm -rf allure-results/history
             mkdir -p allure-results/history
             cp -r gh-pages/projects/${PROJECT_ID}/history/* allure-results/history/ || true
           else
-            echo "ℹ️ No previous history found for ${PROJECT_ID}"
+            echo " No previous history found for ${PROJECT_ID}"
           fi
-# ===========================
-# 🔽 Generate Allure report
-# ===========================
-      # ⬅️ NEW: Allure needs Java, install on runner
+
+# Generate Allure report
+      # NEW: Allure needs Java, install on runner
       - name: Set up Java (for Allure)               
         if: always()                                 
         uses: actions/setup-java@v4                  
@@ -117,7 +177,7 @@ jobs:
           distribution: temurin                      
           java-version: '17'                         
 
-      # ⬅️ NEW: Install Allure CLI on the runner (avoid docker pull/auth issues)
+      # NEW: Install Allure CLI on the runner (avoid docker pull/auth issues)
       - name: Install Allure CLI                     
         if: always()                                 
         run: |                                   
@@ -125,25 +185,23 @@ jobs:
           sudo tar -zxvf allure.tgz -C /opt/
           echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
 
-      # ⬅️ CHANGED: Use local allure CLI instead of dockerized CLI
+      # CHANGED: Use local allure CLI instead of dockerized CLI
       - name: Generate Allure Report                
         if: always()                                 
         run: |                                       
           allure --version
           allure generate allure-results --clean -o allure-report/projects/${REPORT_ID}
           ls -lah allure-report/projects/${REPORT_ID} || true
-# ============================
-# 🔽 Merge history and upload
-# ============================
+
+# Merge history and upload
       - name: Merge existing history with the new report
         if: always()
         run: |
           mkdir -p allure-report/projects/${REPORT_ID}/history
           cp -r allure-results/history/* allure-report/projects/${REPORT_ID}/history/ || true
           touch allure-report/projects/${REPORT_ID}/.nojekyll
-# ============================
-# 🔽 Upload helpful artifacts
-# ============================
+
+# Upload helpful artifacts
       - name: Upload Allure HTML (artifact)
         if: always()
         uses: actions/upload-artifact@v4
@@ -176,9 +234,8 @@ jobs:
           path: allure-report/projects/${{ env.REPORT_ID }}/data/attachments/*.png
           if-no-files-found: ignore
           retention-days: 7
-# ========================
-# 🔽 GitHub Pages publish
-# ========================
+
+# GitHub Pages publish
       - name: Setup Pages
         if: always()
         uses: actions/configure-pages@v5
@@ -201,12 +258,11 @@ jobs:
       - name: Add Report Link to Summary
         if: always()
         run: |
-          echo "## ✅ Docker Test Report" >> $GITHUB_STEP_SUMMARY
+          echo "## Docker Test Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "[👉 View Docker Report](https://ashfaq-viva.github.io/PIHR.webAutomation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
-# ===============================
-# 🔽 Sent Email of results
-# ===============================
+          echo "[ View Docker Report](https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
+
+#  Sent Email of results
       - name: Install mailx
         run: sudo apt-get install -y mailutils
 
@@ -228,11 +284,11 @@ jobs:
           if [ -f "$REPORT_PATH" ]; then
             jq -r '"PIHR Automation Report(Docker): Passed: \(.statistic.passed) | Failed: \(.statistic.failed) | Total: \(.statistic.total)"' $REPORT_PATH > summary.txt
             echo "" >> summary.txt
-            echo "👉 View full report(Docker): https://ashfaq-viva.github.io/PIHR.webAutomation/projects/${{ env.REPORT_ID }}" >> summary.txt
+            echo "View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
           else
             echo "No summary found. Check if tests executed correctly." > summary.txt
             echo "" >> summary.txt
-            echo "👉 View full report(Docker): https://ashfaq-viva.github.io/PIHR.webAutomation/projects/${{ env.REPORT_ID }}" >> summary.txt
+            echo "View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
           fi
         shell: /usr/bin/bash -e {0}
         env:
@@ -246,5 +302,4 @@ jobs:
 
       - name: Send Email with Allure Report
         run: |
-          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  ashfaq.ahmed@vivasoftltd.com
-
+          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  mostafa.imran@vivasoftltd.com
