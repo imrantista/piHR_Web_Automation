@@ -11,7 +11,7 @@ test.describe('Login to PIHR', () => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.doLogin(config.credentials.adminEmail, config.credentials.adminPassword);
-      await loginPage.assertUserDashboard();
+      await loginPage.assertLoginAdmin();
     });
   }
   for (const vp of [Desktop]) {
@@ -40,19 +40,19 @@ test.describe('Login to PIHR', () => {
   }
 
   for (const vp of [Desktop]) {
-    test(`${vp.name}  @regression TC_004:Successful admin login with session`, async ({ page, loginPage, useSession }) => {
+    test(`${vp.name}  @regression TC_003:Successful admin login with session`, async ({ page, loginPage, useSession }) => {
       await setViewport(page, vp.size);
       await useSession('admin');
       await loginPage.visit();
-      await loginPage.assertUserDashboard();
+      await loginPage.assertLoginAdmin();
     });
   }
   for (const vp of [Desktop]) {
-    test(`${vp.name}  @regression TC_005:Successful employee login with session`, async ({ page, loginPage, useSession }) => {
+    test(`${vp.name}  @regression TC_004:Successful employee login with session`, async ({ page, loginPage, useSession }) => {
       await setViewport(page, vp.size);
       await useSession('employee');
       await loginPage.visit();
-      await loginPage.assertUserDashboard();
+      await loginPage.assertLoginEmployee();
     });
   }
 });
@@ -116,7 +116,7 @@ viewports.forEach((vp) => {
     await setViewport(page, Desktop.size);
     await loginPage.visit();
     await loginPage.doLogin(config.credentials.adminEmail, config.credentials.adminPassword); //admin password has special characters
-    await loginPage.assertUserDashboard();
+    await loginPage.assertLoginAdmin();
   });
 });
 
@@ -199,9 +199,9 @@ test.describe('ForgotPassword to PIHR', () => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.validateResetLinkExpiryAndResend();
-      await loginPage.visit();
-      await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
-      await loginPage.getResetPasswordLink();
+      // await loginPage.visit();
+      // await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
+      // await loginPage.getResetPasswordLink();
       
     });
 

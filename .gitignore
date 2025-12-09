@@ -58,7 +58,7 @@ locks/
 storedValue/
 coverage.json
 SaveData/
-user.json
+user.json/
 
 # ==============================
 # Logs & temp files
@@ -80,3 +80,4 @@ user.json
 # ==============================
 .eslintcache
 .prettiercache
+pages/Leave/Dashboard/LeaveDashboardApi.js

@@ -28,14 +28,15 @@ export const config = {
     "leavedashboard": 'leave/leavedashboard',
     "dashboard": 'dashboard',
     "attendanceDashboard": 'attendance/attendancedashboard',
+    "leaveDashboard": 'leave/leavedashboard',
   },
   "data": {
-     "emplyeeName":"Golam Mostafa Imran",
+     "emplyeeName":"Tanzim Emon",
      "leaveType":"Annual Leave",
      "leaveStartDate":"28-12-2025",
      "leaveEndDate":"30-12-2025",
-     "leavePurpose":"Family Vacation",
-     "deleteEmployeeName":"Golam"
+     "leavePurpose":"Vacation",
+     "deleteEmployeeName":"Tanzim"
   }
 }
 
