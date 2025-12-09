@@ -58,6 +58,8 @@ export class LoginPage extends BasePage {
     this.logoutBtn=page.getByRole('menuitem', { name: 'Logout' });
     this.passwordMatchTxt=page.getByText('Passwords do not match');
     this.selfServiceTxt=page.getByRole('paragraph').filter({ hasText: 'Self Service' });
+    this.welcomeTitleTxt=page.locator('iframe[title="Login Page"]').contentFrame().getByText('Welcome! Please enter your');
+    this.footerTxt=page.locator('iframe[title="Login Page"]').contentFrame().getByText('Developed & Maintained by');
   }
 
   async visit(slugKeyOrPath = '') {
@@ -85,10 +87,26 @@ export class LoginPage extends BasePage {
     await this.expectAndClick(this.loginBtn, 'Login Button', 'loginApi:GET');
   }
 
+  async doLoginUsingEnterButton(username, password) {
+    await this.waitAndFill(this.emailTxt, username, 'Email');
+    await this.waitAndFill(this.passwordTxt, password, 'Password');
+    await this.page.keyboard.press('Enter');
+  }
+
+  async validateNavigateBackAfterLogout() {
+    await this.page.keyboard.press('Alt+ArrowLeft');
+    await this.assert({
+      locator: {
+        default: this.loginBtn,
+      },
+      state: 'visible',
+      alias: 'Login button visible after logout and navigating back'
+    });
+  }
+
 async assertUserDashboard() {
   await this.page.waitForLoadState('networkidle');
 
-  // Precompute visibility once to avoid duplicate queries
   const [hasSelfService, hasSettings] = await Promise.all([
     this.selfServiceTxt.count().then(c => c > 0),
     this.settingTxt.count().then(c => c > 0),
@@ -116,6 +134,34 @@ async assertUserDashboard() {
 
   throw new Error("❌ Unknown user role after login");
 }
+
+  async assertLoginPageComponents(){
+    console.log("Asserting Login Page Components");
+    const elements=[
+      {locator: this.loginImg, alias: 'Login Image Visible'},
+      {locator: this.productImg, alias: 'Product Logo Visible'},
+      {locator: this.welcomeTitleTxt, alias: 'Welcome! Please enter your credentials... Visible'},
+      {locator: this.emailTxt, alias: 'Email Input Field Visible'},
+      {locator: this.passwordTxt, alias: 'Password Input Field Visible'},
+      {locator: this.rememberMe, alias: 'Remember Me Checkbox Visible'},
+      {locator: this.forgotPasswordFrame, alias: 'Forgot Password Link Visible'},
+      {locator: this.loginBtn, alias: 'Login Button Visible'},
+      {locator: this.footerTxt, alias: 'Footer Text Visible'},
+    ]
+
+      for (const el of elements) {
+      try {
+        await this.assert({
+          locator: { default: el.locator },
+          state: 'visible',
+          alias: el.alias,
+        });
+      } catch (error) {
+        console.error(`Failed to find element: ${el.alias}`);
+        throw error;
+      }
+    }
+  }
 
 
   async clickRememberMe() {

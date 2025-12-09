@@ -30,6 +30,15 @@ test.describe('Login to PIHR', () => {
       await loginPage.assertUserDashboard();
     });
   }
+
+  for (const vp of [Desktop]) {
+    test(`${vp.name}  @regression TC_004:Assert Login Page Components `, async ({ page, loginPage }) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.assertLoginPageComponents();
+    });
+  }
+
   for (const vp of [Desktop]) {
     test(`${vp.name}  @regression TC_004:Successful admin login with session`, async ({ page, loginPage, useSession }) => {
       await setViewport(page, vp.size);
@@ -131,7 +140,7 @@ test.describe('Deactivated User Login Verification', () => {
 test.describe('ForgotPassword to PIHR', () => {
   
   for (const vp of [Desktop]) {
-    test(`${vp.name}  Password Reset Successful @regression Auth-1023`, async ({ page, loginPage}) => {
+    test(`${vp.name}  Password Reset Successful @regression TC_1023`, async ({ page, loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
@@ -139,49 +148,54 @@ test.describe('ForgotPassword to PIHR', () => {
       await loginPage.doLoginWithNewPassword(config.credentials.employeeEmail);
     });
 
-    test(`${vp.name} Forgot Password Component Check @regression Auth-1024`, async ({page, loginPage})=>{
+    test(`${vp.name} Forgot Password Component Check @regression TC_1024`, async ({page, loginPage})=>{
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.forgotPasswordPageComponenetCheck();
     });
 
-    test(`${vp.name} Validate Cancel Button on Forgot Password Page @regression Auth-1025`, async ({page, loginPage})=>{
+    test(`${vp.name} Validate Cancel Button on Forgot Password Page @regression TC_1025`, async ({page, loginPage})=>{
       await setViewport(page,vp.size);
       await loginPage.visit();
       await loginPage.validateCancelButton(config.credentials.employeeEmail);
     });
 
-    test(`${vp.name} Empty field Validation on Forgot Password Page @regression Auth-1026`, async ({page, loginPage})=>{
+    test(`${vp.name} Empty field Validation on Forgot Password Page @regression TC_1026`, async ({page, loginPage})=>{
       await setViewport(page,vp.size);
       await loginPage.visit();
       await loginPage.emptyFieldValidation();
     });
 
-     test(`${vp.name} Wrong Email Format Validation on Forgot Password Page @regression Auth-1027`, async ({page, loginPage})=>{
+     test(`${vp.name} Wrong Email Format Validation on Forgot Password Page @regression TC_1027`, async ({page, loginPage})=>{
       await setViewport(page,vp.size);
       await loginPage.visit();
       await loginPage.isInvalidEmailFormat();
     });
 
-    test(`${vp.name} Unregister Email Validation on Forgot Password Page @regression Auth-1028`, async ({page, loginPage})=>{
+    test(`${vp.name} Unregister Email Validation on Forgot Password Page @regression TC_1028`, async ({page, loginPage})=>{
       await setViewport(page,vp.size);
       await loginPage.visit();
       await loginPage.validateUnregisteredEmail();
     });
 
-     test(`${vp.name} Validate Login with Old Password @regression Auth-1029`, async ({page, loginPage})=>{
+     test(`${vp.name} Validate Login with Old Password @regression TC_1029`, async ({page, loginPage})=>{
       await setViewport(page,vp.size);
       await loginPage.loginWithOldPassword(config.credentials.employeeEmail,config.credentials.employeePassword);
     });
 
-    test(`${vp.name}  Password Reset using Old Password @regression Auth-1030`, async ({ page,loginPage}) => {
+    test(`${vp.name}  Password Reset using Old Password @regression TC_1030`, async ({ page,loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
       await loginPage.validateOldPasswordNotAllowed();
     });
 
-    test(`${vp.name}  Validate Reset Password Link Expiry @regression Auth-1034`, async ({ page,loginPage}) => {
+     test(`${vp.name}  Set new Password after login @regression TC_1031`, async ({ page,loginPage}) => {
+      await setViewport(page, vp.size);
+      await loginPage.handleFirstLoginPasswordReset();
+    });
+
+    test(`${vp.name}  Validate Reset Password Link Expiry @regression TC_1034`, async ({ page,loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.validateResetLinkExpiryAndResend();
@@ -191,27 +205,35 @@ test.describe('ForgotPassword to PIHR', () => {
       
     });
 
-    test(`${vp.name}  Validate Email Body and Company Branding  @regression Auth-1039`, async ({ page,loginPage}) => {
+    test(`${vp.name}  Validate Email Body and Company Branding  @regression TC_1039`, async ({ page,loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.validateEmailBody(config.credentials.resetPasswordEmail);
       
     });
 
-    test(`${vp.name}  Set new Password after login @regression Auth-1031`, async ({ page,loginPage}) => {
+    test(`${vp.name}  @regression TC_1043:Successful Login Using Keyboard Enter Button`, async ({ page, loginPage }) => {
       await setViewport(page, vp.size);
-      await loginPage.handleFirstLoginPasswordReset();
-    
+      await loginPage.visit();
+      await loginPage.doLoginUsingEnterButton(config.credentials.adminEmail, config.credentials.adminPassword);
     });
 
-    test(`${vp.name}  Validate Password strength @regression Auth-1047`, async ({ page,loginPage}) => {
+    test(`${vp.name}  @regression TC_1044:Validate After Logout Browser back button behavior`, async ({ page, loginPage,logout }) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.doLogin(config.credentials.adminEmail, config.credentials.adminPassword);
+      await logout.logoutFunc();
+      await loginPage.validateNavigateBackAfterLogout();
+    });
+
+    test(`${vp.name}  Validate Password strength @regression TC_1047`, async ({ page,loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
       await loginPage.validatePasswordStrength();
     });
 
-    test(`${vp.name}  Validate Password Match @regression Auth-1048`, async ({ page,loginPage}) => {
+    test(`${vp.name}  Validate Password Match @regression TC_1048`, async ({ page,loginPage}) => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);

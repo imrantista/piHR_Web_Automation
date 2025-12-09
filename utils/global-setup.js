@@ -166,7 +166,7 @@ async function globalSetup() {
   console.log('=== Global Setup Start ===');
   console.log(`ENV: ${ENV} | BASE_URL: ${BASE_URL}`);
 
-  const usersToLogin = ['admin', 'employee', 'employeeAdmin'];
+  const usersToLogin = ['admin', 'employee', 'employeeAdmin','supervisor'];
   for (const role of usersToLogin) {
     console.log(`\n--- ${role.toUpperCase()} ---`);
     await ensureValidSession(role);
@@ -177,7 +177,7 @@ async function globalSetup() {
 
 export async function ensureTokens() {
   const browser = await chromium.launch({ headless: true, ignoreHTTPSErrors: true });
-  const usersToLogin = ['admin', 'employee' ,'employeeAdmin'];
+  const usersToLogin = ['admin', 'employee' ,'employeeAdmin','supervisor'];
 
   for (const role of usersToLogin) {
     const email = config.credentials[`${role}Email`];
