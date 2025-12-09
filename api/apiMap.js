@@ -23,6 +23,8 @@ if (!BASE_URL) throw new Error(`BASE_URL not defined for ENV=${ENV}`);
 
 // API map with **endpoint paths only**
 const apiPaths = {
+
+  //Dashboard APIs
   loginApi: '/api/v2/pihr-web/user-screen-permissions',
   logoutApi: '/v2/api/log-out',
   validSubdomainApi: '/v2/api/is-valid-subdomain',
@@ -45,6 +47,15 @@ const apiPaths = {
   leaveAddButtonApi: '/api/v2/employee',
   leaveCreateApi: '/api/v2/leave/admin-apply-leave',
   leaveDeleteApi: '/api/v2/leave',
+
+
+  //Leave Dashboard APIs
+  dropDownApiLeaveType: "/api/v2/leave-types/dropdown",
+  dropDownApiBranches: "/api/v2/branches/dropdown",
+  monthlyLeaveAPI: "/api/v2/leave-dashboards/monthly-leave-application-status",
+  monthWiseLeaveApi: "/api/v2/leave-dashboards/month-wise-leave-application-status",
+  yearlyLeaveApi: "/api/v2/leave-dashboards/yearly-leave-approval-status",
+  notificationsLeaveDashboardApi: "/api/v2/my-dashboard/notifications",
 };
 
 // Build final API map for current environment

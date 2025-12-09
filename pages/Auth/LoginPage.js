@@ -42,22 +42,7 @@ export class LoginPage extends BasePage {
     this.validateResetPass= page.getByText('New Password is same as');
     this.invalidCredTxt=page.locator('iframe[title="Login Page"]').contentFrame().getByText('Invalid user name or password');
     this.expireToast=page.getByText('Reset Password Link expired.');
-    this.settingTxt=page.getByRole('paragraph').filter({ hasText: 'Settings' });
-    this.secuityTxt=page.getByRole('paragraph').filter({ hasText: 'Security' });
-    this.userBtn=page.getByRole('button', { name: 'User' });
-    this.searchBox=page.getByRole('textbox', { name: 'Search', exact: true });
-    this.userDetails = page.getByRole('row', { name: 'Shabit Employee 00000586' }).locator('path').nth(2);
-    this.clickResetBtn=page.getByText('Reset password');
-    this.inputPass=page.locator('input[name="password"]');
-    this.assertToast=page.getByText('Password changed successfully');
-    this.currentPassTxt= page.locator('iframe[title="Login Page"]').contentFrame().locator('#ChangePasswordForm div').filter({ hasText: 'Current Password' }).locator('div').first();
-    this.newPassTxt=page.locator('iframe[title="Login Page"]').contentFrame().locator('div:nth-child(2) > .login_related_section_content_form_input');
-    this.retypeNewPassTxt=page.locator('iframe[title="Login Page"]').contentFrame().locator('#ChangePasswordForm div').filter({ hasText: 'Re-type New Password' }).locator('div').first();
-    this.changeBtn=page.locator('iframe[title="Login Page"]').contentFrame().getByRole('button', { name: 'Change' });
-    this.profileImg=page.locator('img[alt="profile"]');
-    this.logoutBtn=page.getByRole('menuitem', { name: 'Logout' });
-    this.passwordMatchTxt=page.getByText('Passwords do not match');
-    this.selfServiceTxt=page.getByRole('paragraph').filter({ hasText: 'Self Service' });
+
   }
 
   async visit(slugKeyOrPath = '') {
@@ -84,39 +69,24 @@ export class LoginPage extends BasePage {
     await this.waitAndFill(this.passwordTxt, password, 'Password');
     await this.expectAndClick(this.loginBtn, 'Login Button', 'loginApi:GET');
   }
-
-async assertUserDashboard() {
-  await this.page.waitForLoadState('networkidle');
-
-  // Precompute visibility once to avoid duplicate queries
-  const [hasSelfService, hasSettings] = await Promise.all([
-    this.selfServiceTxt.count().then(c => c > 0),
-    this.settingTxt.count().then(c => c > 0),
-  ]);
-
-  const isSelfServiceVisible = hasSelfService && await this.selfServiceTxt.first().isVisible();
-  const isSettingsVisible = hasSettings && await this.settingTxt.first().isVisible();
-
-  if (isSelfServiceVisible && !isSettingsVisible) {
-    await expect(this.selfServiceTxt).toBeVisible();
-    await expect(this.settingTxt).not.toBeVisible();
-    console.log("✅ Logged in as Employee");
-    return "employee";
-  } else if (!isSelfServiceVisible && isSettingsVisible) {
-    await expect(this.selfServiceTxt).not.toBeVisible();
-    await expect(this.settingTxt).toBeVisible();
-    console.log("✅ Logged in as Admin");
-    return "admin";
-  } else if (isSelfServiceVisible && isSettingsVisible) {
-    await expect(this.selfServiceTxt).toBeVisible();
-    await expect(this.settingTxt).toBeVisible();
-    console.log("✅ Logged in as EmployeeAdmin");
-    return "employeeAdmin";
+  async assertLoginAdmin() {
+    await this.assert({
+      locator: {
+        default: this.welcomeBackTxt,
+      },
+      state: 'visible',
+      alias: 'Welcome back Text visible'
+    });
   }
-
-  throw new Error("❌ Unknown user role after login");
-}
-
+  async assertLoginEmployee() {
+    await this.assert({
+      locator: {
+        default: this.myScreenTxt,
+      },
+      state: 'visible',
+      alias: 'Welcome back Text visible'
+    });
+  }
 
   async clickRememberMe() {
     console.log("Attempting to click on Remember Me checkbox.");
@@ -337,13 +307,13 @@ async assertUserDashboard() {
       toHaveText: 'Reset Password Link expired.',
     })
   
-  //   const reset = await getResetPasswordLinkUnified({
-  //       method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
-  //       request: this.request,
-  //       expectedSubject: 'Please Reset Your Password',
-  //     });
-  //     await this.page.goto(reset);
-  //     await this.setNewPassword(config.credentials.newPassword);
+    // const reset = await getResetPasswordLinkUnified({
+    //     method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
+    //     request: this.request,
+    //     expectedSubject: 'Please Reset Your Password',
+    //   });
+    //   await this.page.goto(reset);
+    //   await this.setNewPassword(config.credentials.newPassword);
   }
   
   async validateEmailBody(email){
@@ -351,70 +321,10 @@ async assertUserDashboard() {
       await this.waitAndFill(this.resetEmailTxt, email,'Email');
       await this.expectAndClick(this.submitBtn,'Submit Button');
       const emailBody= await waitForEmailSubjectUnified({
-      method : "APP_PASSWORD",
-      request: this.request,
-      expectedSubject: 'Please Reset Your Password',
-    });
-  }
-
-  async handleFirstLoginPasswordReset(){
-  const loginPage = new LoginPage(this.page, this.context);
-  await loginPage.visit();
-  await loginPage.doLogin(config.credentials.adminEmail, config.credentials.adminPassword);
-  await this.expectAndClick(this.settingTxt,'Settings');
-  await this.secuityTxt.hover();
-  await this.expectAndClick(this.userBtn,'User');
-  await this.waitAndFill(this.searchBox,'Shabit','Search');
-  await this.expectAndClick(this.userDetails,'User Details');
-  await this.expectAndClick(this.clickResetBtn,'Reset Password Button');
-  await this.waitAndFill(this.inputPass,'1234','New Password');
-  await this.expectAndClick(this.resetBtn,'Reset Button');
-  await this.assert({
-    locator: {default: this.assertToast},
-    state: 'visible',
-    toHaveText: 'Password changed successfully'
+    method : "APP_PASSWORD",
+    request: this.request,
+    expectedSubject: 'Please Reset Your Password',
   });
-  await this.expectAndClick(this.profileImg,'Profile Image');
-  await this.expectAndClick(this.logoutBtn,'Logout Button');
-  await loginPage.doLogin(config.credentials.employeeEmail,'1234');
-}
-
-async validatePasswordStrength() {
-        const resetLink = await getResetPasswordLinkUnified({
-        method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
-        request: this.request,
-        expectedSubject: 'Please Reset Your Password',
-      });
-      const newPassword = 1234
-      await this.page.goto(resetLink);
-      await this.setNewPassword(newPassword);
-      await this.assert({
-        locator: {default: this.validateResetPass},
-        state: 'visible',
-        toHaveText: 'Your Password is too weak.',
-      })
   }
-
-  async validatePasswordMatch() {
-        const resetLink = await getResetPasswordLinkUnified({
-        method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
-        request: this.request,
-        expectedSubject: 'Please Reset Your Password',
-      });
-      const data = JSON.parse(fs.readFileSync("SaveData/user.json","utf-8"));
-      const newPassword =data.newPassword
-      await this.page.goto(resetLink);
-      await this.waitAndFill(this.newPassword,newPassword,'NewPassword');
-      await this.waitAndFill(this.confirmNewPassword,'12345566713');
-      await this.assert({
-        locator: {default: this.passwordMatchTxt},
-        state: 'visible',
-        toHaveText: 'Passwords do not match',
-      });
-      await this.waitAndFill(this.confirmNewPassword,'');
-      await this.waitAndFill(this.confirmNewPassword,newPassword);
-      await this.expectAndClick(this.resetBtn,'Reset Button');
-  }
-
 }
 
