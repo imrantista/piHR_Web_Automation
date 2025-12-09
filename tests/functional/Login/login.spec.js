@@ -19,7 +19,15 @@ test.describe('Login to PIHR', () => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.doLogin(config.credentials.employeeEmail, config.credentials.employeePassword);
-      await loginPage.assertLoginEmployee();
+      await loginPage.assertUserDashboard();
+    });
+  }
+   for (const vp of [Desktop]) {
+    test(`${vp.name}  Successful employee admin login @regression TC_003:`, async ({ page, loginPage }) => {
+      await setViewport(page, vp.size);
+      await loginPage.visit();
+      await loginPage.doLogin(config.credentials.employeeAdminEmail, config.credentials.employeeAdminPassword);
+      await loginPage.assertUserDashboard();
     });
   }
 
