@@ -35,6 +35,7 @@ export class leaveApplicationPage extends BasePage {
     this.successMessage = page.getByText('Leave application added successfully');
     // Apply in same date error
     this.errorMessage = page.getByText('Overlaps with another application');
+    this.closeModal= page.getByRole('button', { name: 'Cancel' });
     // Delete Leave
     this.searchField = page.getByRole('textbox', { name: 'Employee Code or Name' });
     this.expandRowBtn = page.locator('.inline-block > span').first();
@@ -45,7 +46,7 @@ export class leaveApplicationPage extends BasePage {
   }
   // CHECK MODAL UI COMPONENTS
   async checkModalComponent() {
-    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveAddButtonApi:GET");
+    await this.expectAndClick(this.addNewBtn, "Add New Button");
 
     await this.assert({
       locator: { default: this.modalTitle },
@@ -77,7 +78,7 @@ export class leaveApplicationPage extends BasePage {
   }
   // REQUIRED FIELD VALIDATION
   async requiredFieldValidation() {
-    await this.expectAndClick(this.addNewBtn, "Add New Button", "leaveAddButtonApi:GET");
+    await this.expectAndClick(this.addNewBtn, "Add New Button");
 
     await this.expectAndClick(this.saveBtn, "Save Button");
 
@@ -121,7 +122,7 @@ export class leaveApplicationPage extends BasePage {
     await this.waitAndFill(this.purposeField, leavePurpose, "Purpose Field");
 
     if (saveAfterFill) {
-      await this.expectAndClick(this.saveBtn, "Save Button", "leaveCreateApi:POST");
+      await this.expectAndClick(this.saveBtn, "Save Button");
       await this.assert({
         locator: this.successMessage,
         state: "visible",
@@ -140,7 +141,8 @@ export class leaveApplicationPage extends BasePage {
       state: "visible",
       alias: "Leave application in same date error message visible"
     });
-  }
+    await this.expectAndClick(this.closeModal, "Close Modal Button");
+  } 
   // DELETE LEAVE
   async deleteLeave(deleteEmployeeName) {
     await this.expectAndClick(this.searchField, "Search Field");
@@ -151,7 +153,9 @@ export class leaveApplicationPage extends BasePage {
     const employeeRow = this.page.getByRole('row', { name: new RegExp(deleteEmployeeName, 'i') });
     await employeeRow.locator('path').nth(2).click();
 
+    
     await this.expectAndClick(this.page.getByText('Delete', { exact: true }), "Delete Button");
+    
 
     await this.assert({
       locator: this.confirmationDialog,
@@ -159,7 +163,7 @@ export class leaveApplicationPage extends BasePage {
       alias: 'Delete confirmation dialog visible'
     });
 
-    await this.expectAndClick(this.confirmDeleteBtn, "Confirm Delete Button", "leaveDeleteApi:DELETE");
+    await this.expectAndClick(this.confirmDeleteBtn, "Confirm Delete Button");
 
     await this.assert({
       locator: this.deleteSuccessMessage,

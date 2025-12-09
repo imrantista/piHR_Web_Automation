@@ -1,4 +1,5 @@
 import BasePage from "../../BasePage.js";
+import { expect } from '@playwright/test'; 
 
 export class leaveDashboardPage extends BasePage {
   constructor(page, context) {
@@ -32,37 +33,33 @@ export class leaveDashboardPage extends BasePage {
     this.employeeImages = 'td div.flex img';
     this.avatarList = 'div.avatar-list';           // popover after first click
     this.avatarListItem = 'div.avatar-list img';  // individual avatars in popover
-    this.modal = 'div.modal';                     // employee details modal
+    this.modal = 'div.w-max.absolute.bg-white.rounded-lg';                     // employee details modal
     this.modalContent = 'div.modal-content';      // content inside modal
+
     //Month year selector
     this.dateSelector = '//span[contains(@class,"min-w-40") and contains(@class,"text-center") and contains(@class,"font-semibold")]';
   }
 
-  // ---------------------------------------------
   // 📌 API VALIDATION
-  // ---------------------------------------------
   async leaveDashboardAllApis() {
     await Promise.all([
-      this.waitForAndVerifyApi('validSubdomainApi', 'GET', /is-valid-subdomain/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('userSessionApi', 'GET', /user-sessions/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('notificationsApi', 'GET', /my-dashboard\/notifications/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('userQuickLinksApi', 'GET', /users\/user-quick-links/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('wingSliApi', 'GET', /wings\/wing-sli/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('dropDownApiLeaveType', 'GET', /leave-types\/dropdown/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('dropDownApiBranches', 'GET', /branches\/dropdown/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('departmentSliApi', 'GET', /departments\/department-sli/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('dashboardsLeaveCalendarApi', 'GET', /leave-calenda/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('employeeCurrentLeaveStatusApi', 'GET', /leave-dashboards\/employee-current-leave-status/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('monthlyLeaveAPI', 'GET', /monthly-leave-application/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('monthWiseLeaveApi', 'GET', /month-wise-leave-application/, null, 'leaveDashboard'),
-      this.waitForAndVerifyApi('yearlyLeaveApi', 'GET', /yearly-leave-approval/, null, 'leaveDashboard'),
-      this.page.reload({ waitUntil: 'networkidle' }),
+        this.waitForAndVerifyApi("validSubdomainApi", "GET", /is-valid-subdomain/),
+    this.waitForAndVerifyApi("userSessionApi", "GET", /user-sessions/),
+    this.waitForAndVerifyApi("notificationsApi", "GET", /my-dashboard\/notifications/),
+    this.waitForAndVerifyApi("userQuickLinksApi", "GET", /users\/user-quick-links/),
+    this.waitForAndVerifyApi("wingSliApi", "GET", /wings\/wing-sli/),
+    this.waitForAndVerifyApi("dropDownApiLeaveType", "GET", /leave-types\/dropdown/),
+    this.waitForAndVerifyApi("dropDownApiBranches", "GET", /branches\/dropdown/),
+    this.waitForAndVerifyApi("departmentSliApi", "GET", /departments\/department-sli/),
+    this.waitForAndVerifyApi("dashboardsLeaveCalendarApi", "GET", /leave-calendar/),
+    this.waitForAndVerifyApi("employeeCurrentLeaveStatusApi", "GET", /leave-dashboards\/employee-current-leave-status/),
+    this.waitForAndVerifyApi("monthlyLeaveAPI", "GET", /monthly-leave-application/),
+    this.waitForAndVerifyApi("monthWiseLeaveApi", "GET", /month-wise-leave-application/),
+    this.waitForAndVerifyApi("yearlyLeaveApi", "GET", /yearly-leave-approval/),
+    this.page.reload({ waitUntil: "networkidle" }),
     ]);
   }
-
-  // ---------------------------------------------
   // 📌 COMPONENT VALIDATION
-  // ---------------------------------------------
   async leaveComponentCheck() {
     await this.scrollToTop();
 
@@ -95,9 +92,7 @@ export class leaveDashboardPage extends BasePage {
     }
   }
 
-  // ---------------------------------------------
   // 📌 HOLIDAY / CALENDAR ACTIONS
-  // ---------------------------------------------
   async getHolidayCount() {
     return await this.holidayCells.count();
   }
@@ -106,9 +101,7 @@ export class leaveDashboardPage extends BasePage {
     return await this.holidayLabels.allTextContents();
   }
 
-  // ---------------------------------------------
   // 📌 TODAY HIGHLIGHT VALIDATION
-  // ---------------------------------------------
   async verifyTodayHighlight() {
     const today = new Date();
     const todayFormatted = `${today.getDate()} ${today.toLocaleString('default', { month: 'long' })} ${today.getFullYear()}`;
@@ -129,9 +122,7 @@ export class leaveDashboardPage extends BasePage {
     }
   }
 
-  // ---------------------------------------------
   // 📌 DAY-WISE LEAVE COUNTS WITH ACTUAL DATES
-  // ---------------------------------------------
   async getLeaveCountsPerDay() {
     const dayCells = await this.page.$$(this.leaveDays);
     const leaveCounts = [];
@@ -200,51 +191,48 @@ export class leaveDashboardPage extends BasePage {
     return { date: `${dayNumber} ${month} ${year}`, leaveCount };
   }
 
-  // ---------------------------------------------
-  // 📌 RANDOM EMPLOYEE MODAL ACTIONS (2-step click)
-  // ---------------------------------------------
+  // 📌 RANDOM EMPLOYEE MODAL ACTIONS
   async openRandomEmployeeModal() {
-    // Step 1: Click a random avatar in calendar
-    const images = await this.page.$$(this.employeeImages);
-    if (images.length === 0) throw new Error('No employee images found in calendar!');
-    const randomIndex = Math.floor(Math.random() * images.length);
-    await images[randomIndex].click();
+    // Click a random avatar in calendar
+    const mainAvatars = this.page.locator(this.employeeImages);
+    const count = await mainAvatars.count();
+    if (count === 0) throw new Error("No main avatars found!");
+    const randomIndex = Math.floor(Math.random() * count);
+    await mainAvatars.nth(randomIndex).click({ timeout: 5000 });
 
-    // Step 2: Check if popover appears (only if multiple avatars)
+    // If popover exists, click a random avatar inside it
     const popover = this.page.locator(this.avatarList);
     if (await popover.isVisible({ timeout: 3000 }).catch(() => false)) {
-      const popoverAvatars = await this.page.$$(this.avatarListItem);
-      if (popoverAvatars.length > 0) {
-        const randomPopoverIndex = Math.floor(Math.random() * popoverAvatars.length);
-        await popoverAvatars[randomPopoverIndex].click();
-      }
+        const popoverAvatars = this.page.locator(this.avatarListItem);
+        const popoverCount = await popoverAvatars.count();
+        if (popoverCount > 0) {
+            const randomPopoverIndex = Math.floor(Math.random() * popoverCount);
+            await popoverAvatars.nth(randomPopoverIndex).click({ timeout: 5000 });
+        }
     }
 
-    // Step 3: Wait for employee details modal
+    // Wait for employee details modal
     const modal = this.page.locator(this.modal);
     await modal.waitFor({ state: 'visible', timeout: 10000 });
     await expect(modal).toBeVisible();
-  }
+}
 
-  async verifyModalContent() {
-    const modalContent = this.page.locator(this.modalContent);
-    await modalContent.waitFor({ state: 'visible', timeout: 10000 });
-    await expect(modalContent).toBeVisible();
-  }
+  // 📌 MONTH-YEAR VALIDATION
   async getDisplayedDate() {
-        const text = await this.page.textContent(`xpath=${this.dateSelector}`);
-        return text ? text.trim() : '';
-    }
-    async leaveDashboardMonthYearValidation() {
-        const displayedDate = await this.getDisplayedDate();
-        const currentDate = new Date();
-        const expectedDate = `${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
+    const text = await this.page.textContent(`xpath=${this.dateSelector}`);
+    return text ? text.trim() : '';
+  }
 
-        console.log('Displayed Date:', displayedDate);
-        console.log('Expected Date:', expectedDate);
+  async leaveDashboardMonthYearValidation() {
+    const displayedDate = await this.getDisplayedDate();
+    const currentDate = new Date();
+    const expectedDate = `${currentDate.toLocaleString('default', { month: 'long' })} ${currentDate.getFullYear()}`;
 
-        if (displayedDate !== expectedDate) {
-            throw new Error(`Displayed date "${displayedDate}" does not match expected date "${expectedDate}"`);
-        }
+    console.log('Displayed Date:', displayedDate);
+    console.log('Expected Date:', expectedDate);
+
+    if (displayedDate !== expectedDate) {
+        throw new Error(`Displayed date "${displayedDate}" does not match expected date "${expectedDate}"`);
     }
+  }
 }

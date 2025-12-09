@@ -156,254 +156,269 @@ PIHR.WEBAUTOMATION/
 │   ├── Dashboard.js                             # All Dashboard elements
 │   ├── Attendance/
 │   │   ├── AttendanceDashboard/
-│   │   │   └── attendanceDashboard.js
+│   │   │   └── attendanceDashboardPage.js
 │   │   ├── Operation/
-│   │   │   ├── dailyAttendance.js
-│   │   │   ├── uploadAttendanceData.js
-│   │   │   ├── attendanceApproval.js
-│   │   │   ├── otCalculation.js
-│   │   │   ├── breakTimeReconciliation.js
-│   │   │   ├── multipleCheckInOut.js
-│   │   │   ├── faceRecognitionApproval.js
-│   │   │   ├── attendanceDeletion.js
-│   │   │   └── overtimePreApproval.js
+│   │   │   ├── dailyAttendancePage.js
+│   │   │   ├── uploadAttendanceDataPage.js
+│   │   │   ├── attendanceApprovalPage.js
+│   │   │   ├── otCalculationPage.js
+│   │   │   ├── breakTimeReconciliationPage.js
+│   │   │   ├── multipleCheckInOutPage.js
+│   │   │   ├── faceRecognitionApprovalPage.js
+│   │   │   ├── attendanceDeletionPage.js
+│   │   │   └── overtimePreApprovalPage.js
 │   │   ├── Rostering/
-│   │   │   ├── shiftSetup.js
-│   │   │   ├── rosterEligibleEmployee.js
-│   │   │   ├── rosterSetup.js
-│   │   │   ├── rosterAttendanceReconciliation.js
-│   │   │   ├── rosterPlanModification.js
-│   │   │   └── shiftSwapRequest.js
+│   │   │   ├── shiftSetupPage.js
+│   │   │   ├── rosterEligibleEmployeePage.js
+│   │   │   ├── rosterSetupPage.js
+│   │   │   ├── rosterAttendanceReconciliationPage.js
+│   │   │   ├── rosterPlanModificationPage.js
+│   │   │   └── shiftSwapRequestPage.js
 │   │   ├── Reports/
-│   │   │   ├── attendance.js
-│   │   │   ├── monthWiseAttendance.js
-│   │   │   ├── employeeJobCard.js
-│   │   │   ├── employeeAttendanceAnalysis.js
-│   │   │   ├── attendanceHistory.js
-│   │   │   ├── monthlyAttendanceSummary.js
-│   │   │   ├── extraWorkDaysReport.js
-│   │   │   ├── attendanceReconciliation.js
-│   │   │   ├── overtimeReport.js
-│   │   │   ├── attendancePolicyMappingReport.js
-│   │   │   ├── employeeBreakTimes.js
-│   │   │   ├── multipleCheckInOutReport.js
-│   │   │   ├── rosterScheduleReport.js
-│   │   │   ├── continuousAbsentReport.js
-│   │   │   ├── attendancePercentageRank.js
-│   │   │   └── overtimePolicyMappingReport.js
+│   │   │   ├── attendancePage.js
+│   │   │   ├── monthWiseAttendancePage.js
+│   │   │   ├── employeeJobCardPage.js
+│   │   │   ├── employeeAttendanceAnalysisPage.js
+│   │   │   ├── attendanceHistoryPage.js
+│   │   │   ├── monthlyAttendanceSummaryPage.js
+│   │   │   ├── extraWorkDaysReportPage.js
+│   │   │   ├── attendanceReconciliationPage.js
+│   │   │   ├── overtimeReportPage.js
+│   │   │   ├── attendancePolicyMappingReportPage.js
+│   │   │   ├── employeeBreakTimesPage.js
+│   │   │   ├── multipleCheckInOutReportPage.js
+│   │   │   ├── rosterScheduleReportPage.js
+│   │   │   ├── continuousAbsentReportPage.js
+│   │   │   ├── attendancePercentageRankPage.js
+│   │   │   └── overtimePolicyMappingReportPage.js
 │   │   └── Settings/
-│   │       ├── attendancePolicy.js
-│   │       ├── policyMapping.js
-│   │       ├── holidaySetup.js
-│   │       ├── flagSetup.js
-│   │       ├── rfIdSetup.js
-│   │       ├── deductionPolicy.js
-│   │       ├── overTimePolicy.js
-│   │       ├── eligibleEmployee.js
-│   │       ├── otPolicyMapping.js
-│   │       ├── hotspot.js
-│   │       ├── attendanceConfiguration.js
-│   │       └── attendanceDevices.js
+│   │       ├── attendancePolicyPage.js
+│   │       ├── policyMappingPage.js
+│   │       ├── holidaySetupPage.js
+│   │       ├── flagSetupPage.js
+│   │       ├── rfIdSetupPage.js
+│   │       ├── deductionPolicyPage.js
+│   │       ├── overTimePolicyPage.js
+│   │       ├── eligibleEmployeePage.js
+│   │       ├── otPolicyMappingPage.js
+│   │       ├── hotspotPage.js
+│   │       ├── attendanceConfigurationPage.js
+│   │       └── attendanceDevicesPage.js
 │   ├── Leave/
 │   │   ├── LeaveDashboard/
-│   │   │   └── leaveDashboard.js
+│   │   │   └── leaveDashboardPage.js
 │   │   ├── Operation/
-│   │   │   ├── leaveApplication.js
-│   │   │   ├── visitApplication.js
-│   │   │   ├── leaveAdjustment.js
-│   │   │   └── leaveEncashmentProcess.js
+│   │   │   ├── leaveApplicationPage.js
+│   │   │   ├── visitApplicationPage.js
+│   │   │   ├── leaveAdjustmentPage.js
+│   │   │   └── leaveEncashmentProcessPage.js
 │   │   ├── Reports/
-│   │   │   ├── employeeLeaveBalance.js
-│   │   │   ├── leaveSummary.js
-│   │   │   ├── leaveAnalysis.js
-│   │   │   ├── visitReport.js
-│   │   │   ├── leaveAdjustmentReport.js
-│   │   │   ├── leaveApproverHistoryReport.js
-│   │   │   ├── employeeEarnLeave.js
-│   │   │   ├── leaveEncashmentReport.js
-│   │   │   └── compensatedExtraTimeReport.js
+│   │   │   ├── employeeLeaveBalancePage.js
+│   │   │   ├── leaveSummaryPage.js
+│   │   │   ├── leaveAnalysisPage.js
+│   │   │   ├── visitReportPage.js
+│   │   │   ├── leaveAdjustmentReportPage.js
+│   │   │   ├── leaveApproverHistoryReportPage.js
+│   │   │   ├── employeeEarnLeavePage.js
+│   │   │   ├── leaveEncashmentReportPage.js
+│   │   │   └── compensatedExtraTimeReportPage.js
 │   │   └── Settings/
-│   │       ├── leaveType.js
-│   │       ├── leaveGroup.js
-│   │       ├── currentLeaveStatus.js
-│   │       ├── leaveYear.js
-│   │       ├── leaveProcessPolicy.js
-│   │       ├── approverSetup.js
-│   │       ├── eligibleEmployee.js
-│   │       └── leaveEncashmentPolicy.js
+│   │       ├── leaveTypePage.js
+│   │       ├── leaveGroupPage.js
+│   │       ├── currentLeaveStatusPage.js
+│   │       ├── leaveYearPage.js
+│   │       ├── leaveProcessPolicyPage.js
+│   │       ├── approverSetupPage.js
+│   │       ├── eligibleEmployeePage.js
+│   │       └── leaveEncashmentPolicyPage.js
 │   ├── Salary/
 │   │   ├── SalaryOperation/
-│   │   │   ├── salaryStructure.js
-│   │   │   ├── finalSettlement.js
-│   │   │   ├── heldUpEmployee.js
-│   │   │   ├── processIncrement.js
-│   │   │   ├── salaryGeneration.js
-│   │   │   ├── salaryAdjustment.js
-│   │   │   ├── salaryModification.js
-│   │   │   ├── deleteUnverifySalary.js
-│   │   │   ├── salaryVerification.js
-│   │   │   ├── salaryPayment.js
-│   │   │   ├── emailPayslip.js
-│   │   │   └── cashModification.js
+│   │   │   ├── salaryStructurePage.js
+│   │   │   ├── finalSettlementPage.js
+│   │   │   ├── heldUpEmployeePage.js
+│   │   │   ├── processIncrementPage.js
+│   │   │   ├── salaryGenerationPage.js
+│   │   │   ├── salaryAdjustmentPage.js
+│   │   │   ├── salaryModificationPage.js
+│   │   │   ├── deleteUnverifySalaryPage.js
+│   │   │   ├── salaryVerificationPage.js
+│   │   │   ├── salaryPaymentPage.js
+│   │   │   ├── emailPayslipPage.js
+│   │   │   └── cashModificationPage.js
 │   │   ├── BonusOperation/
-│   │   │   ├── bonusPolicy.js
-│   │   │   ├── bonusType.js
-│   │   │   ├── yearlyBonusSetup.js
-│   │   │   ├── bonusGeneration.js
-│   │   │   ├── bonusModification.js
-│   │   │   └── bonusTransfer.js
+│   │   │   ├── bonusPolicyPage.js
+│   │   │   ├── bonusTypePage.js
+│   │   │   ├── yearlyBonusSetupPage.js
+│   │   │   ├── bonusGenerationPage.js
+│   │   │   ├── bonusModificationPage.js
+│   │   │   └── bonusTransferPage.js
 │   │   ├── Reports/
-│   │   │   ├── payslip.js
-│   │   │   ├── salaryCertificate.js
-│   │   │   ├── salaryAnalysis.js
-│   │   │   ├── salaryPayment.js
-│   │   │   ├── currentSalaryStructure.js
-│   │   │   ├── salaryStructureHistory.js
-│   │   │   ├── bonusStatement.js
-│   │   │   ├── bonusAnalysis.js
-│   │   │   ├── claimReport.js
-│   │   │   ├── monthlyAdvanceSalaryCollection.js
-│   │   │   ├── salaryIncrementReport.js
-│   │   │   ├── salaryConsolidateReport.js
-│   │   │   ├── salaryAdjustment.js
-│   │   │   ├── salaryDeductionReport.js
-│   │   │   ├── cashSalaryReport.js
-│   │   │   └── cashBonusReport.js
+│   │   │   ├── payslipPage.js
+│   │   │   ├── salaryCertificatePage.js
+│   │   │   ├── salaryAnalysisPage.js
+│   │   │   ├── salaryPaymentPage.js
+│   │   │   ├── currentSalaryStructurePage.js
+│   │   │   ├── salaryStructureHistoryPage.js
+│   │   │   ├── bonusStatementPage.js
+│   │   │   ├── bonusAnalysisPage.js
+│   │   │   ├── claimReportPage.js
+│   │   │   ├── monthlyAdvanceSalaryCollectionPage.js
+│   │   │   ├── salaryIncrementReportPage.js
+│   │   │   ├── salaryConsolidateReportPage.js
+│   │   │   ├── salaryAdjustmentPage.js
+│   │   │   ├── salaryDeductionReportPage.js
+│   │   │   ├── cashSalaryReportPage.js
+│   │   │   └── cashBonusReportPage.js
 │   │   ├── Settings/
-│   │   │   ├── salaryGenPolicy.js
-│   │   │   ├── consolidateSalaryBreakdowns.js
-│   │   │   ├── baseBreakup.js
-│   │   │   ├── finalSettlementComponents.js
-│   │   │   ├── breakup.js
-│   │   │   ├── salaryGroup.js
-│   │   │   ├── breakupAmount.js
-│   │   │   ├── bank.js
-│   │   │   ├── incrementBreakup.js
-│   │   │   ├── adjustmentPurpose.js
-│   │   │   ├── employeeBankAccount.js
-│   │   │   ├── eligibleEmployee.js
-│   │   │   ├── advanceSalaryPolicy.js
-│   │   │   ├── dynamicSalaryAdjustmentPolicy.js
-│   │   │   ├── employeeWiseCashDistribution.js
-│   │   │   ├── attendanceBasedAllowancePolicy.js
-│   │   │   └── attendanceBasedAllowancePolicyMapping.js
+│   │   │   ├── salaryGenPolicyPage.js
+│   │   │   ├── consolidateSalaryBreakdownsPage.js
+│   │   │   ├── baseBreakupPage.js
+│   │   │   ├── finalSettlementComponentsPage.js
+│   │   │   ├── breakupPage.js
+│   │   │   ├── salaryGroupPage.js
+│   │   │   ├── breakupAmountPage.js
+│   │   │   ├── bankPage.js
+│   │   │   ├── incrementBreakupPage.js
+│   │   │   ├── adjustmentPurposePage.js
+│   │   │   ├── employeeBankAccountPage.js
+│   │   │   ├── eligibleEmployeePage.js
+│   │   │   ├── advanceSalaryPolicyPage.js
+│   │   │   ├── dynamicSalaryAdjustmentPolicyPage.js
+│   │   │   ├── employeeWiseCashDistributionPage.js
+│   │   │   ├── attendanceBasedAllowancePolicyPage.js
+│   │   │   └── attendanceBasedAllowancePolicyMappingPage.js
 │   │   └── Claim/
-│   │       ├── claim.js
-│   │       ├── claimCategory.js
-│   │       └── claimSetting.js
+│   │       ├── claimPage.js
+│   │       ├── claimCategoryPage.js
+│   │       └── claimSettingPage.js
 │   ├── Employee/
 │   │   ├── EmployeeDashboard/
-│   │   │   └── employeeDashboard.js
+│   │   │   └── employeeDashboardPage.js
 │   │   ├── Operation/
-│   │   │   ├── employeeList.js
-│   │   │   ├── employeeBenefits.js
-│   │   │   ├── disciplinaryRecord.js
-│   │   │   ├── organogram.js
-│   │   │   ├── statusToBeEffective.js
-│   │   │   └── employeeDocumentRequest.js
+│   │   │   ├── employeeListPage.js
+│   │   │   ├── employeeBenefitsPage.js
+│   │   │   ├── disciplinaryRecordPage.js
+│   │   │   ├── organogramPage.js
+│   │   │   ├── statusToBeEffectivePage.js
+│   │   │   └── employeeDocumentRequestPage.js
 │   │   ├── Reports/
-│   │   │   ├── employeePosition.js
-│   │   │   ├── employeeProfile.js
-│   │   │   ├── religionAndBloodGroup.js
-│   │   │   ├── contactReport.js
-│   │   │   ├── viewTemplateReport.js
-│   │   │   ├── ageServiceLengthReport.js
-│   │   │   ├── employeeSupervisorAndLeaveApprover.js
-│   │   │   ├── employeeTransferHistory.js
-│   │   │   ├── passportAndVisaReport.js
-│   │   │   └── monthWiseJoiningAndDismissedEmployee.js
+│   │   │   ├── employeePositionPage.js
+│   │   │   ├── employeeProfilePage.js
+│   │   │   ├── religionAndBloodGroupPage.js
+│   │   │   ├── contactReportPage.js
+│   │   │   ├── viewTemplateReportPage.js
+│   │   │   ├── ageServiceLengthReportPage.js
+│   │   │   ├── employeeSupervisorAndLeaveApproverPage.js
+│   │   │   ├── employeeTransferHistoryPage.js
+│   │   │   ├── passportAndVisaReportPage.js
+│   │   │   └── monthWiseJoiningAndDismissedEmployeePage.js
 │   │   ├── Settings/
-│   │   │   ├── birthdayNotification.js
-│   │   │   ├── department.js
-│   │   │   ├── unit.js
-│   │   │   ├── jobStatus.js
-│   │   │   ├── jobBase.js
-│   │   │   ├── jobLevel.js
-│   │   │   ├── designation.js
-│   │   │   ├── functionalDesignation.js
-│   │   │   ├── educationGroup.js
-│   │   │   ├── education.js
-│   │   │   ├── gradeDivision.js
-│   │   │   ├── educationInstitute.js
-│   │   │   ├── designationGroup.js
-│   │   │   ├── jobGroup.js
-│   │   │   ├── talentType.js
-│   │   │   ├── employmentCategory.js
-│   │   │   ├── documentCategory.js
-│   │   │   ├── awardType.js
-│   │   │   ├── warningType.js
-│   │   │   ├── approvalWorkflow.js
-│   │   │   ├── approvalWorkflowMapping.js
-│   │   │   └── supervisorSetup.js
+│   │   │   ├── birthdayNotificationPage.js
+│   │   │   ├── departmentPage.js
+│   │   │   ├── unitPage.js
+│   │   │   ├── jobStatusPage.js
+│   │   │   ├── jobBasePage.js
+│   │   │   ├── jobLevelPage.js
+│   │   │   ├── designationPage.js
+│   │   │   ├── functionalDesignationPage.js
+│   │   │   ├── educationGroupPage.js
+│   │   │   ├── educationPage.js
+│   │   │   ├── gradeDivisionPage.js
+│   │   │   ├── educationInstitutePage.js
+│   │   │   ├── designationGroupPage.js
+│   │   │   ├── jobGroupPage.js
+│   │   │   ├── talentTypePage.js
+│   │   │   ├── employmentCategoryPage.js
+│   │   │   ├── documentCategoryPage.js
+│   │   │   ├── awardTypePage.js
+│   │   │   ├── warningTypePage.js
+│   │   │   ├── approvalWorkflowPage.js
+│   │   │   ├── approvalWorkflowMappingPage.js
+│   │   │   └── supervisorSetupPage.js
 │   │   ├── EmployeeTracking/
-│   │   │   ├── employeeMonitoring.js
-│   │   │   ├── trackingEnabledEmployee.js
-│   │   │   ├── trackingSchedules.js
-│   │   │   └── trackingHistoryReport.js
+│   │   │   ├── employeeMonitoringPage.js
+│   │   │   ├── trackingEnabledEmployeePage.js
+│   │   │   ├── trackingSchedulesPage.js
+│   │   │   └── trackingHistoryReportPage.js
 │   │   ├── Task/
-│   │   │   ├── task.js
-│   │   │   ├── taskCategory.js
-│   │   │   ├── taskPriority.js
-│   │   │   ├── taskStatus.js
-│   │   │   └── taskReport.js
+│   │   │   ├── taskPage.js
+│   │   │   ├── taskCategoryPage.js
+│   │   │   ├── taskPriorityPage.js
+│   │   │   ├── taskStatusPage.js
+│   │   │   └── taskReportPage.js
 │   │   └── Asset/
-│   │       ├── assetCategory.js
-│   │       ├── asset.js
-│   │       ├── distributeAsset.js
-│   │       ├── assetReport.js
-│   │       └── assetRequisitionRequest.js
+│   │       ├── assetCategoryPage.js
+│   │       ├── assetPage.js
+│   │       ├── distributeAssetPage.js
+│   │       ├── assetReportPage.js
+│   │       └── assetRequisitionRequestPage.js
 │   ├── Tax/
 │   │   ├── TaxDashboard/
-│   │   │   └── taxDashboard.js
+│   │   │   └── taxDashboardPage.js
 │   │   ├── Operation/
-│   │   │   ├── employeeTaxProvision.js
-│   │   │   ├── monthlyTaxCollection.js
-│   │   │   ├── modifyMonthlyTaxCollection.js
-│   │   │   ├── yearlyIncomeTax.js
-│   │   │   ├── taxChallan.js
-│   │   │   └── employeeYearlyTaxCalculation.js
+│   │   │   ├── employeeTaxProvisionPage.js
+│   │   │   ├── monthlyTaxCollectionPage.js
+│   │   │   ├── modifyMonthlyTaxCollectionPage.js
+│   │   │   ├── yearlyIncomeTaxPage.js
+│   │   │   ├── taxChallanPage.js
+│   │   │   └── employeeYearlyTaxCalculationPage.js
 │   │   ├── Reports/
-│   │   │   ├── monthlyTaxProvision.js
-│   │   │   ├── monthlyTaxCollection.js
-│   │   │   ├── taxProvisionStatement.js
-│   │   │   ├── yearlyTaxStatement.js
-│   │   │   └── taxChallanReport.js
+│   │   │   ├── monthlyTaxProvisionPage.js
+│   │   │   ├── monthlyTaxCollectionPage.js
+│   │   │   ├── taxProvisionStatementPage.js
+│   │   │   ├── yearlyTaxStatementPage.js
+│   │   │   └── taxChallanReportPage.js
 │   │   ├── Settings/
-│   │   │   ├── taxPolicy.js
-│   │   │   ├── taxFactor.js
-│   │   │   ├── bonusYearAndMonths.js
-│   │   │   ├── taxYear.js
-│   │   │   ├── medicalInformation.js
-│   │   │   ├── investmentInformation.js
-│   │   │   └── investmentType.js
+│   │   │   ├── taxPolicyPage.js
+│   │   │   ├── taxFactorPage.js
+│   │   │   ├── bonusYearAndMonthsPage.js
+│   │   │   ├── taxYearPage.js
+│   │   │   ├── medicalInformationPage.js
+│   │   │   ├── investmentInformationPage.js
+│   │   │   └── investmentTypePage.js
 │   │   └── GlobalConfiguration/
-│   │       └── globalConfiguration.js
+│   │       └── globalConfigurationPage.js
 │   └── Settings/
 │       ├── Security/
-│       │   ├── user.js
-│       │   ├── deviceChangeRequest.js
-│       │   └── ipWhitelist.js
+│       │   ├── userPage.js
+│       │   ├── deviceChangeRequestPage.js
+│       │   └── ipWhitelistPage.js
 │       ├── Settings/
-│       │   ├── state.js
-│       │   ├── reportTemplate.js
-│       │   ├── idTemplate.js
-│       │   ├── city.js
-│       │   ├── branch.js
-│       │   └── reportSignatory.js
+│       │   ├── statePage.js
+│       │   ├── reportTemplatePage.js
+│       │   ├── idTemplatePage.js
+│       │   ├── cityPage.js
+│       │   ├── branchPage.js
+│       │   └── reportSignatoryPage.js
 │       ├── Notifications/
-│       │   └── notifications.js
+│       │   └── notificationsPage.js
 │       ├── Reports/
-│       │   └── reports.js
+│       │   └── reportsPage.js
 │       ├── NoticeBoard/
-│       │   └── noticeBoard.js
+│       │   └── noticeBoardPage.js
 │       ├── Customer/
-│       │   └── customer.js
+│       │   └── customerPage.js
 │       └── CompanyPolicy/
-│           └── companyPolicy.js
+│           └── companyPolicyPage.js
+
 ├── test/
 │   └── functional/
-│       └── 1_Login/
-│           └── login.spec.js                   # Login test spec
+│       ├── 1_Login/
+│       │   └── login.spec.js                   # Login test spec
+│       ├── Dashboard
+│       │   └── dashboard.spec.js
+│       ├── Attendance/
+│       │   └── attendance.spec.js
+│       ├── Leave/
+│       │   └── leave.spec.js
+│       ├── Salary/
+│       │   └── salary.spec.js
+│       ├── Employee/
+│       │   └── employee.spec.js
+│       ├── Tax/
+│       │   └── tax.spec.js
+│       └── Settings/
+│           └── settings.spec.js    
 ├── utils/
 │   ├── global-setup.js                         # Global setup logic
 │   ├── sessionUse.js                           # Session handling

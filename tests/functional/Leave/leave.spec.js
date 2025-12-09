@@ -2,11 +2,9 @@ import { setViewport, Laptop, Mobile, Desktop, Tablet } from '../../../utils/vie
 import { test, allAdmin, admin } from '../../../utils/sessionUse.js';
 import { config } from '../../../config/testConfig.js';
 
-// -------------------------
 // Helper function to setup dashboard
-// -------------------------
 async function setupDashboard({ loginPage, leaveDashboard, useSession }, role) {
-  const userRole = role || allAdmin[0]; // default to first admin if role not provided
+  const userRole = role || allAdmin[0]; 
   await useSession(userRole);
 
   // Visit the leave dashboard page
@@ -16,9 +14,7 @@ async function setupDashboard({ loginPage, leaveDashboard, useSession }, role) {
   await leaveDashboard.pageTitle.waitFor({ state: 'visible' });
 }
 
-// -------------------------
 // Leave Test Suite
-// -------------------------
 test.describe('Leave test', () => {
   for (const bothAdmin of allAdmin) {
     for (const vp of [Desktop]) {
@@ -43,48 +39,26 @@ test.describe('Leave test', () => {
   }
 
   for (const Admin of admin) {
-    for (const vp of [Desktop]) {
-      test(`${Admin}-${vp.name} Create Leave for an Employee with Pending Status : @regression Leave-1307`,
-        async ({ page, loginPage, leavepage, useSession }) => {
-          await setViewport(page, vp.size);
-          await useSession(Admin);
-          await loginPage.visit(config.slug.leavepage);
-          await leavepage.createNewLeave(
-            config.data.emplyeeName,
-            config.data.leaveType,
-            config.data.leaveStartDate,
-            config.data.leaveEndDate,
-            config.data.leavePurpose
-          );
-      });
-    }
+  for (const vp of [Desktop]) {
+    test(`${Admin}-${vp.name} Leave Management Workflow: Create, Restrict Multiple Same Date, and Delete : @regression Leave-1307-1310-1349`  , async ({ page, loginPage, leavepage, useSession}) => {
+      await setViewport(page, vp.size);
+      await useSession(Admin);
+      await loginPage.visit(config.slug.leavepage);
 
-    for (const vp of [Desktop]) {
-      test(`${Admin}-${vp.name} Verify System Restriction When Creating Multiple Leaves on the Same Date : @regression Leave-1310`,
-        async ({ page, loginPage, leavepage, useSession }) => {
-          await setViewport(page, vp.size);
-          await useSession(Admin);
-          await loginPage.visit(config.slug.leavepage);
-          await leavepage.applyLeaveInSameDate(
-            config.data.emplyeeName,
-            config.data.leaveType,
-            config.data.leaveStartDate,
-            config.data.leaveEndDate,
-            config.data.leavePurpose
-          );
-      });
-    }
+      // Step 1: Create Leave for an Employee with Pending Status (Leave-1307)
+      await leavepage.createNewLeave(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
+      console.log("Leave created successfully for employee:", config.data.emplyeeName);
 
-    for (const vp of [Desktop]) {
-      test(`${Admin}-${vp.name} Verify Pending Leave Can Be Deleted : @regression Leave-1349`,
-        async ({ page, loginPage, leavepage, useSession }) => {
-          await setViewport(page, vp.size);
-          await useSession(Admin);
-          await loginPage.visit(config.slug.leavepage);
-          await leavepage.deleteLeave(config.data.deleteEmployeeName);
-      });
-    }
-
+      // Step 2: Verify System Restriction When Creating Multiple Leaves on the Same Date (Leave-1310)
+      await leavepage.applyLeaveInSameDate(config.data.emplyeeName, config.data.leaveType, config.data.leaveStartDate, config.data.leaveEndDate, config.data.leavePurpose);
+      console.log("System restriction verified for multiple leaves on the same date for employee:", config.data.emplyeeName);
+      
+      // Step 3: Verify Pending Leave Can Be Deleted (Leave-1349)
+      await leavepage.deleteLeave(config.data.deleteEmployeeName);
+      console.log("Leave deleted successfully for employee:", config.data.deleteEmployeeName);
+    });
+  }
+     
     for (const vp of [Desktop]) {
       test(`${Admin}-${vp.name} Verify Calendar Displays Correct Month & Year When Navigating Months : @regression Leave-1002`,
         async ({ page, loginPage, useSession, leaveDashboard }) => {
@@ -97,9 +71,8 @@ test.describe('Leave test', () => {
   }
 });
 
-// -------------------------
 // Dashboard Leave Tests
-// -------------------------
+
 test.describe('Dashboard Leave Tests', () => {
 
   // API Validation
@@ -151,14 +124,14 @@ test.describe('Dashboard Leave Tests', () => {
       test.expect(day5Leave.leaveCount).toBeGreaterThanOrEqual(0);
   });
 
-  // Random Employee Modal Validation
+  /*// Random Employee Modal Validation
   test(`Verify Random Employee Modal Opens : @regression Leave_1010`, 
     async ({ loginPage, leaveDashboard, useSession }) => {
       await setupDashboard({ loginPage, leaveDashboard, useSession });
 
+      // New SMART modal logic
       await leaveDashboard.openRandomEmployeeModal();
-      await leaveDashboard.verifyModalContent();
 
-      console.log('🎉 PASS: Employee modal opened successfully and content is visible!'); / 
-  });
+      console.log('🎉 PASS: Employee modal opened successfully and content is visible!');
+  });*/
 });

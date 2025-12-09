@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { getViewportNameFromPage } from '../utils/viewports.js';
 import { allure } from 'allure-playwright';
-import allApiMaps from '../api/apiMap.js';
+import apiMap from '../api/apiMap.js';
 
 export default class BasePage {
   constructor(page, context) {
@@ -10,45 +10,45 @@ export default class BasePage {
     this.defaultTimeout = 20000;
   }
 // verify API response against expected values from apiMap
-  async verifyApiResponse(apiEndpoint, method, actualResponse, requestBody = null, mapName = 'default') {
+  async verifyApiResponse(apiEndpoint, method, actualResponse, requestBody = null) {
     const env = process.env.ENV || 'PIHR_PROD';
-    const apiMap = allApiMaps[mapName]; // select map: default, dashboard, etc.
-
-    if (!apiMap || !apiMap[apiEndpoint]) {
-        throw new Error(`API endpoint "${apiEndpoint}" not found in apiMap for environment ${env}, map: ${mapName}`);
+    //const expectedApi = apiMap[env][apiEndpoint];
+    const expectedApi = apiMap[apiEndpoint];
+    
+    if (!expectedApi) {
+      throw new Error(`API endpoint "${apiEndpoint}" not found in apiMap for environment ${env}`);
     }
 
-    const expectedApi = apiMap[apiEndpoint];
-
     if (!method || !expectedApi.methods[method]) {
-        throw new Error(`Method "${method}" not supported for API endpoint "${apiEndpoint}"`);
+      throw new Error(`Method "${method}" not supported for API endpoint "${apiEndpoint}"`);
     }
 
     const expectedStatus = expectedApi.methods[method].expectedStatus;
     let actualResponseBody;
-
+    
     try {
-        actualResponseBody = await actualResponse.json();
+      actualResponseBody = await actualResponse.json();
     } catch (e) {
-        actualResponseBody = await actualResponse.text();
+      actualResponseBody = await actualResponse.text();
     }
 
+    // Prepare detailed response information
     const responseDetails = {
-        request: {
-            endpoint: expectedApi.url,
-            method: method,
-            body: requestBody
-        },
-        expected: {
-            status: expectedStatus,
-            ...expectedApi.methods[method]
-        },
-        actual: {
-            status: actualResponse.status(),
-            headers: actualResponse.headers(),
-            body: actualResponseBody
-        },
-        timestamp: new Date().toISOString()
+      request: {
+        endpoint: expectedApi.url,
+        method: method,
+        body: requestBody
+      },
+      expected: {
+        status: expectedStatus,
+        ...expectedApi.methods[method]
+      },
+      actual: {
+        status: actualResponse.status(),
+        headers: actualResponse.headers(),
+        body: actualResponseBody
+      },
+      timestamp: new Date().toISOString()
     };
 
     console.log(`\n🔍 API Response Comparison:`);
@@ -57,19 +57,23 @@ export default class BasePage {
     console.log('📌 Expected Status:', expectedStatus);
     console.log('📌 Actual Status:', actualResponse.status());
 
+    // Method-specific status code validation
     expect(actualResponse.status(), `Expected ${expectedStatus} but got ${actualResponse.status()} for ${method} ${expectedApi.url}`)
-        .toBe(expectedStatus);
+      .toBe(expectedStatus);
 
+    // Add detailed report to Allure
     await allure.attachment(
-        `API Response Details - ${method} ${apiEndpoint}`,
-        JSON.stringify(responseDetails, null, 2),
-        'application/json'
+      `API Response Details - ${method} ${apiEndpoint}`,
+      JSON.stringify(responseDetails, null, 2),
+      'application/json'
     );
 
+    // Return the response details for any additional custom validations
     return responseDetails;
-}
+  }
+
   // Helper method to wait for and verify API response
-  async waitForAndVerifyApi(apiEndpoint, method, urlPattern, requestBody = null, mapName = 'default') {
+  async waitForAndVerifyApi(apiEndpoint, method, urlPattern, requestBody = null) {
     console.log(` Waiting for API response → ${apiEndpoint} (${method})`);
 
     let response;
@@ -83,7 +87,7 @@ export default class BasePage {
     }
 
     console.log(` API Captured → ${response.url()} (${response.status()})`);
-    return this.verifyApiResponse(apiEndpoint, method, response, requestBody, mapName);
+    return this.verifyApiResponse(apiEndpoint, method, response, requestBody);
   }
 
 // 🔹 Get the friendly viewport name using the shared util
