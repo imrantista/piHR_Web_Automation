@@ -14,6 +14,8 @@ export const config = {
     "adminPassword": process.env.ADMIN_PASSWORD,
     "employeeEmail": process.env.EMPLOYEE_EMAIL,
     "employeePassword": process.env.EMPLOYEE_PASSWORD,
+    "supervisorEmail": process.env.SUPERVISOR_EMAIL,
+    "supervisorPassword": process.env.SUPERVISOR_PASSWORD,
     "resetPasswordEmail": 'shabitalahi123@gmail.com',
     "newPassword":'Pihr@' + generateRandomId(100,999),
     "employeeAdminEmail": process.env.EMPLOYEE_ADMIN_EMAIL,
@@ -84,6 +86,7 @@ export const validUsers = [
   { name: 'Admin', email: config.credentials.adminEmail, password: config.credentials.adminPassword },
   { name: 'Employee', email: config.credentials.employeeEmail, password: config.credentials.employeePassword },
   { name: 'Emplyee Admin', email: config.credentials.employeeAdminEmail, password: config.credentials.employeeAdminPassword },
+  { name : 'Supervisor', email: config.credentials.supervisorEmail, password: config.credentials.supervisorPassword }
 ];
 
 export const branches = ['Banani', 'bKash', 'PiHR', 'Financfy', 'Kathmandu', 'Klikit', 'Mirpur DOHS', 'PiHR Support Rajshahi', 'Rajshahi'];

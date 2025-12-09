@@ -7,6 +7,7 @@ import { ensureTokens } from './global-setup.js'; // ✅ import token helper
 export const allAdmin = ['admin', 'employeeAdmin'];
 export const admin = ['admin'];
 export const employee = ['employee'];
+export const supervisor= ['supervisor'];
 
 // Helper: get domain host
 function getHost() {

@@ -42,7 +42,24 @@ export class LoginPage extends BasePage {
     this.validateResetPass= page.getByText('New Password is same as');
     this.invalidCredTxt=page.locator('iframe[title="Login Page"]').contentFrame().getByText('Invalid user name or password');
     this.expireToast=page.getByText('Reset Password Link expired.');
-
+    this.settingTxt=page.getByRole('paragraph').filter({ hasText: 'Settings' });
+    this.secuityTxt=page.getByRole('paragraph').filter({ hasText: 'Security' });
+    this.userBtn=page.getByRole('button', { name: 'User' });
+    this.searchBox=page.getByRole('textbox', { name: 'Search', exact: true });
+    this.userDetails = page.getByRole('row', { name: 'Shabit Employee 00000586' }).locator('path').nth(2);
+    this.clickResetBtn=page.getByText('Reset password');
+    this.inputPass=page.locator('input[name="password"]');
+    this.assertToast=page.getByText('Password changed successfully');
+    this.currentPassTxt= page.locator('iframe[title="Login Page"]').contentFrame().locator('#ChangePasswordForm div').filter({ hasText: 'Current Password' }).locator('div').first();
+    this.newPassTxt=page.locator('iframe[title="Login Page"]').contentFrame().locator('div:nth-child(2) > .login_related_section_content_form_input');
+    this.retypeNewPassTxt=page.locator('iframe[title="Login Page"]').contentFrame().locator('#ChangePasswordForm div').filter({ hasText: 'Re-type New Password' }).locator('div').first();
+    this.changeBtn=page.locator('iframe[title="Login Page"]').contentFrame().getByRole('button', { name: 'Change' });
+    this.profileImg=page.locator('img[alt="profile"]');
+    this.logoutBtn=page.getByRole('menuitem', { name: 'Logout' });
+    this.passwordMatchTxt=page.getByText('Passwords do not match');
+    this.selfServiceTxt=page.getByRole('paragraph').filter({ hasText: 'Self Service' });
+    this.welcomeTitleTxt=page.locator('iframe[title="Login Page"]').contentFrame().getByText('Welcome! Please enter your');
+    this.footerTxt=page.locator('iframe[title="Login Page"]').contentFrame().getByText('Developed & Maintained by');
   }
 
   async visit(slugKeyOrPath = '') {
@@ -69,24 +86,83 @@ export class LoginPage extends BasePage {
     await this.waitAndFill(this.passwordTxt, password, 'Password');
     await this.expectAndClick(this.loginBtn, 'Login Button', 'loginApi:GET');
   }
-  async assertLoginAdmin() {
+
+  async doLoginUsingEnterButton(username, password) {
+    await this.waitAndFill(this.emailTxt, username, 'Email');
+    await this.waitAndFill(this.passwordTxt, password, 'Password');
+    await this.page.keyboard.press('Enter');
+  }
+
+  async validateNavigateBackAfterLogout() {
+    await this.page.keyboard.press('Alt+ArrowLeft');
     await this.assert({
       locator: {
-        default: this.welcomeBackTxt,
+        default: this.loginBtn,
       },
       state: 'visible',
-      alias: 'Welcome back Text visible'
+      alias: 'Login button visible after logout and navigating back'
     });
   }
-  async assertLoginEmployee() {
-    await this.assert({
-      locator: {
-        default: this.myScreenTxt,
-      },
-      state: 'visible',
-      alias: 'Welcome back Text visible'
-    });
+
+async assertUserDashboard() {
+  await this.page.waitForLoadState('networkidle');
+
+  const [hasSelfService, hasSettings] = await Promise.all([
+    this.selfServiceTxt.count().then(c => c > 0),
+    this.settingTxt.count().then(c => c > 0),
+  ]);
+
+  const isSelfServiceVisible = hasSelfService && await this.selfServiceTxt.first().isVisible();
+  const isSettingsVisible = hasSettings && await this.settingTxt.first().isVisible();
+
+  if (isSelfServiceVisible && !isSettingsVisible) {
+    await expect(this.selfServiceTxt).toBeVisible();
+    await expect(this.settingTxt).not.toBeVisible();
+    console.log("✅ Logged in as Employee");
+    return "employee";
+  } else if (!isSelfServiceVisible && isSettingsVisible) {
+    await expect(this.selfServiceTxt).not.toBeVisible();
+    await expect(this.settingTxt).toBeVisible();
+    console.log("✅ Logged in as Admin");
+    return "admin";
+  } else if (isSelfServiceVisible && isSettingsVisible) {
+    await expect(this.selfServiceTxt).toBeVisible();
+    await expect(this.settingTxt).toBeVisible();
+    console.log("✅ Logged in as EmployeeAdmin");
+    return "employeeAdmin";
   }
+
+  throw new Error("❌ Unknown user role after login");
+}
+
+  async assertLoginPageComponents(){
+    console.log("Asserting Login Page Components");
+    const elements=[
+      {locator: this.loginImg, alias: 'Login Image Visible'},
+      {locator: this.productImg, alias: 'Product Logo Visible'},
+      {locator: this.welcomeTitleTxt, alias: 'Welcome! Please enter your credentials... Visible'},
+      {locator: this.emailTxt, alias: 'Email Input Field Visible'},
+      {locator: this.passwordTxt, alias: 'Password Input Field Visible'},
+      {locator: this.rememberMe, alias: 'Remember Me Checkbox Visible'},
+      {locator: this.forgotPasswordFrame, alias: 'Forgot Password Link Visible'},
+      {locator: this.loginBtn, alias: 'Login Button Visible'},
+      {locator: this.footerTxt, alias: 'Footer Text Visible'},
+    ]
+
+      for (const el of elements) {
+      try {
+        await this.assert({
+          locator: { default: el.locator },
+          state: 'visible',
+          alias: el.alias,
+        });
+      } catch (error) {
+        console.error(`Failed to find element: ${el.alias}`);
+        throw error;
+      }
+    }
+  }
+
 
   async clickRememberMe() {
     console.log("Attempting to click on Remember Me checkbox.");
