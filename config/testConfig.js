@@ -29,6 +29,7 @@ export const config = {
     "dashboard": 'dashboard',
     "attendanceDashboard": 'attendance/attendancedashboard',
     "leaveDashboard": 'leave/leavedashboard',
+    "employeeDashboard": 'selfservice/mydashboard',
   },
   "data": {
      "emplyeeName":"Tanzim Emon",

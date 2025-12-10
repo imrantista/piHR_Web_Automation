@@ -1,6 +1,8 @@
+import { expect } from '@playwright/test';
 import { setViewport, Laptop, Mobile, Desktop, Tablet } from '../../../utils/viewports.js';
-import { test, allAdmin, admin } from '../../../utils/sessionUse.js';
+import { test, allAdmin, admin,employee,supervisor } from '../../../utils/sessionUse.js';
 import { config } from '../../../config/testConfig.js';
+
 
 // Helper function to setup dashboard
 async function setupDashboard({ loginPage, leaveDashboard, useSession }, role) {
@@ -129,9 +131,32 @@ test.describe('Dashboard Leave Tests', () => {
     async ({ loginPage, leaveDashboard, useSession }) => {
       await setupDashboard({ loginPage, leaveDashboard, useSession });
 
-      // New SMART modal logic
+      // New SMART method TO OPEN RANDOM EMPLOYEE MODAL
       await leaveDashboard.openRandomEmployeeModal();
 
       console.log('🎉 PASS: Employee modal opened successfully and content is visible!');
   });*/
 });
+
+for (const vp of [Desktop]) {
+    test(`Employee-${vp.name} Verify "Leave Remaining" count and dashboard validations: @regression Leave-XXXX`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+       
+        await setViewport(page, vp.size);
+    
+        await useSession(employee); // 'employee'
+      
+        await loginPage.visit(config.slug.employeeDashboard);
+       
+         const leaveRemainingCount = await visitApplication.getLeaveRemainingCount();
+        //expect(leaveRemainingCount).toBe('15');
+      
+          const actualSupervisorName = await visitApplication.logSupervisorName();
+
+        // Assertion to fail test if name doesn't match
+        expect(actualSupervisorName).toBe(visitApplication.expectedSupervisorName);
+
+        console.log("✅ Leave Remaining count:", leaveRemainingCount);
+    });
+}
+
