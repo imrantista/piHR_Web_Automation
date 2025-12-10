@@ -47,6 +47,7 @@ const apiPaths = {
   leaveAddButtonApi: '/api/v2/employee',
   leaveCreateApi: '/api/v2/leave/admin-apply-leave',
   leaveDeleteApi: '/api/v2/leave',
+  manageUserApi: 'api/v2/users',
 
 
   //Leave Dashboard APIs
