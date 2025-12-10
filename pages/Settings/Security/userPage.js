@@ -206,6 +206,7 @@ export class ManageUserPage extends BasePage {
     }
 
     async verifySearchByMobile() {
+        await this.applySearch('');
         const searchedMobile = await this.getUserMobileNumber();
         await this.applySearch(searchedMobile);
         const rows = await this.getRow(true);
@@ -214,6 +215,9 @@ export class ManageUserPage extends BasePage {
         }
     }
     async verifySearchByEmployeeCode() {
+        await this.applySearch('');
+        await this.changeItemsPerPage(100);
+        await this.page.waitForTimeout(1000);
         const rows = await this.getRow(true); 
 
         let searchedCode = null;
