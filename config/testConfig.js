@@ -29,6 +29,7 @@ export const config = {
     "dashboard": 'dashboard',
     "attendanceDashboard": 'attendance/attendancedashboard',
     "leaveDashboard": 'leave/leavedashboard',
+    "manageUser": 'user'
   },
   "data": {
      "emplyeeName":"Tanzim Emon",
@@ -90,3 +91,10 @@ export const validUsers = [
 ];
 
 export const branches = ['Banani', 'bKash', 'PiHR', 'Financfy', 'Kathmandu', 'Klikit', 'Mirpur DOHS', 'PiHR Support Rajshahi', 'Rajshahi'];
+
+export const invalidMobileNumbers = [
+    "017",         
+    "01712345678912414",     
+    "abc12345678",      
+    "01712@#$%1"        
+];
