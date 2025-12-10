@@ -199,9 +199,9 @@ test.describe('ForgotPassword to PIHR', () => {
       await setViewport(page, vp.size);
       await loginPage.visit();
       await loginPage.validateResetLinkExpiryAndResend();
-      // await loginPage.visit();
-      // await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
-      // await loginPage.getResetPasswordLink();
+      await loginPage.visit();
+      await loginPage.ForgotPassword(config.credentials.resetPasswordEmail);
+      await loginPage.getResetPasswordLink();
       
     });
 
