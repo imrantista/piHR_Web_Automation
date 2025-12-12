@@ -41,7 +41,8 @@
     "jsdom": "^27.2.0",
     "mailparser": "^3.9.0",
     "mailslurp-client": "^15.20.2",
-    "pdf-parse": "^1.1.1"
+    "pdf-parse": "^1.1.4",
+    "xlsx": "^0.18.5"
   },
   "c8": {
     "include": [
