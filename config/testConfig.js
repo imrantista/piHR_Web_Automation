@@ -103,6 +103,6 @@ export const invalidMobileNumbers = [
 ];
 //Attendance report config data
 export const reportConfig = {
-  month: 11,
+  month: 12,
   year: 2025
 };

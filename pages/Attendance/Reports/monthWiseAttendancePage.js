@@ -7,16 +7,15 @@ export class monthWiseAttendancePage extends BasePage {
     this.page = page;
     this.context = context;
   }
-async downloadMonthWiseAttendancePDF({ month = reportConfig.month, year = reportConfig.year, role } = {}) {
+  async downloadMonthWiseAttendancePDF({ month = reportConfig.month, year = reportConfig.year, role, prefix = "Attendance Report" } = {}) {
     if (!role) throw new Error("Role must be specified for downloading the attendance report!");
-    const fileName = `Attendance_${month}_${year}.pdf`;
-    return await this.callAPI({
+    return await this.downloadAndConvertPDF({
       apiKey: "monthWiseAttendanceApi",
       role,
-      headers: { Accept: "application/pdf" },
-      expectFile: true,
-      query: { month: Number(month), year, export_as_excel: false },
-      outputFileName: fileName,
+      prefix,
+      month,
+      year,
+      outputFolder: this.context.outputFolder // optional, can define folder per page
     });
   }
 }
