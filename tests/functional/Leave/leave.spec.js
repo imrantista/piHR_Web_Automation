@@ -1,5 +1,6 @@
+import { expect } from '@playwright/test';
 import { setViewport, Laptop, Mobile, Desktop, Tablet } from '../../../utils/viewports.js';
-import { test, allAdmin, admin } from '../../../utils/sessionUse.js';
+import { test, allAdmin, admin ,employee, supervisor} from '../../../utils/sessionUse.js';
 import { config } from '../../../config/testConfig.js';
 
 // Helper function to setup dashboard
@@ -8,7 +9,7 @@ async function setupDashboard({ loginPage, leaveDashboard, useSession }, role) {
   await useSession(userRole);
 
   // Visit the leave dashboard page
-  await loginPage.visit(config.slug.leavedashboard);
+  await loginPage.visit(config.slug.leaveDashboard);
 
   // Wait for dashboard title to be visible
   await leaveDashboard.pageTitle.waitFor({ state: 'visible' });
@@ -64,7 +65,7 @@ test.describe('Leave test', () => {
         async ({ page, loginPage, useSession, leaveDashboard }) => {
           await setViewport(page, vp.size);
           await useSession(Admin);
-          await loginPage.visit(config.slug.leavedashboard);
+          await loginPage.visit(config.slug.leaveDashboard);
           await leaveDashboard.leaveDashboardMonthYearValidation();
       });
     }
@@ -135,3 +136,105 @@ test.describe('Dashboard Leave Tests', () => {
       console.log('🎉 PASS: Employee modal opened successfully and content is visible!');
   });*/
 });
+
+for (const vp of [Desktop]) {
+    test(`Employee-${vp.name} Verify "Leave Remaining" count and dashboard validations: @Self-1016`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+       
+        await setViewport(page, vp.size);
+    
+        await useSession(employee); // 'employee'
+      
+        await loginPage.visit(config.slug.employeeDashboard);
+       
+         const leaveRemainingCount = await visitApplication.getLeaveRemainingCount();
+        //expect(leaveRemainingCount).toBe('15');
+      
+          const actualSupervisorName = await visitApplication.logSupervisorName();
+
+        // Assertion to fail test if name doesn't match
+        expect(actualSupervisorName).toBe(visitApplication.expectedSupervisorName);
+
+        console.log("✅ Leave Remaining count:", leaveRemainingCount);
+    });
+}
+
+// Visit Application
+for (const vp of [Desktop]) {
+  test(`Employee-${vp.name} Visit Application Workflow: Create + Supervisor Verify @ Self-1017`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+
+      const visitPurpose = config.visitApplicationData.visitPurpose;
+
+     
+      // EMPLOYEE CREATES VISIT
+   
+      await setViewport(page, vp.size);
+      await useSession(employee[0]);
+      await loginPage.visit(config.slug.visitApplication);
+
+      await visitApplication.createNewVisit(
+        config.visitApplicationData.visitFromtDate,
+        config.visitApplicationData.visitEndDate,
+        visitPurpose
+      );
+
+      // Verify visit for employee
+      await visitApplication.verifyVisitStatus(visitPurpose, false);
+
+   
+      // SUPERVISOR VALIDATION
+   
+      await useSession(supervisor[0]);
+
+      await loginPage.visit(config.slug.supervisorVisitApplication);
+      await visitApplication.verifySupervisorView(); 
+    }
+  ); 
+} 
+
+  //Edit Visit Application
+ for (const vp of [Desktop]) {
+  test(`Employee-${vp.name} Visit ApplicationEdit flow: Create + Supervisor Verify @ Self-1018`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+
+      const visitPurpose = config.visitApplicationData.visitPurpose;
+      const UpdatedVisitFromDate = config.visitApplicationData.updatedVisitFromDate;
+     
+      // EMPLOYEE Edits VISIT
+   
+      await setViewport(page, vp.size);
+      await useSession(employee[0]);
+      await loginPage.visit(config.slug.visitApplication);
+      await page.waitForTimeout(2000);
+
+      await visitApplication.editVisitApplication(
+        visitPurpose,
+        UpdatedVisitFromDate
+      );
+
+      // Verify visit for employee
+      await visitApplication.verifyFromDate(visitPurpose, UpdatedVisitFromDate);
+
+      // SUPERVISOR VALIDATION
+   
+      // await useSession(supervisor[0]);
+
+      // await loginPage.visit(config.slug.supervisorVisitApplication);
+      // await visitApplication.verifyEditApplication(UpdatedVisitFromDate); 
+    }
+   );
+  }
+
+// Delete Visit Application
+ for (const vp of [Desktop]) {
+  test(`Employee-${vp.name} Delete Visit Application @ Self-1019`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+   
+      await setViewport(page, vp.size);
+      await useSession(employee[0]);
+      await loginPage.visit(config.slug.visitApplication);
+
+      await visitApplication.deleteLeave(config.deleteApplicationData.visitReason);
+});
+ };

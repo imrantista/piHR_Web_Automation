@@ -31,7 +31,8 @@ export const config = {
     "leaveDashboard": 'leave/leavedashboard',
     "manageUser": 'user',
     "monthWiseAttendanceReport": 'selfservice/selfattendancereport/selfattendancereport',
-    "visitapplication": 'selfservice/visit'
+    "visitapplication": 'selfservice/visit',
+    "supervisorVisitApplication": '/selfservice/appapproval?page_size=10&page_number=1'
 
   },
   "data": {
@@ -41,6 +42,17 @@ export const config = {
      "leaveEndDate":"30-12-2025",
      "leavePurpose":"Vacation",
      "deleteEmployeeName":"Tanzim"
+  },
+  "visitApplicationData": {
+     "visitFromtDate":"19-12-2025",
+     "visitEndDate":"20-12-2025",
+     "visitPurpose":"Vacation",
+     "employeeName":"Tanzim Emon",
+     "updatedVisitPurpose":"Client Visit",
+     "updatedVisitFromDate":"18-12-2025",
+  },
+  "deleteApplicationData": {
+    "visitReason": "Vacation"
   }
 }
 
