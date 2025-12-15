@@ -1,10 +1,6 @@
 import { setViewport, Laptop, Mobile, Desktop, Tablet } from '../../../utils/viewports.js';
-import { test, allAdmin, admin } from '../../../utils/sessionUse.js';
-import { branches, config } from '../../../config/testConfig.js';
-import { getEmployeeID } from '../../../api/employeeApi.js';
-import { getCurrentLeaveBalance } from '../../../api/leaveApi.js';
-import { expect } from '@playwright/test';
-import { captureApiJson } from '../../../utils/apiUtils.js';
+import { test, allAdmin, admin} from '../../../utils/sessionUse.js';
+import { config } from '../../../config/testConfig.js';
 
 test.describe('Dashboard component', () => {
   for (const role of allAdmin) {
@@ -16,7 +12,7 @@ test.describe('Dashboard component', () => {
         await dashboard.dashboardComponentCheck();
       });
     }
-  }
+    }
   for (const role of admin) {
     for (const vp of [Desktop]) {
       test(`${role} - ${vp.name} Verify the Dashboard All APIs Response : @Smoke & Regression Dash-1002`, async ({ page, loginPage, dashboard, useSession }) => {
