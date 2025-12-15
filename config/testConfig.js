@@ -30,7 +30,10 @@ export const config = {
     "attendanceDashboard": 'attendance/attendancedashboard',
     "leaveDashboard": 'leave/leavedashboard',
     "manageUser": 'user',
-    "employeeDashboard": 'selfservice/mydashboard',
+    "monthWiseAttendanceReport": 'selfservice/selfattendancereport/selfattendancereport',
+    "visitapplication": 'selfservice/visit',
+    "supervisorVisitApplication": '/selfservice/appapproval?page_size=10&page_number=1'
+
   },
   "data": {
      "emplyeeName":"Tanzim Emon",
@@ -39,6 +42,17 @@ export const config = {
      "leaveEndDate":"30-12-2025",
      "leavePurpose":"Vacation",
      "deleteEmployeeName":"Tanzim"
+  },
+  "visitApplicationData": {
+     "visitFromtDate":"19-12-2025",
+     "visitEndDate":"20-12-2025",
+     "visitPurpose":"Vacation",
+     "employeeName":"Tanzim Emon",
+     "updatedVisitPurpose":"Client Visit",
+     "updatedVisitFromDate":"18-12-2025",
+  },
+  "deleteApplicationData": {
+    "visitReason": "Vacation"
   }
 }
 
@@ -99,3 +113,8 @@ export const invalidMobileNumbers = [
     "abc12345678",      
     "01712@#$%1"        
 ];
+//Attendance report config data
+export const reportConfig = {
+  month: 12,
+  year: 2025
+};

@@ -5,17 +5,17 @@ import { config } from '../../../config/testConfig.js';
 test.describe('Dashboard component', () => {
   for (const role of allAdmin) {
     for (const vp of [Desktop]) {
-      test(`${role} - ${vp.name} Dashboard Component Check : @smoke TC_001`, async ({ page, loginPage, dashboard , useSession }) => {
+      test(`${role} - ${vp.name} Verify the dashboard UI elements : @Smoke & Regression Dash-1001`, async ({ page, loginPage, dashboard , useSession }) => {
         await setViewport(page, vp.size);
         await useSession(role);
         await loginPage.visit(config.slug.dashboard);
-        await componentPage.componentCheckAdmin();
+        await dashboard.dashboardComponentCheck();
       });
     }
     }
   for (const role of admin) {
     for (const vp of [Desktop]) {
-      test(`${role} - ${vp.name} Dashboard API Response Check : @smoke TC_002`, async ({ page, loginPage, dashboard, useSession }) => {
+      test(`${role} - ${vp.name} Verify the Dashboard All APIs Response : @Smoke & Regression Dash-1002`, async ({ page, loginPage, dashboard, useSession }) => {
         await setViewport(page, vp.size);
         await useSession(role);
         await loginPage.visit(config.slug.dashboard);
@@ -29,14 +29,14 @@ test.describe('Dashboard component', () => {
 allAdmin.forEach(role => {
   test.describe("Current Leave Balance Table Filter", () => {
 
-    test.beforeEach(async ({ page, loginPage, useSession, dashboard }) => {
+    test.beforeEach(async ({ page, loginPage, useSession}) => {
       await setViewport(page, Desktop.size);
       await useSession(role);
       await loginPage.visit();
     });
 
 
-    test(`Verify Employee Search Functionality by Name in Current Leave Balance Section for ${role}`, async ({ page, dashboard }) => {
+    test(`Verify Employee Search Functionality by Name in Current Leave Balance Section for${role} @Regression Dash-1003` , async ({ page, dashboard }) => {
       const nameToFilter = await dashboard.getNameFromCurrentLeaveTable();
       await dashboard.applySearchInCurrentLeaveTable(nameToFilter);
       const tableData = await dashboard.getNameFromCurrentLeaveTable(true);
@@ -47,7 +47,7 @@ allAdmin.forEach(role => {
 
 
     branches.forEach(branchName => {
-      test(`Verify Employee Filter Functionality by Branch ${branchName} in Current Leave Balance Section ${role}`, async ({ page, dashboard }) => {
+      test(`Verify Employee Filter Functionality by Branch ${branchName} in Current Leave Balance Section ${role} @Regression Dash-1004`, async ({ page, dashboard }) => {
         console.log(`Filtering by Branch: ${branchName}`);
 
         await dashboard.branchFilterInCurrentLeaveTable(branchName);
@@ -59,7 +59,7 @@ allAdmin.forEach(role => {
       });
     });
 
-    test(`Verify Employee Image Loads Properly in Current Leave Balance Section ${role}`, async ({ page, dashboard }) => {
+    test(`Verify Employee Image Loads Properly in Current Leave Balance Section ${role}  @Regression Dash-1006`, async ({ page, dashboard }) => {
       const images = await dashboard.getAllImagesFromCurrentLeaveTable();
       images.forEach(img => {
         // Assertions
@@ -68,7 +68,7 @@ allAdmin.forEach(role => {
       });
     });
 
-    test(`Verify Employee Branch, Role, and Leave Group Display in Current Leave Balance Section ${role}`, async ({ page, dashboard }) => {
+    test(`Verify Employee Branch, Role, and Leave Group Display in Current Leave Balance Section ${role}  @Regression Dash-1007`, async ({ page, dashboard }) => {
       const data = await captureApiJson(page, 'employeeCurrentLeaveStatusApi');
       await dashboard.verifyEmployeeLeaveData(data);
       console.log('✅ All table rows match API data for Branch, Role, and Leave Group.');
@@ -76,7 +76,7 @@ allAdmin.forEach(role => {
     });
 
 
-    test(`Verify Remaining Leave Count Display in Current Leave Balance Section for ${role}`, async ({ dashboard }) => {
+    test(`Verify Remaining Leave Count Display in Current Leave Balance Section for ${role}  @Regression Dash-1008`, async ({ dashboard }) => {
       const rows = await dashboard.getAllCurrentLeaveTableRows(false);
 
       if (!rows.length) throw new Error('Current Leave Balance table is empty');
@@ -88,7 +88,7 @@ allAdmin.forEach(role => {
     });
 
 
-    test(`Verify Leave Taken Count Display in Current Leave Balance Section ${role}`, async ({ page, dashboard }) => {
+    test(`Verify Leave Taken Count Display in Current Leave Balance Section ${role}  @Regression Dash-1009`, async ({ page, dashboard }) => {
       const rows = await dashboard.getAllCurrentLeaveTableRows(false);
 
       if (!rows.length) throw new Error('Current Leave Balance table is empty');
@@ -108,7 +108,7 @@ allAdmin.forEach(role => {
       await loginPage.visit();
     });
 
-    test(`Verify Calendar Displays Correct Month & Year When Navigating Months for ${role}`, async ({ page, dashboard }) => {
+    test(`Verify Calendar Displays Correct Month & Year When Navigating Months for ${role}  @Regression Dash-1010`, async ({ page, dashboard }) => {
       //Skipped for now
       // const currentDate = new Date();
 
@@ -122,7 +122,7 @@ allAdmin.forEach(role => {
       // console.log(await nextButton.count());
     });
 
-    test(`Verify Leave Calendar Highlights Today Correctly for ${role}`, async ({ page, dashboard }) => {
+    test(`Verify Leave Calendar Highlights Today Correctly for ${role}  @Regression Dash-1011`, async ({ page, dashboard }) => {
       // Locate the calendar cell by its background color and check that its number matches today's date
       const today = new Date().getDate();
       const tdWithBackground = page.locator('td[style*="background-color: rgb(193, 208, 255)"]');
