@@ -1,5 +1,5 @@
 import { setViewport, Laptop, Mobile, Desktop, Tablet } from '../../../utils/viewports.js';
-import { test, allAdmin, admin } from '../../../utils/sessionUse.js';
+import { test, allAdmin, admin,employee, supervisor } from '../../../utils/sessionUse.js';
 import { config } from '../../../config/testConfig.js';
 
 // Helper function to setup dashboard
@@ -134,4 +134,111 @@ test.describe('Dashboard Leave Tests', () => {
 
       console.log('🎉 PASS: Employee modal opened successfully and content is visible!');
   });*/
+});
+
+// //Employee Management Leave page
+test.describe('Employee Management Leave Page Tests', () => {
+ 
+    for (const vp of [Desktop]){
+      test(`${employee}-${vp.name} Verify Employee Leave Eligibility : @Business/Functional Self-1001`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.verifyLeaveEligibility();
+      });
+
+      test(`${employee}-${vp.name} Apply Leave : @Business/Functional Self-1002`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+
+        
+      });
+      test(`${supervisor}-${vp.name} Supervisor Reject Leave Request : @Business/Functional Self-1004`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.supervisorRejectLeave();
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.verifyLeaveEligibility();
+        
+      });
+      test(`${supervisor,employee}-${vp.name} Supervisor Accept Leave Request : @Business/Functional Self-1003`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.approveLeaveApplication();
+        
+      });
+        test(`${supervisor,employee}-${vp.name} Supervisor Accept Leave Request, Employee Check Leave Status After Accept and Before Accept : @Business/Functional`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit('selfservice/mydashboard');
+        await leavepage.verifyLeaveEligibility('employeeLeaveInformation.json');
+        await leavepage.compareUIAndApiLeaveTakenAndLeaveRemainingValueBreforeApproval();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.approveLeaveApplication();
+        await useSession(employee);
+        await loginPage.visit('selfservice/mydashboard');
+        await leavepage.verifyLeaveEligibility('AfterLeaveEmployeeLeaveInformation.json');
+        await leavepage.afterApproveCompareUIAndApiLeaveTakenAndLeaveRemainingValueBreforeApproval();
+    });
+
+     test(`${employee}-${vp.name} Apply Leave : @Business/Functional123 Self-100`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        // await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await leavepage.verifyLeaveEligibility2();
+    });
+
+     test(`${admin}-${vp.name} Admin Verify Leave Application : @Business/Functional123 Self-1005`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(admin);
+        await loginPage.visit();
+        await leavepage.adminVerifyLeaveApplication();
+    });
+
+    test(`${employee}-${vp.name} Update Leave Application : @Business/Functional123 Self-1008`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.updateLeaveApplication(config.data.updateLeaveEndDate);
+    });
+
+    test(`${employee}-${vp.name} Delete Leave Application : @Business/Functional123 Self-1009`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.deleteLeaveApplication();
+    });
+
+    test(`${supervisor}-${vp.name} Supervisor Edit Leave Application : @Business/Functional123 Self-1011`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.supervisorEditLeaveApplication(config.data.supEditLeaveDate);
+    });
+
+    test(`${admin}-${vp.name} Admin Approve Leave Application : @Business/Functional123 Self-1012`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(admin);
+        await loginPage.visit();
+        await leavepage.adminApproveLeaveApplication();
+    });
+
+    test(`${admin}-${vp.name} Admin Delete Leave Application : @Business/Functional123 Self-1013`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(admin);
+        await loginPage.visit();
+        await leavepage.adminDeleteLeaveApplication();
+    });
+}
 });

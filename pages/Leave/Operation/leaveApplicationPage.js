@@ -1,4 +1,9 @@
 import BasePage from "../../BasePage";
+// import { saveApiResponse } from "../../../utils/fetchApiResponse";
+import fs from 'fs';
+import { expect } from "@playwright/test";
+
+import path from "path";
 
 export class leaveApplicationPage extends BasePage {
   constructor(page, context) {
@@ -43,6 +48,57 @@ export class leaveApplicationPage extends BasePage {
     this.confirmDeleteBtn = page.getByRole('button', { name: 'Delete' });
     this.confirmationDialog = page.getByText('Are you sure you want to');
     this.deleteSuccessMessage = page.getByText('Data deleted successfully.');
+    // Employee Leave Management Page
+    this.selfServiceTab= page.getByRole('paragraph').filter({ hasText: 'Self Service' });
+    this.myScreenBtn=page.getByRole('paragraph').filter({ hasText: 'My Screens' });
+    this.dashboardBtn=page.getByRole('button', { name: 'Dashboard' });
+    this.leaveOverviewTitle = page.getByText('Leave Overview');
+    this.remainingHeader = page.getByRole('heading', { name: 'Remaining' });
+    this.remainingLeaveCount =page.getByText('15Leave Remaining');
+    this.takenLeaveCount =page.getByText('0Leave Taken');
+    this.annualLeaveTitle=page.getByText('Annual Leave');
+    this.annualLeaveCount=page.getByText('Annual Leave15/');
+    this.supervisorInfo=page.locator('div').filter({ hasText: /^Shabit -A -AlahiSQA Engineer L-I00000586$/ }).first();
+    this.leaveApplicationBtn = page.getByRole('button', { name: 'Leave Application' });
+    this.leaveTypeBtn=page.getByText('×Annual Leave');
+    this.leaveTypeOptionBtn=page.locator('div').filter({ hasText: /^Annual Leave$/ });
+    this.approvarInfo=page.getByText('Approver*Shabit -A -Alahi');
+    this.pendingStatus=page.getByText('Pending');
+    this.updateLeaveApplicationBtn=page.locator( 'button:has(svg path[d^="M9.34153"])');
+    // this.updateLeaveApplicationBtn=page.getByRole('row', { name: '15-12-2025 Yes 26-01-2026 27-' }).getByRole('button');
+    // this.updateSuccessToast=page.getByText('Leave application updated');
+    this.updateSuccessToast= page.getByText('Leave application updated successfully');
+    this.deleteLeaveApplicationIcon= page.locator('.group.delete-hover-effect');
+    this.deleteBtn=page.getByRole('button', { name: 'Delete' });
+    this.deleteSuccessToast=page.getByText('Data deleted successfully.');
+    this.approveSuccessToast=page.getByText('Application approved');
+
+    // Supervisor 
+    this.approvalApplicationBtn=page.getByRole('button', { name: 'Approve Application' });
+    this.clickApplication=page.getByRole('cell', { name: 'Tanzim Emon Banani' }).locator('div').first();
+    this.rejectBtn=page.getByRole('button', { name: 'Reject' });
+    this.confirmRejectBtn=page.getByRole('button', { name: 'Reject' }).nth(1);
+    this.rejectionStatus=page.getByText('Application rejected');
+    this.acceptLeaveBtn=page.getByRole('button', { name: 'Approve' });
+    this.confirmAcceptLeaveBtn=page.getByRole('button', { name: 'Approve' }).nth(1);
+    this.supervisorEditLeaveApplicationBtn =page.locator('.flex.items-end');
+    this.remarksTxt =page.getByRole('textbox', { name: 'Type here...' });
+    this.approveBtn=page.getByRole('button', { name: 'Approve' });
+    this.confirmApproveBtn=page.getByRole('button', { name: 'Approve' }).nth(1);
+    //Admin locators
+    this.leaveBtn= page.getByRole('paragraph').filter({ hasText: 'Leave' }).getByRole('img');
+    this.operationBtn=  page.getByRole('paragraph').filter({ hasText: 'Operation' });
+    this.adminSearchBox=page.getByRole('textbox', { name: 'Employee Code or Name' });
+    this.kebabMenuBtn=page.getByRole('row', { name: 'Tanzim Emon Tanzim Emon' }).locator('svg');
+    this.editLeaveBtn=page.getByText('Edit');
+    this.leavePurposeTxt=page.getByText('Purpose*vacation');
+    this.leaveTypeTxt=page.getByText('Annual Leave×Annual Leave');
+    this.deleteLeaveBtn= page.getByText('Delete', { exact: true });
+    this.confirmDeleteLeaveBtn=page.getByRole('button', { name: 'Delete' });
+    this.deleteLeaveSuccessToast=page.getByText('Data deleted successfully.');
+
+    // this.checkStatus=page.getByRole('cell', { name: 'Status' }).click();
+
   }
   // CHECK MODAL UI COMPONENTS
   async checkModalComponent() {
@@ -107,11 +163,6 @@ export class leaveApplicationPage extends BasePage {
     await this.expectAndClick(this.page.getByRole('main').getByText(employeeName), "Select Employee Option");
 
     await this.expectAndClick(this.leaveTypeDropdown, "Leave Type Dropdown");
-    await this.expectAndClick(
-      this.page.locator('div').filter({ hasText: new RegExp(`^${leaveType}$`) }),
-      "Select Leave Type"
-    );
-
     await this.expectAndClick(this.fromDateInput, "From Date Input");
     await this.waitAndFill(this.fromDateInput, leaveStartDate, "From Date Input");
 
@@ -172,5 +223,236 @@ export class leaveApplicationPage extends BasePage {
     });
   }
 
- 
+  //Employee Leave Management Page
+
+
+  async verifyLeaveEligibility(){
+  await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+  await this.myScreenBtn.hover();
+  await this.expectAndClick(this.dashboardBtn,'DashBoard');
+  await this.saveTextFromDivLocators();            
+  await this.saveNumberFromLocatorSpanValue({
+                "Leave Remaining": "leave/leaveRemaining.txt",
+                "Leave Taken": "leave/leaveTaken.txt",
+                });
+}
+  async applyLeave(leaveStartDate, leaveEndDate, leavePurpose,saveAfterFill = true){
+  await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+  await this.myScreenBtn.hover();
+  await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+  await this.expectAndClick(this.addNewBtn,"Add New Button");
+  await this.expectAndClick(this.leaveTypeBtn,"Leave type drop down");
+  await this.expectAndClick(this.leaveTypeOptionBtn,"Annual Leave");
+   await this.expectAndClick(this.fromDateInput, "From Date Input");
+    await this.waitAndFill(this.fromDateInput, leaveStartDate, "From Date Input");
+
+    await this.expectAndClick(this.toDateInput, "To Date Input");
+    await this.waitAndFill(this.toDateInput, leaveEndDate, "To Date Input");
+
+    await this.expectAndClick(this.purposeField, "Purpose Field");
+    await this.waitAndFill(this.purposeField, leavePurpose, "Purpose Field");
+    await this.assert({
+      locator: this.approvarInfo,
+      state: 'visible',
+      alias:'Shabit-A-Alahi text visible',
+    })
+
+    if (saveAfterFill) {
+      await this.expectAndClick(this.saveBtn, "Save Button");
+      await this.assert({
+        locator: this.successMessage,
+        state: "visible",
+        alias: "Leave creation success message visible"
+      });
+    }
+    await this.assert({
+      locator:this.pendingStatus,
+      state: 'visible',
+      toHaveText: 'Pending'
+    })
+  }
+
+  async supervisorRejectLeave(){
+    await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+    await this.myScreenBtn.hover();
+    await this.expectAndClick(this.approvalApplicationBtn,"Approval Application Dropdown");
+    await this.expectAndClick(this.clickApplication,"Click Approval Application");
+    await this.expectAndClick(this.rejectBtn, "Reject Application");
+    await this.expectAndClick(this.confirmRejectBtn, "Confrim Application Rejection");
+    await this.assert({
+      locator: this.rejectionStatus,
+      state: 'visible',
+      alias: 'Application rejected'
+    })
+  }
+
+  async approveLeaveApplication(){
+    await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+    await this.myScreenBtn.hover();
+    await this.expectAndClick(this.approvalApplicationBtn,"Approval Application Dropdown");
+    await this.expectAndClick(this.clickApplication,"Click Approval Application");
+    await this.expectAndClick(this.acceptLeaveBtn,"Accept Leave");
+    await this.expectAndClick(this.confirmAcceptLeaveBtn,"Confirm Accept Leave");
+  }
+
+
+  async compareUIAndApiLeaveTakenAndLeaveRemainingValueBreforeApproval(){
+    await this.saveNumberFromLocatorSpanValue({
+                "Leave Remaining": "leave/leaveRemaining.txt",
+                "Leave Taken": "leave/leaveTaken.txt",
+                });
+    await this.compareApiJsonWithTxtFiles({
+            apiJsonSubPath: "employeeLeaveInformation.json",
+            apiArrayPath: "body.leave_information",
+            comparisons: [
+                {
+                label: "Leave Remaining",
+                apiField: "remaining_leaves",
+                txtSubPath: "leave/leaveRemaining.txt",
+                },
+                {
+                label: "Leave Taken",
+                apiField: "leave_taken",
+                txtSubPath: "leave/leaveTaken.txt",
+                },
+            ],
+            });
+  }
+  async afterApproveCompareUIAndApiLeaveTakenAndLeaveRemainingValueBreforeApproval(){
+    await this.saveNumberFromLocatorSpanValue({
+                "Leave Remaining": "leave/AfterApproveLeaveRemaining.txt",
+                "Leave Taken": "leave/AfterApproveLeaveTaken.txt",
+                });
+    await this.compareApiJsonWithTxtFiles({
+            apiJsonSubPath: "AfterLeaveEmployeeLeaveInformation.json",
+            apiArrayPath: "body.leave_information",
+            comparisons: [
+                {
+                label: "Leave Remaining",
+                apiField: "remaining_leaves",
+                txtSubPath: "leave/AfterApproveLeaveRemaining.txt",
+                },
+                {
+                label: "Leave Taken",
+                apiField: "leave_taken",
+                txtSubPath: "leave/AfterApproveLeaveTaken.txt",
+                },
+            ],
+            });
+  }
+
+    async verifyLeaveEligibility2(){
+  await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+  await this.myScreenBtn.hover();
+  await this.expectAndClick(this.dashboardBtn,'DashBoard');
+  await this.saveTextFromDivLocators();
+  await this.compareApiJsonWithTxtFiles({
+            apiJsonSubPath: "employeeSupervisor.json",
+            apiDataPath: "body.supervisor",
+            comparisons: [
+                {
+                label: "Supervisor Name",
+                apiField: "supervisor_name",
+                txtSubPath: "supervisor/supervisorinfo.txt",
+                },
+                {
+                label: "Designation Name",
+                apiField: "designation_name",
+                txtSubPath: "supervisor/supervisorinfo.txt",
+                },
+                {
+                label: "Supervisor Code",
+                apiField: "supervisor_code",
+                txtSubPath: "supervisor/supervisorinfo.txt",
+                },
+            ],
+            });
+}
+
+  async adminVerifyLeaveApplication(){
+   await this.expectAndClick(this.leaveBtn,"Leave Button");
+   await this.operationBtn.hover();
+   await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+   await this.waitAndFill(this.adminSearchBox,"Tanzim");
+   await this.assertStatus(
+  'Tanzim Emon',
+  'Pending'
+);
+  }
+
+  async updateLeaveApplication(updateLeaveEndDate, saveAfterFill=true){
+  await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+  await this.myScreenBtn.hover();
+  await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+  await this.expectAndClick (this.updateLeaveApplicationBtn,"Update Leave Application Button");
+  await this.expectAndClick(this.toDateInput, "To Date Input");
+  await this.waitAndFill(this.toDateInput, updateLeaveEndDate, "To Date Input");
+  if (saveAfterFill) {
+      await this.expectAndClick(this.saveBtn, "Save Button");
+    }
+  await this.assert({
+    locator: this.updateSuccessToast,
+    state: 'visible',
+    alias: 'Leave application updated successfully'
+  })  
+  }
+
+  async deleteLeaveApplication(){
+    await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+    await this.myScreenBtn.hover();
+    await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+    await this.expectAndClick(this.deleteLeaveApplicationIcon,"Delete Leave Application");
+    await this.expectAndClick(this.deleteBtn,"Delete Button");
+  }
+async supervisorEditLeaveApplication(supEditLeaveDate){
+    await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
+    await this.myScreenBtn.hover();
+    await this.expectAndClick(this.approvalApplicationBtn,"Approval Application Dropdown");
+    await this.expectAndClick(this.supervisorEditLeaveApplicationBtn,"Edit leave Application");
+    await this.expectAndClick(this.toDateInput, "To Date Input");
+    await this.waitAndFill(this.toDateInput, supEditLeaveDate, "To Date Input");
+    await this.expectAndClick(this.remarksTxt,'Type Remarks here.');
+    await this.waitAndFill(this.remarksTxt,'1 day is avaible for you');
+    await this.expectAndClick(this.approveBtn,'Approve Leave Application');
+    await this.expectAndClick(this.confirmApproveBtn,'Confirm Approve Leave Application'); 
+}
+
+async adminApproveLeaveApplication(){
+   await this.expectAndClick(this.leaveBtn,"Leave Button");
+   await this.operationBtn.hover();
+   await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+   await this.waitAndFill(this.adminSearchBox,"Tanzim");
+   await this.expectAndClick(this.kebabMenuBtn,"Click Kebab Menu Button");
+   await this.expectAndClick(this.editLeaveBtn,"Edit Leave");
+   const elements = [
+      { locator: this.leavePurposeTxt, alias: 'Vacation' },
+      { locator: this.leaveTypeTxt, alias: 'Annual Leave' },
+   ]
+   for (const el of elements) {
+      await this.assert({
+        locator: { default: el.locator },
+        state: 'visible',
+        alias: el.alias
+      });
+    }
+    await this.expectAndClick(this.approveBtn,"Click Approve Button");
+    await this.assertStatus("Tanzim Emon", "Approved");
+}
+
+async adminDeleteLeaveApplication(){
+   await this.expectAndClick(this.leaveBtn,"Leave Button");
+   await this.operationBtn.hover();
+   await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+   await this.waitAndFill(this.adminSearchBox,"Tanzim");
+   await this.expectAndClick(this.kebabMenuBtn,"Click Kebab Menu Button"); 
+   await this.expectAndClick(this.deleteLeaveBtn,"Click Delete button");
+   await this.expectAndClick(this.confirmDeleteLeaveBtn,"Click Confirm Delete Button");
+   await this.assert({
+    locator: this.deleteLeaveSuccessToast,
+    state: 'visible',
+    toHaveText: 'Data deleted successfully.'
+   })
+
+}
+
 }

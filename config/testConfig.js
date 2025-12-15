@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
 import {generateRandomId} from '../utils/generateRandomNumber.js';
+import dotenv from 'dotenv';
 dotenv.config();
 
 export const config = {
@@ -32,12 +32,14 @@ export const config = {
     "manageUser": 'user'
   },
   "data": {
-     "emplyeeName":"Tanzim Emon",
+    //  "emplyeeName":"Tanzim Emon",
      "leaveType":"Annual Leave",
-     "leaveStartDate":"28-12-2025",
-     "leaveEndDate":"30-12-2025",
+     "leaveStartDate":"23-12-2025",
+     "leaveEndDate":"25-12-2025",
      "leavePurpose":"Vacation",
-     "deleteEmployeeName":"Tanzim"
+     "deleteEmployeeName":"Tanzim",
+     "updateLeaveEndDate":"24-12-2025",
+     "supEditLeaveDate":"24-12-2025"
   }
 }
 

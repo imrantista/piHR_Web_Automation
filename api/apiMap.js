@@ -48,7 +48,8 @@ const apiPaths = {
   leaveCreateApi: '/api/v2/leave/admin-apply-leave',
   leaveDeleteApi: '/api/v2/leave',
   manageUserApi: 'api/v2/users',
-
+  hierarchyLeaveApi: '/api/v2/my-dashboard/hierarchy',
+  myDashboardApi: '/api/v2/my-dashboard',
 
   //Leave Dashboard APIs
   dropDownApiLeaveType: "/api/v2/leave-types/dropdown",
