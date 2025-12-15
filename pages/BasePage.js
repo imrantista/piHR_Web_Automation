@@ -1,7 +1,11 @@
 import { expect } from '@playwright/test';
+import fs from "fs";
+import path from "path";
+import pdfParse from 'pdf-parse';
 import { getViewportNameFromPage } from '../utils/viewports.js';
 import { allure } from 'allure-playwright';
 import apiMap from '../api/apiMap.js';
+const ENV = process.env.ENV || "PIHR_PROD";
 
 export default class BasePage {
   constructor(page, context) {
@@ -509,5 +513,137 @@ await this.assert({
     await this.page.evaluate(() => {
       window.scrollTo(0, 0);
     });
+  }
+  // Download file from API response
+  // Usage: await this.callAPI({ apiKey: 'downloadFileApi', method: 'GET', role: 'supervisor', expectFile: true, outputFileName: 'myfile.pdf' });
+  // Note: Ensure the API is configured to return a file in the response
+  static TOKEN_FOLDER_MAP = {
+    PIHR_PROD: "tokens&cookies_PIHR_PROD",
+    PIHR_QA: "tokens&cookies_PIHR_QA",
+  };
+
+  static ROLE_FILE_MAP = {
+    admin: "admin",
+    employee: "employee",
+    employeeAdmin: "employeeAdmin",
+    supervisor: "supervisor",
+  };
+
+  static getTokenFolder() {
+    const folder = this.TOKEN_FOLDER_MAP[ENV];
+    if (!folder) {
+      throw new Error(`No token folder defined for ENV=${ENV}`);
+    }
+    return path.join(process.cwd(), folder);
+  }
+
+  static getAuthTokenForRole(role) {
+    const fileKey = this.ROLE_FILE_MAP[role];
+    if (!fileKey) {
+      throw new Error(
+        `Unknown role "${role}". Valid roles: ${Object.keys(this.ROLE_FILE_MAP).join(", ")}`
+      );
+    }
+
+    const tokenFolder = this.getTokenFolder();
+    const filePath = path.join(tokenFolder, `${fileKey}.json`);
+
+    if (!fs.existsSync(filePath)) {
+      throw new Error(`Token file not found: ${filePath}`);
+    }
+
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const authCookie = parsed.cookies?.find((c) => c.name === "auth");
+
+    if (!authCookie?.value) {
+      throw new Error(`"auth" cookie not found for role "${role}"`);
+    }
+
+    return authCookie.value;
+  }
+  async callAPI({
+    apiKey,
+    method = "GET",
+    role = "supervisor",
+    query = {},
+    headers = {},
+    expectFile = false,
+    outputFileName,
+  }) {
+    const api = apiMap[apiKey];
+    if (!api) {
+      throw new Error(`API key "${apiKey}" not found in apiMap`);
+    }
+
+    const token = BasePage.getAuthTokenForRole(role);
+    const queryString = new URLSearchParams(query).toString();
+    const url = queryString ? `${api.url}?${queryString}` : api.url;
+
+    const response = await this.page.request.fetch(url, {
+      method,
+      headers: {
+        Authorization: `Bearer ${token}`,
+        ...headers,
+      },
+    });
+
+    const expected = api.methods[method]?.expectedStatus ?? 200;
+    if (response.status() !== expected) {
+      const ct = (response.headers()["content-type"] || "").toLowerCase();
+      const body =
+        ct.includes("json") || ct.includes("text")
+          ? await response.text()
+          : "[binary]";
+      console.error("API ERROR:", body);
+      throw new Error(`API ${apiKey} failed with status ${response.status()}`);
+    }
+
+    // File handling
+    if (expectFile) {
+      const buffer = await response.body();
+      const cd = response.headers()["content-disposition"] || "";
+      const match = /filename\*?=(?:UTF-8''|")?([^";]+)"?/i.exec(cd);
+
+      const fileName =
+        outputFileName ||
+        (match ? decodeURIComponent(match[1]) : `download_${Date.now()}`);
+
+      const filePath = path.join(
+        process.cwd(),
+        fileName.replace(/[\\/:*?"<>|]/g, "_")
+      );
+
+      fs.writeFileSync(filePath, buffer);
+      console.log(`File saved: ${filePath}`);
+      return filePath;
+    }
+
+    return await response.json();
+  }
+  // pdf to json conversion
+  async convertPdfToJson(pdfFilePath, outputFolder, outputFileName) {
+    if (!fs.existsSync(pdfFilePath)) {
+      throw new Error(`PDF file not found at ${pdfFilePath}`);
+    }
+
+    const pdfBuffer = fs.readFileSync(pdfFilePath);
+    const data = await pdfParse(pdfBuffer);
+
+    const text = data.text;
+    const lines = text
+      .split('\n')
+      .map(line => line.trim())
+      .filter(line => line);
+
+    const folder = outputFolder || path.join(process.cwd(), 'SaveData', 'PDFtoJSON');
+    const fileName =
+      outputFileName || path.basename(pdfFilePath, path.extname(pdfFilePath)) + '.json';
+    const outputPath = path.join(folder, fileName);
+
+    fs.mkdirSync(folder, { recursive: true });
+    fs.writeFileSync(outputPath, JSON.stringify({ lines }, null, 2));
+
+    console.log(`PDF converted to JSON at: ${outputPath}`);
+    return outputPath;
   }
 }
