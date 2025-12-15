@@ -7,6 +7,7 @@ export class monthWiseAttendancePage extends BasePage {
     this.page = page;
     this.context = context;
   }
+
   async downloadMonthWiseAttendancePDF({ month = reportConfig.month, year = reportConfig.year, role, prefix = "Attendance Report" } = {}) {
     if (!role) throw new Error("Role must be specified for downloading the attendance report!");
     return await this.downloadAndConvertPDF({

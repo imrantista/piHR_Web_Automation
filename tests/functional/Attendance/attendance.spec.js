@@ -8,8 +8,7 @@ test.describe('Dashboard component', () => {
       const { pdfPath, jsonPath } = await monthWiseAttendancereport.downloadMonthWiseAttendancePDF({
         month: reportConfig.month,
         year: reportConfig.year,
-        role: employee,
-        prefix: "Attendance Report" // dynamic prefix
+        role: employee
       });
 
       console.log("PDF Path:", pdfPath);
