@@ -57,6 +57,9 @@ const apiPaths = {
   monthWiseLeaveApi: "/api/v2/leave-dashboards/month-wise-leave-application-status",
   yearlyLeaveApi: "/api/v2/leave-dashboards/yearly-leave-approval-status",
   notificationsLeaveDashboardApi: "/api/v2/my-dashboard/notifications",
+
+  // Report APIs
+  monthWiseAttendanceApi: '/api/v2/self-service-reports/my-attendance'
 };
 
 // Build final API map for current environment

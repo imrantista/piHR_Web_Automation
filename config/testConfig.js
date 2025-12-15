@@ -30,7 +30,9 @@ export const config = {
     "attendanceDashboard": 'attendance/attendancedashboard',
     "leaveDashboard": 'leave/leavedashboard',
     "manageUser": 'user',
-    "monthWiseAttendanceReport": 'selfservice/selfattendancereport/selfattendancereport'
+    "monthWiseAttendanceReport": 'selfservice/selfattendancereport/selfattendancereport',
+    "visitapplication": 'selfservice/visit'
+
   },
   "data": {
      "emplyeeName":"Tanzim Emon",
@@ -101,6 +103,6 @@ export const invalidMobileNumbers = [
 ];
 //Attendance report config data
 export const reportConfig = {
-  month: 'December',
+  month: 12,
   year: 2025
 };

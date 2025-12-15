@@ -1,24 +1,22 @@
 import BasePage from "../../BasePage";
+import { reportConfig } from "../../../config/testConfig.js";
+
 export class monthWiseAttendancePage extends BasePage {
   constructor(page, context) {
     super(page, context);
     this.page = page;
     this.context = context;
-    this.monthInput = page.locator('input[placeholder="Select Month"]');
-    this.yearInput = page.locator('input[placeholder="Year"]');
-    this.pdfReportButton = page.getByRole('button', { name: 'PDF Report' });
   }
-  async selectMonth(month) {
-    await this.monthInput.click();
-    const option = this.page.locator(`li:has-text("${month}")`);
-    await option.first().click();
+
+  async downloadMonthWiseAttendancePDF({ month = reportConfig.month, year = reportConfig.year, role, prefix = "Attendance Report" } = {}) {
+    if (!role) throw new Error("Role must be specified for downloading the attendance report!");
+    return await this.downloadAndConvertPDF({
+      apiKey: "monthWiseAttendanceApi",
+      role,
+      prefix,
+      month,
+      year,
+      outputFolder: this.context.outputFolder // optional, can define folder per page
+    });
   }
-  async enterYear(year) {
-    await this.yearInput.fill(year.toString());
-  }
-  async downloadMonthWiseAttendanceReport(month, year) {
-    await this.selectMonth(month);
-    await this.enterYear(year);
-    await this.expectAndClick(this.pdfReportButton, "PDF Report Button");
-}
 }
