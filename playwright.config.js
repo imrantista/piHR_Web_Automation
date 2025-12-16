@@ -73,7 +73,7 @@ export default defineConfig({
     actionTimeout: 0,
     ignoreHTTPSErrors: true,
     browserName: 'chromium',
-    headless: process.env.CI ? true : false,
+    headless: false,
     screenshot: 'only-on-failure',
     video:'on',
     trace: 'retain-on-failure',

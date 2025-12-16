@@ -4,6 +4,8 @@ import { ensureTokens } from '../../utils/global-setup.js';
 import { expect } from '@playwright/test';
 import { getResetPasswordLinkUnified,waitForEmailSubjectUnified } from '../../utils/gmailUtils.js';
 import fs from 'fs';
+import path from 'path';
+
 
 export class LoginPage extends BasePage {
   constructor(page, context,request) {
@@ -251,11 +253,18 @@ async assertUserDashboard() {
       await this.page.goto(resetLink);
       await this.setNewPassword(config.credentials.newPassword);
   
+      // Ensure the SaveData directory exists
+      const dir = path.join(process.cwd(), 'SaveData');
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+    
+      // Write the new password to user.json
       fs.writeFileSync(
-      "SaveData/user.json",
-      JSON.stringify({ newPassword: config.credentials.newPassword }, null, 2),
-      "utf-8"
-    );
+        path.join(dir, 'user.json'),
+        JSON.stringify({ newPassword: config.credentials.newPassword }, null, 2),
+        'utf-8'
+      );
   
     console.log("✅ user.json updated with new password");
   }
@@ -359,6 +368,62 @@ async assertUserDashboard() {
       toHaveText: 'Please enter a valid email address.'
     })
   }
+  async handleFirstLoginPasswordReset(){
+  const loginPage = new LoginPage(this.page, this.context);
+  await loginPage.visit();
+  await loginPage.doLogin(config.credentials.adminEmail, config.credentials.adminPassword);
+  await this.expectAndClick(this.settingTxt,'Settings');
+  await this.secuityTxt.hover();
+  await this.expectAndClick(this.userBtn,'User');
+  await this.waitAndFill(this.searchBox,'Shabit','Search');
+  await this.expectAndClick(this.userDetails,'User Details');
+  await this.expectAndClick(this.clickResetBtn,'Reset Password Button');
+  await this.waitAndFill(this.inputPass,'1234','New Password');
+  await this.expectAndClick(this.resetBtn,'Reset Button');
+  await this.assert({
+    locator: {default: this.assertToast},
+    state: 'visible',
+    toHaveText: 'Password changed successfully'
+  });
+  await this.expectAndClick(this.profileImg,'Profile Image');
+  await this.expectAndClick(this.logoutBtn,'Logout Button');
+  await loginPage.doLogin(config.credentials.employeeEmail,'1234');
+}
+async validatePasswordStrength() {
+        const resetLink = await getResetPasswordLinkUnified({
+        method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
+        request: this.request,
+        expectedSubject: 'Please Reset Your Password',
+      });
+      const newPassword = 1234
+      await this.page.goto(resetLink);
+      await this.setNewPassword(newPassword);
+      await this.assert({
+        locator: {default: this.validateResetPass},
+        state: 'visible',
+        toHaveText: 'Your Password is too weak.',
+      })
+  }
+  async validatePasswordMatch() {
+        const resetLink = await getResetPasswordLinkUnified({
+        method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
+        request: this.request,
+        expectedSubject: 'Please Reset Your Password',
+      });
+      const data = JSON.parse(fs.readFileSync("SaveData/user.json","utf-8"));
+      const newPassword =data.newPassword
+      await this.page.goto(resetLink);
+      await this.waitAndFill(this.newPassword,newPassword,'NewPassword');
+      await this.waitAndFill(this.confirmNewPassword,'12345566713');
+      await this.assert({
+        locator: {default: this.passwordMatchTxt},
+        state: 'visible',
+        toHaveText: 'Passwords do not match',
+      });
+      await this.waitAndFill(this.confirmNewPassword,'');
+      await this.waitAndFill(this.confirmNewPassword,newPassword);
+      await this.expectAndClick(this.resetBtn,'Reset Button');
+  }
   
   async validateUnregisteredEmail(email){
     await this.expectAndClick(this.forgotPasswordFrame,'Forgot Password Link');
@@ -383,13 +448,13 @@ async assertUserDashboard() {
       toHaveText: 'Reset Password Link expired.',
     })
   
-    // const reset = await getResetPasswordLinkUnified({
-    //     method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
-    //     request: this.request,
-    //     expectedSubject: 'Please Reset Your Password',
-    //   });
-    //   await this.page.goto(reset);
-    //   await this.setNewPassword(config.credentials.newPassword);
+    const reset = await getResetPasswordLinkUnified({
+        method: "APP_PASSWORD",          //  "API" or "APP_PASSWORD"
+        request: this.request,
+        expectedSubject: 'Please Reset Your Password',
+      });
+      await this.page.goto(reset);
+      await this.setNewPassword(config.credentials.newPassword);
   }
   
   async validateEmailBody(email){
