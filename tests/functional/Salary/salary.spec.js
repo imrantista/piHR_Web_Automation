@@ -1,5 +1,5 @@
 import { config } from "../../../config/testConfig.js";
-import { test } from "../../../utils/sessionUse";
+import { test } from "../../../utils/sessionUse.js";
 import { Desktop, setViewport } from "../../../utils/viewports.js";
 
 test.describe("Employee Self Service Tests", () => {
@@ -13,6 +13,8 @@ test.describe("Employee Self Service Tests", () => {
     });
 
     test("Verify Employee Can Edit Pending Claim Application : @Business/Functional Self-1029", async ({ page, claim }) => {
+        // Add claim as pre-requisite to have claim to edit
+        await claim.addNewClaim(true);
         await claim.editAndVerifyClaim();
     });
 
