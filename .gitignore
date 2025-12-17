@@ -81,3 +81,9 @@ user.json/
 .eslintcache
 .prettiercache
 pages/Leave/Dashboard/LeaveDashboardApi.js
+
+
+# ==============================
+# Download folder
+# ==============================
+downloads
