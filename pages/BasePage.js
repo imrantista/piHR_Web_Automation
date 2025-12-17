@@ -1,10 +1,15 @@
 import { expect } from '@playwright/test';
+import fs from "fs";
+import path from "path";
+import pdfParse from 'pdf-parse';
 import { getViewportNameFromPage } from '../utils/viewports.js';
 import { allure } from 'allure-playwright';
 import apiMap from '../api/apiMap.js';
 import { getAuthTokenForRole } from '../utils/fetchApiRoleUtils.js';
 import fs from 'fs';
 import path from "path";
+const ENV = process.env.ENV || "PIHR_PROD";
+
 export default class BasePage {
   constructor(page, context) {
     this.page = page;
@@ -776,4 +781,124 @@ async assertStatus(employeeName, expectedStatus) {
 
   console.log(`✅ Status "${expectedStatus}" is visible for employee "${employeeName}"`);
 }    
+}
+  // Download file from API response
+  // Usage: await this.callAPI({ apiKey: 'downloadFileApi', method: 'GET', role: 'supervisor', expectFile: true, outputFileName: 'myfile.pdf' });
+  // Note: Ensure the API is configured to return a file in the response
+static TOKEN_FOLDER_MAP = {
+    PIHR_PROD: "tokens&cookies_PIHR_PROD",
+    PIHR_QA: "tokens&cookies_PIHR_QA",
+  };
+
+  static ROLE_FILE_MAP = {
+    admin: "admin",
+    employee: "employee",
+    employeeAdmin: "employeeAdmin",
+    supervisor: "supervisor",
+  };
+
+  static getTokenFolder() {
+    const folder = this.TOKEN_FOLDER_MAP[process.env.ENV];
+    if (!folder) throw new Error(`No token folder defined for ENV=${process.env.ENV}`);
+    return path.join(process.cwd(), folder);
+  }
+
+  static getAuthTokenForRole(role) {
+    const fileKey = this.ROLE_FILE_MAP[role];
+    if (!fileKey)
+      throw new Error(
+        `Unknown role "${role}". Valid roles: ${Object.keys(this.ROLE_FILE_MAP).join(", ")}`
+      );
+
+    const tokenFolder = this.getTokenFolder();
+    const filePath = path.join(tokenFolder, `${fileKey}.json`);
+    if (!fs.existsSync(filePath)) throw new Error(`Token file not found: ${filePath}`);
+
+    const parsed = JSON.parse(fs.readFileSync(filePath, "utf-8"));
+    const authCookie = parsed.cookies?.find((c) => c.name === "auth");
+    if (!authCookie?.value) throw new Error(`"auth" cookie not found for role "${role}"`);
+
+    return authCookie.value;
+  }
+
+  // Delete all PDFs and JSONs in a folder
+  static clearPDFandJSON(folder) {
+    if (!fs.existsSync(folder)) return;
+    const files = fs.readdirSync(folder);
+    files.forEach((file) => {
+      const ext = path.extname(file).toLowerCase();
+      if (ext === ".pdf" || ext === ".json") {
+        fs.unlinkSync(path.join(folder, file));
+      }
+    });
+  }
+
+  // Generic API call
+  async callAPI({ apiKey, method = "GET", role, query = {}, headers = {}, expectFile = false, outputFileName }) {
+    const api = apiMap[apiKey];
+    if (!api) throw new Error(`API key "${apiKey}" not found in apiMap`);
+
+    const token = BasePage.getAuthTokenForRole(role);
+    const queryString = new URLSearchParams(query).toString();
+    const url = queryString ? `${api.url}?${queryString}` : api.url;
+
+    const response = await this.page.request.fetch(url, {
+      method,
+      headers: { Authorization: `Bearer ${token}`, ...headers },
+    });
+
+    const expected = api.methods[method]?.expectedStatus ?? 200;
+    if (response.status() !== expected) {
+      const ct = (response.headers()["content-type"] || "").toLowerCase();
+      const body = ct.includes("json") || ct.includes("text") ? await response.text() : "[binary]";
+      throw new Error(`API ${apiKey} failed with status ${response.status()}:\n${body}`);
+    }
+
+    if (expectFile) {
+      const buffer = await response.body();
+      const filePath = path.join(process.cwd(), outputFileName.replace(/[\\/:*?"<>|]/g, "_"));
+      fs.writeFileSync(filePath, buffer);
+      console.log(`File saved: ${filePath}`);
+      return filePath;
+    }
+
+    return await response.json();
+  }
+
+  // Download PDF and convert to JSON (deletes all previous PDFs/JSONs)
+  async downloadAndConvertPDF({ apiKey, role, prefix = "Report", month, year, outputFolder }) {
+    if (!role) throw new Error("Role must be specified!");
+
+    const folder = outputFolder || path.join(process.cwd(), "SaveData", "PDFtoJSON");
+    fs.mkdirSync(folder, { recursive: true });
+
+    // Delete all previous PDFs and JSONs
+    BasePage.clearPDFandJSON(folder);
+
+    const pdfFileName = `${prefix}_${month}_${year}.pdf`;
+    const jsonFileName = `${prefix}_${month}_${year}.json`;
+
+    // Download PDF
+    const pdfPath = await this.callAPI({
+      apiKey,
+      role,
+      headers: { Accept: "application/pdf" },
+      expectFile: true,
+      query: { month: Number(month), year, export_as_excel: false },
+      outputFileName: pdfFileName,
+    });
+
+    // Convert PDF to JSON
+    const pdfBuffer = fs.readFileSync(pdfPath);
+    const data = await pdfParse(pdfBuffer);
+    const lines = data.text.split("\n").map((l) => l.trim()).filter(Boolean);
+
+    const jsonPath = path.join(folder, jsonFileName);
+    fs.writeFileSync(jsonPath, JSON.stringify({ lines }, null, 2));
+
+    console.log(`PDF downloaded at: ${pdfPath}`);
+    console.log(`Converted JSON saved at: ${jsonPath}`);
+
+    return { pdfPath, jsonPath };
+  }
 }

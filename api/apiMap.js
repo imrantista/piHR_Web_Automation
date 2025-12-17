@@ -51,6 +51,10 @@ const apiPaths = {
   hierarchyLeaveApi: '/api/v2/my-dashboard/hierarchy',
   myDashboardApi: '/api/v2/my-dashboard',
 
+  //User Claim APIs
+  saveUserClam: '/api/v2/claim/save-claim',
+
+
   //Leave Dashboard APIs
   dropDownApiLeaveType: "/api/v2/leave-types/dropdown",
   dropDownApiBranches: "/api/v2/branches/dropdown",
@@ -58,6 +62,9 @@ const apiPaths = {
   monthWiseLeaveApi: "/api/v2/leave-dashboards/month-wise-leave-application-status",
   yearlyLeaveApi: "/api/v2/leave-dashboards/yearly-leave-approval-status",
   notificationsLeaveDashboardApi: "/api/v2/my-dashboard/notifications",
+
+  // Report APIs
+  monthWiseAttendanceApi: '/api/v2/self-service-reports/my-attendance'
 };
 
 // Build final API map for current environment

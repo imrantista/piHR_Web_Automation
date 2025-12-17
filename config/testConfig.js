@@ -29,7 +29,14 @@ export const config = {
     "dashboard": 'dashboard',
     "attendanceDashboard": 'attendance/attendancedashboard',
     "leaveDashboard": 'leave/leavedashboard',
-    "manageUser": 'user'
+    "manageUser": 'user',
+    "monthWiseAttendanceReport": 'selfservice/selfattendancereport/selfattendancereport',
+    "visitapplication": 'selfservice/visit',
+    "supervisorVisitApplication": '/selfservice/appapproval?page_size=10&page_number=1',
+
+    "myClaim": 'selfservice/claim',
+    "claimRequest": 'salary/employeeclaimrequest',
+    "claim": 'salary/claim',
   },
   "data": {
     //  "emplyeeName":"Tanzim Emon",
@@ -41,6 +48,17 @@ export const config = {
      "updateLeaveEndDate":"24-12-2025",
      "supEditLeaveDate":"24-12-2025",
      "adminEditLeaveDate":"24-12-2025"
+  },
+  "visitApplicationData": {
+     "visitFromtDate":"19-12-2025",
+     "visitEndDate":"20-12-2025",
+     "visitPurpose":"Vacation",
+     "employeeName":"Tanzim Emon",
+     "updatedVisitPurpose":"Client Visit",
+     "updatedVisitFromDate":"18-12-2025",
+  },
+  "deleteApplicationData": {
+    "visitReason": "Vacation"
   }
 }
 
@@ -101,3 +119,8 @@ export const invalidMobileNumbers = [
     "abc12345678",      
     "01712@#$%1"        
 ];
+//Attendance report config data
+export const reportConfig = {
+  month: 12,
+  year: 2025
+};
