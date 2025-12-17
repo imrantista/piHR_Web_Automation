@@ -76,3 +76,12 @@ export async function getRowsAsArray(tableLocator, columns, allRows = true) {
 
     return result;
 }
+
+
+export async function getRowCount(tableLocator)
+{
+    const rows = tableLocator.locator('tbody tr');
+    const rowCount = await rows.count();
+    return rowCount;
+
+}
