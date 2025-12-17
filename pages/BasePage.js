@@ -781,7 +781,7 @@ async assertStatus(employeeName, expectedStatus) {
 
   console.log(`✅ Status "${expectedStatus}" is visible for employee "${employeeName}"`);
 }    
-}
+
   // Download file from API response
   // Usage: await this.callAPI({ apiKey: 'downloadFileApi', method: 'GET', role: 'supervisor', expectFile: true, outputFileName: 'myfile.pdf' });
   // Note: Ensure the API is configured to return a file in the response
