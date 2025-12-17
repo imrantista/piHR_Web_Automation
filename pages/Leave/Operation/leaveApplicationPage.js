@@ -396,11 +396,6 @@ async adminApproveLeaveApplication(){
    await this.waitAndFill(this.adminSearchBox,"Tanzim");
    await this.page.reload('networkidle'); 
    await this.expectAndClick(this.kebabMenuBtn,"Click Kebab Menu Button");
-  // await this.page
-  // .locator('tbody tr')
-  // .nth(0)
-  // .locator('td:last-child svg')
-  // .click();
    await this.expectAndClick(this.editLeaveBtn,"Edit Leave");
    const elements = [
       { locator: this.leavePurposeTxt, alias: 'Vacation' },
