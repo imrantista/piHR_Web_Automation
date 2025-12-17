@@ -104,3 +104,82 @@ test.describe("Admin User Claim", () => {
 
 
 })
+
+
+test.describe("Advance Salary Employee Self Service Tests", () => {
+    test.beforeEach(async ({ page, loginPage, useSession }) => {
+        await setViewport(page, Desktop.size);
+        await useSession('employee');
+        await loginPage.visit(config.slug.myAdvanceSalary);
+    });
+
+    test("Verify Employee Can Submit Advance Salary Application : @Business/Functional Self-1039", async ({ page, advanceSalary }) => {
+        await advanceSalary.addAdvanceSalaryAndVerify({});
+    });
+
+    test("Verify Employee Can Edit Pending Advance Salary Application : @Business/Functional Self-1040", async ({ page, advanceSalary }) => {
+        // Add Advance Salary as pre-requisite to have advance salary to edit
+        await advanceSalary.addAdvanceSalaryAndVerify({});
+        await advanceSalary.editAndVerifyAdvanceSalary({});
+    });
+
+    test("Verify Employee Can Delete Pending Advance Salary Application : @Business/Functional Self-1041", async ({ page, advanceSalary }) => {
+        // Add Advance Salary as pre-requisite to have advance salary to delete
+        await advanceSalary.addAdvanceSalaryAndVerify({});
+        await advanceSalary.deleteAndVerifyAdvanceSalary();
+    });
+});
+
+test.describe("Advance Salary Supervisor Self Service Tests", () => {
+    test.beforeEach(async ({ page, loginPage, useSession, advanceSalary }) => {
+        await setViewport(page, Desktop.size);
+        // Add Advance Salary as pre-requisite to have advance salary to approve/reject
+        await useSession('employee');
+        await loginPage.visit(config.slug.myAdvanceSalary);
+        await advanceSalary.addAdvanceSalaryAndVerify({});
+
+        // Now Login as Supervisor
+        await useSession('supervisor');
+        await loginPage.visit(config.slug.approveApplication);
+        await advanceSalary.navigateToAdvanceSalaryTab();
+    });
+
+    test("Verify Supervisor Can Approve Advance Salary Application : @Business/Functional Self-1042", async ({ page, advanceSalary }) => {
+        await advanceSalary.approveAndVerifyAdvanceSalary();
+    });
+
+    test("Verify Supervisor Can Reject Advance Salary Application : @Business/Functional Self-1043", async ({ page, advanceSalary }) => {
+        await advanceSalary.rejectAndVerifyAdvanceSalary();
+    });
+});
+
+test.describe("Advance Salary Admin User Tests", () => {
+
+    test.beforeEach(async ({ page, loginPage, useSession, advanceSalary }) => {
+        await setViewport(page, Desktop.size);
+        // Add Advance Salary as pre-requisite to have advance salary to approve/reject
+        await useSession('employee');
+        await loginPage.visit(config.slug.myAdvanceSalary);
+        await advanceSalary.addAdvanceSalaryAndVerify({});
+
+        // Now Login as Admin
+        await useSession('admin');
+        await loginPage.visit(config.slug.advanceSalary);
+    });
+
+    test("Verify Admin Can Approve Advance Salary Application : @Business/Functional Self-1046", async ({ page, advanceSalary }) => {
+        await advanceSalary.approveAndVerifyAdvanceSalaryByAdmin();
+    });
+
+    test("Verify Admin Can Edit and Approve Advance Salary Application : @Business/Functional Self-1047", async ({ page, advanceSalary }) => {
+        await advanceSalary.updateAndVerifyAdvanceSalaryByAdmin({});
+    });
+
+    test("Verify Admin Can Reject Advance Salary Application : @Business/Functional Self-1048", async ({ page, advanceSalary }) => {
+        await advanceSalary.rejectAndVerifyAdvanceSalaryByAdmin();
+    });
+
+    test("Verify Admin Can Delete Advance Salary Application : @Business/Functional Self-1049", async ({ page, advanceSalary }) => {
+        await advanceSalary.deleteAndVerifyAdvanceSalaryByAdmin();
+    });
+});
