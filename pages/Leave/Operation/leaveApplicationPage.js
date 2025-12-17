@@ -230,6 +230,7 @@ export class leaveApplicationPage extends BasePage {
   await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
   await this.myScreenBtn.hover();
   await this.expectAndClick(this.dashboardBtn,'DashBoard');
+  await this.saveApiResponse("myDashboardApi","employee","employeeLeaveInformation.json");
   await this.saveTextFromDivLocators();            
   await this.saveNumberFromLocatorSpanValue({
                 "Leave Remaining": "leave/leaveRemaining.txt",
@@ -295,7 +296,6 @@ export class leaveApplicationPage extends BasePage {
     await this.expectAndClick(this.confirmAcceptLeaveBtn,"Confirm Accept Leave");
   }
 
-
   async compareUIAndApiLeaveTakenAndLeaveRemainingValueBreforeApproval(){
     await this.saveNumberFromLocatorSpanValue({
                 "Leave Remaining": "leave/leaveRemaining.txt",
@@ -340,34 +340,6 @@ export class leaveApplicationPage extends BasePage {
             ],
             });
   }
-
-    async verifyLeaveEligibility2(){
-  await this.expectAndClick(this.selfServiceTab,"Self Service Tab");
-  await this.myScreenBtn.hover();
-  await this.expectAndClick(this.dashboardBtn,'DashBoard');
-  await this.saveTextFromDivLocators();
-  await this.compareApiJsonWithTxtFiles({
-            apiJsonSubPath: "employeeSupervisor.json",
-            apiDataPath: "body.supervisor",
-            comparisons: [
-                {
-                label: "Supervisor Name",
-                apiField: "supervisor_name",
-                txtSubPath: "supervisor/supervisorinfo.txt",
-                },
-                {
-                label: "Designation Name",
-                apiField: "designation_name",
-                txtSubPath: "supervisor/supervisorinfo.txt",
-                },
-                {
-                label: "Supervisor Code",
-                apiField: "supervisor_code",
-                txtSubPath: "supervisor/supervisorinfo.txt",
-                },
-            ],
-            });
-}
 
   async adminVerifyLeaveApplication(){
    await this.expectAndClick(this.leaveBtn,"Leave Button");
@@ -422,7 +394,13 @@ async adminApproveLeaveApplication(){
    await this.operationBtn.hover();
    await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
    await this.waitAndFill(this.adminSearchBox,"Tanzim");
+   await this.page.reload('networkidle'); 
    await this.expectAndClick(this.kebabMenuBtn,"Click Kebab Menu Button");
+  // await this.page
+  // .locator('tbody tr')
+  // .nth(0)
+  // .locator('td:last-child svg')
+  // .click();
    await this.expectAndClick(this.editLeaveBtn,"Edit Leave");
    const elements = [
       { locator: this.leavePurposeTxt, alias: 'Vacation' },
@@ -439,7 +417,7 @@ async adminApproveLeaveApplication(){
     await this.assertStatus("Tanzim Emon", "Approved");
 }
 
-async adminDeleteLeaveApplication(){
+async adminRejectPendingLeaveApplication(){
    await this.expectAndClick(this.leaveBtn,"Leave Button");
    await this.operationBtn.hover();
    await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
@@ -452,7 +430,37 @@ async adminDeleteLeaveApplication(){
     state: 'visible',
     toHaveText: 'Data deleted successfully.'
    })
+  }
+  async adminEditLeaveApplication(adminEditLeaveDate){
+   await this.expectAndClick(this.leaveBtn,"Leave Button");
+   await this.operationBtn.hover();
+   await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+   await this.waitAndFill(this.adminSearchBox,"Tanzim");
+   await this.expectAndClick(this.kebabMenuBtn,"Click Kebab Menu Button");
+   await this.expectAndClick(this.editLeaveBtn,"Edit Leave");
+   const elements = [
+      { locator: this.leavePurposeTxt, alias: 'Vacation' },
+      { locator: this.leaveTypeTxt, alias: 'Annual Leave' },
+   ]
+   for (const el of elements) {
+      await this.assert({
+        locator: { default: el.locator },
+        state: 'visible',
+        alias: el.alias
+      });
+    }
+   await this.expectAndClick(this.toDateInput, "To Date Input");
+   await this.waitAndFill(this.toDateInput, adminEditLeaveDate, "To Date Input"); 
+   await this.expectAndClick(this.approveBtn,"Click Approve Button");
+   await this.assertStatus("Tanzim Emon", "Approved");
+  }  
 
-}
+  async adminDeleteLeaveApplication(){
+   await this.expectAndClick(this.leaveBtn,"Leave Button");
+   await this.operationBtn.hover();
+   await this.expectAndClick(this.leaveApplicationBtn,"Leave Application Button");
+   await this.waitAndFill(this.adminSearchBox,"Tanzim");
+   await this.expectAndClick(this.kebabMenuBtn,"Click Kebab Menu Button");
+  }
 
 }

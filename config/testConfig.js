@@ -39,7 +39,8 @@ export const config = {
      "leavePurpose":"Vacation",
      "deleteEmployeeName":"Tanzim",
      "updateLeaveEndDate":"24-12-2025",
-     "supEditLeaveDate":"24-12-2025"
+     "supEditLeaveDate":"24-12-2025",
+     "adminEditLeaveDate":"24-12-2025"
   }
 }
 
