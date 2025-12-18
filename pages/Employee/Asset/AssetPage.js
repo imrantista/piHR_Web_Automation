@@ -21,10 +21,11 @@ export class AssetPage extends BasePage {
   pendingLabel = () => this.page.getByText('Pending').first();
   tableFirstEditButton = () => this.page.getByRole('table').getByRole('button').first();
   updatedDescriptionCell = (text) => this.page.getByText(text).first();
-  approvedCell = () =>  this.page.getByRole('row', { name: '00000276 Tanzim Emon Banani' }).locator('rect').first()
+  approvedCell = () =>  this.page.getByRole('row', { name: '00000276 Tanzim Emon Banani' }).locator('rect').first();
   searchBox = () => this.page.getByRole('textbox', { name: 'Search', exact: true });
   pendingRequest = () => this.page.getByText('Pending', { exact: true });
   clickoutsidesearchbox = () => this.page.getByText('Employee Code');
+  approveSuccessToaster = () => this.page.getByText("Application approved successfully.");
 
   // Employee Request Asset
   async requestAssetByEmployee(descriptionText = "test assets") {
@@ -61,15 +62,19 @@ export class AssetPage extends BasePage {
     await expect(updatedCell).toBeVisible();
   }
   // Supervisor Approve Asset Request
-  async approveAssetRequestBySupervisor(employeeName) {
-    await this.expectAndClick(this.searchBox(), "Search Box");
-    await this.searchBox().fill(employeeName);
-    await this.clickoutsidesearchbox().click();
-    await this.page.waitForTimeout(1000);
-    if (!(await this.pendingRequest().isVisible().catch(() => false))) {
+ async approveAssetRequestBySupervisor(employeeName) {
+  await this.expectAndClick(this.searchBox(), "Search Box");
+  await this.searchBox().fill(employeeName);
+  await this.searchBox().press('Enter');
+  if (!(await this.pendingRequest().isVisible().catch(() => false))) {
       await this.requestAssetByEmployee();
       await expect(this.pendingRequest()).toBeVisible();
     }
-    await this.expectAndClick(this.approvedCell(), "Approve Cell");
-  }
+  const employeeRow = this.page.getByRole('row', { name: new RegExp(employeeName, 'i') });
+  await expect(employeeRow).toBeVisible();
+  const approveButton = employeeRow.getByRole('img').nth(1);
+  await this.expectAndClick(approveButton, "Approve Button");
+  await expect(this.approveSuccessToaster()).toBeVisible();
+  await expect(this.approveSuccessToaster()).toBeHidden({ timeout: 5000 });
+}
 }

@@ -129,5 +129,5 @@ export const reportConfig = {
 };
 //Asset config data
 export const assetConfig = {
-  emplyeeName: "Tanzim Emon Banani"
+  emplyeeName: "Tanzim"
 };
