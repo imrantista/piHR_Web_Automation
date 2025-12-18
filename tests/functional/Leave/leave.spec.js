@@ -238,3 +238,114 @@ for (const vp of [Desktop]) {
       await visitApplication.deleteLeave(config.deleteApplicationData.visitReason);
 });
  };
+ 
+ //Approve Visit Application As Supervisor
+for (const vp of [Desktop]) {
+  test(`Supervisor-${vp.name} Approve Visit Application @ Self-1020`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+   
+      await setViewport(page, vp.size);
+      await useSession(supervisor[0]);
+      await loginPage.visit(config.slug.supervisorVisitApplication);
+
+      await visitApplication.approveVisitApplication();
+});
+};
+
+//Reject Visit Application As Supervisor
+for (const vp of [Desktop]) {
+  test(`Supervisor-${vp.name} Reject Visit Application @ Self-1021`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+   
+      await setViewport(page, vp.size);
+      await useSession(supervisor[0]);
+      await loginPage.visit(config.slug.supervisorVisitApplication);
+
+      await visitApplication.rejectVisitApplication();
+});
+};
+
+//Edit Visit Application As Supervisor
+for (const vp of [Desktop]) {
+  test(`Supervisor-${vp.name} Edit Visit Application as Supervisor @ Self-1022`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+   
+      await setViewport(page, vp.size);
+      await useSession(supervisor[0]);
+      await loginPage.visit(config.slug.supervisorVisitApplication);
+      await visitApplication.editVisitApplicationAsSupervisor();
+});
+};
+
+//View Visit Application Details As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name} View Visit Application Details as Admin @ Self-1023`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+         const employeeData = await visitApplication.visitDetails();
+        console.log('Employee Details:', employeeData);
+    });
+  }
+}
+
+//Approve Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Approve as Admin @ Self-1024`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitApproveAsAdmin();
+    });
+  }
+}
+
+//Reject Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Reject as Admin @ Self-1025`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitRejectAsAdmin();
+    });
+  }
+}
+
+//Edit Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Updated as Admin @ Self-1026`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitEditAsAdmin();
+    });
+  }
+}
+
+//Delete Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Delete as Admin @ Self-1027`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitDeleteAsAdmin();
+    });
+  }
+}
+
+
