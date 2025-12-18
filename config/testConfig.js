@@ -40,6 +40,8 @@ export const config = {
     "myAdvanceSalary": 'selfservice/advancesalary',
     "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
     "advanceSalary": 'salary/advancesalary',
+    "employeeasset": '/selfservice/myassignedasset',
+    "assetrequisitionrequest": 'employee/assetrequisitionrequest' 
 
   },
   "data": {
@@ -124,4 +126,8 @@ export const invalidMobileNumbers = [
 export const reportConfig = {
   month: 12,
   year: 2025
+};
+//Asset config data
+export const assetConfig = {
+  emplyeeName: "Tanzim Emon Banani"
 };

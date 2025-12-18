@@ -70,6 +70,6 @@ export class AssetPage extends BasePage {
       await this.requestAssetByEmployee();
       await expect(this.pendingRequest()).toBeVisible();
     }
-    //await this.expectAndClick(this.approvedCell(), "Approve Asset Request");
+    await this.expectAndClick(this.approvedCell(), "Approve Cell");
   }
 }
