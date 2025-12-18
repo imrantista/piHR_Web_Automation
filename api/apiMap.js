@@ -49,6 +49,9 @@ const apiPaths = {
   leaveDeleteApi: '/api/v2/leave',
   manageUserApi: 'api/v2/users',
 
+  //User Claim APIs
+  saveUserClam: '/api/v2/claim/save-claim',
+
 
   //Leave Dashboard APIs
   dropDownApiLeaveType: "/api/v2/leave-types/dropdown",

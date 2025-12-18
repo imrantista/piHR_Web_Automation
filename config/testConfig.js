@@ -32,7 +32,14 @@ export const config = {
     "manageUser": 'user',
     "monthWiseAttendanceReport": 'selfservice/selfattendancereport/selfattendancereport',
     "visitapplication": 'selfservice/visit',
-    "supervisorVisitApplication": '/selfservice/appapproval?page_size=10&page_number=1'
+    "supervisorVisitApplication": '/selfservice/appapproval?page_size=10&page_number=1',
+
+    "myClaim": 'selfservice/claim',
+    "claimRequest": 'salary/employeeclaimrequest',
+    "claim": 'salary/claim',
+    "myAdvanceSalary": 'selfservice/advancesalary',
+    "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
+    "advanceSalary": 'salary/advancesalary',
 
   },
   "data": {
