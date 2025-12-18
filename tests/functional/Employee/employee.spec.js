@@ -24,14 +24,25 @@ test.describe("Employee Asset Module test", () => {
       }
     );
   }
-   for (const vp of [Desktop]) {
-    test(`${supervisor} - ${vp.name} Verify Supervisor Can Approve Employee Asset Request: @Business/Functional Self-1086`,
-      async ({ page, loginPage, employeeasset, useSession }) => {
-        await setViewport(page, vp.size);
+for (const vp of [Desktop]) {
+  test(`${supervisor} - ${vp.name} Verify Supervisor Can Approve Employee Asset Request: @Business/Functional Self-1086`,
+    async ({ page, loginPage, employeeasset, useSession }) => {
+
+      await setViewport(page, vp.size);
+      await useSession(supervisor);
+      await loginPage.visit(config.slug.assetrequisitionrequest);
+      if (!(await employeeasset.pendingRequest().isVisible().catch(() => false))) {
+        await useSession(employee);
+        await loginPage.visit(config.slug.employeeasset);
+        await employeeasset.requestAssetByEmployee();
+
         await useSession(supervisor);
         await loginPage.visit(config.slug.assetrequisitionrequest);
-        await employeeasset.approveAssetRequestBySupervisor(assetConfig.emplyeeName);
-      }
-    );
-  }
+       }
+      await employeeasset.approveAssetRequestBySupervisor(
+        assetConfig.emplyeeName
+      );
+    }
+  );
+}
 });

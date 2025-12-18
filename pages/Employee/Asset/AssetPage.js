@@ -1,6 +1,5 @@
 import BasePage from "../../BasePage";
 import { expect } from "@playwright/test";
-import { assetConfig } from "../../../config/testConfig"; 
 
 export class AssetPage extends BasePage {
   constructor(page, context) {
@@ -25,7 +24,7 @@ export class AssetPage extends BasePage {
   searchBox = () => this.page.getByRole('textbox', { name: 'Search', exact: true });
   pendingRequest = () => this.page.getByText('Pending', { exact: true });
   clickoutsidesearchbox = () => this.page.getByText('Employee Code');
-  approveSuccessToaster = () => this.page.getByText("Application approved successfully.");
+  approveSuccessToaster = () => this.page.getByText("Application rejected successfully.");
 
   // Employee Request Asset
   async requestAssetByEmployee(descriptionText = "test assets") {
@@ -66,10 +65,6 @@ export class AssetPage extends BasePage {
   await this.expectAndClick(this.searchBox(), "Search Box");
   await this.searchBox().fill(employeeName);
   await this.searchBox().press('Enter');
-  if (!(await this.pendingRequest().isVisible().catch(() => false))) {
-      await this.requestAssetByEmployee();
-      await expect(this.pendingRequest()).toBeVisible();
-    }
   const employeeRow = this.page.getByRole('row', { name: new RegExp(employeeName, 'i') });
   await expect(employeeRow).toBeVisible();
   const approveButton = employeeRow.getByRole('img').nth(1);
