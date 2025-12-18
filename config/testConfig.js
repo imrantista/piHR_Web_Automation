@@ -38,6 +38,10 @@ export const config = {
     "myClaim": 'selfservice/claim',
     "claimRequest": 'salary/employeeclaimrequest',
     "claim": 'salary/claim',
+    "myAdvanceSalary": 'selfservice/advancesalary',
+    "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
+    "advanceSalary": 'salary/advancesalary',
+
   },
   "data": {
      "emplyeeName":"Tanzim Emon",
