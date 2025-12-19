@@ -41,13 +41,15 @@ export const config = {
   "data": {
     //  "emplyeeName":"Tanzim Emon",
      "leaveType":"Annual Leave",
-     "leaveStartDate":"23-12-2025",
-     "leaveEndDate":"25-12-2025",
+     "leaveStartDate":"13-12-2025",
+     "leaveEndDate":"15-12-2025",
      "leavePurpose":"Vacation",
      "deleteEmployeeName":"Tanzim",
      "updateLeaveEndDate":"24-12-2025",
      "supEditLeaveDate":"24-12-2025",
-     "adminEditLeaveDate":"24-12-2025"
+     "adminEditLeaveDate":"24-12-2025",
+     "newLeaveStartDate": "",
+     "newLeaveEndDate": "",
   },
   "visitApplicationData": {
      "visitFromtDate":"19-12-2025",
