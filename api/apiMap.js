@@ -52,6 +52,9 @@ const apiPaths = {
   //User Claim APIs
   saveUserClam: '/api/v2/claim/save-claim',
 
+  // Employee APIs
+  employeeTaskApi: '/api/v2/task/employee-tasks',
+
 
   //Leave Dashboard APIs
   dropDownApiLeaveType: "/api/v2/leave-types/dropdown",
