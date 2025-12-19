@@ -116,10 +116,7 @@ export class AssetPage extends BasePage {
 }
  // Assigned Asset shows in Asset Assigned Table
   async assignedAssetShowsInAssignedTable() {
-  // Click on Asset Assigned
   await this.expectAndClick(this.assignedAssetBtn(), "Asset Assigned Button");
-
-  // Check if "Occupied" status is visible in the table
   const occupiedStatus = this.page.getByText('Occupied', { exact: true });
   await expect(occupiedStatus).toBeVisible();
 }
