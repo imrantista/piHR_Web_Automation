@@ -20,11 +20,13 @@ export class AssetPage extends BasePage {
   pendingLabel = () => this.page.getByText('Pending').first();
   tableFirstEditButton = () => this.page.getByRole('table').getByRole('button').first();
   updatedDescriptionCell = (text) => this.page.getByText(text).first();
-  approvedCell = () =>  this.page.getByRole('row', { name: '00000276 Tanzim Emon Banani' }).locator('rect').first();
   searchBox = () => this.page.getByRole('textbox', { name: 'Search', exact: true });
   pendingRequest = () => this.page.getByText('Pending', { exact: true });
   clickoutsidesearchbox = () => this.page.getByText('Employee Code');
-  approveSuccessToaster = () => this.page.getByText("Application rejected successfully.");
+  approveSuccessToaster = () => this.page.getByText("Application approved successfully.");
+  rejectButton = () => this.page.getByRole('cell', { name: 'Reject' }).locator('rect').nth(1);
+  rejectToaster = () => this.page.getByText("Application rejected successfully.");
+  assignedAssetBtn = () => this.page.getByText('Asset Assigned');
 
   // Employee Request Asset
   async requestAssetByEmployee(descriptionText = "test assets") {
@@ -60,16 +62,65 @@ export class AssetPage extends BasePage {
     const updatedCell = this.updatedDescriptionCell(updatedDescription);
     await expect(updatedCell).toBeVisible();
   }
+// Get Employee Row by Name
+  async getEmployeeRow(employeeName) {
+  const nameCell = this.page.getByText(new RegExp(employeeName, 'i')).first();
+  await expect(nameCell).toBeVisible();
+  const employeeRow = nameCell.locator('xpath=ancestor::tr');
+  await expect(employeeRow).toBeVisible();
+  return employeeRow;
+}
   // Supervisor Approve Asset Request
  async approveAssetRequestBySupervisor(employeeName) {
   await this.expectAndClick(this.searchBox(), "Search Box");
   await this.searchBox().fill(employeeName);
   await this.searchBox().press('Enter');
-  const employeeRow = this.page.getByRole('row', { name: new RegExp(employeeName, 'i') });
-  await expect(employeeRow).toBeVisible();
+  const employeeRow = await this.getEmployeeRow(employeeName);
   const approveButton = employeeRow.getByRole('img').nth(1);
   await this.expectAndClick(approveButton, "Approve Button");
   await expect(this.approveSuccessToaster()).toBeVisible();
   await expect(this.approveSuccessToaster()).toBeHidden({ timeout: 5000 });
+}
+  // Supervisor Reject Asset Request
+  async rejectAssetRequestBySupervisor(employeeName) {
+  await this.expectAndClick(this.searchBox(), "Search Box");
+  await this.searchBox().fill(employeeName);
+  await this.searchBox().press('Enter');
+  const employeeRow = await this.getEmployeeRow(employeeName);
+  const rejectButton = employeeRow.getByRole('img').nth(2);
+  await this.expectAndClick(rejectButton, "Reject Button");
+  await expect(this.rejectToaster()).toBeVisible();
+  await expect(this.rejectToaster()).toBeHidden({ timeout: 5000 });
+}
+// Admin approve asset request
+  async approveAssetRequestByAdmin(employeeName) {
+  await this.expectAndClick(this.searchBox(), "Search Box");
+  await this.searchBox().fill(employeeName);
+  await this.searchBox().press('Enter');
+  const employeeRow = await this.getEmployeeRow(employeeName);
+  const approveButton = employeeRow.getByRole('img').nth(1);
+  await this.expectAndClick(approveButton, "Approve Button");
+  await expect(this.approveSuccessToaster()).toBeVisible();
+  await expect(this.approveSuccessToaster()).toBeHidden({ timeout: 5000 });
+}
+// Admin reject asset request
+  async rejectAssetRequestByAdmin(employeeName) {
+  await this.expectAndClick(this.searchBox(), "Search Box");
+  await this.searchBox().fill(employeeName);
+  await this.searchBox().press('Enter');
+  const employeeRow = await this.getEmployeeRow(employeeName);
+  const rejectButton = employeeRow.getByRole('img').nth(2);
+  await this.expectAndClick(rejectButton, "Reject Button");
+  await expect(this.rejectToaster()).toBeVisible();
+  await expect(this.rejectToaster()).toBeHidden({ timeout: 5000 });   
+}
+ // Assigned Asset shows in Asset Assigned Table
+  async assignedAssetShowsInAssignedTable() {
+  // Click on Asset Assigned
+  await this.expectAndClick(this.assignedAssetBtn(), "Asset Assigned Button");
+
+  // Check if "Occupied" status is visible in the table
+  const occupiedStatus = this.page.getByText('Occupied', { exact: true });
+  await expect(occupiedStatus).toBeVisible();
 }
 }
