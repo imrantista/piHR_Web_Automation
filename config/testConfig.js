@@ -42,7 +42,8 @@ export const config = {
     "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
     "advanceSalary": 'salary/advancesalary',
     "employeeasset": '/selfservice/myassignedasset',
-    "assetrequisitionrequest": 'employee/assetrequisitionrequest' 
+    "assetrequisitionrequest": 'employee/assetrequisitionrequest',
+    "employeeInTimeOutTime": 'selfservice/myattendance/inouttime',
 
   },
   "data": {
