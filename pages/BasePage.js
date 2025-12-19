@@ -1,10 +1,11 @@
 import { expect } from '@playwright/test';
-import fs from "fs";
-import path from "path";
 import pdfParse from 'pdf-parse';
 import { getViewportNameFromPage } from '../utils/viewports.js';
 import { allure } from 'allure-playwright';
 import apiMap from '../api/apiMap.js';
+import { getAuthTokenForRole } from '../utils/fetchApiRoleUtils.js';
+import fs from 'fs';
+import path from "path";
 const ENV = process.env.ENV || "PIHR_PROD";
 
 export default class BasePage {
@@ -514,6 +515,271 @@ await this.assert({
       window.scrollTo(0, 0);
     });
   }
+
+  /////
+
+  async saveNumberFromLocatorSpanValue(labelToSubPathMap) {
+    const baseDir = path.resolve(process.cwd(), "saveData/txt");
+    const results = {};
+  
+    for (const [labelText, subPath] of Object.entries(labelToSubPathMap)) {
+      const labelSpan = this.page.getByText(labelText, { exact: true });
+      const numberSpan = labelSpan.locator("xpath=preceding-sibling::span");
+  
+      const text = (await numberSpan.textContent())?.trim();
+  
+      if (!text || isNaN(text)) {
+        throw new Error(`Invalid value for "${labelText}": "${text}"`);
+      }
+  
+      const value = Number(text);
+  
+      const filePath = path.join(baseDir, subPath);
+      fs.mkdirSync(path.dirname(filePath), { recursive: true });
+      fs.writeFileSync(filePath, String(value), "utf8");
+  
+      results[labelText] = value;
+      // console.log(results);  
+      console.log("Final collected values:", results);
+    }
+      // ✅ Eligibility check (AFTER all values are collected)
+  if (results["Leave Remaining"] > 0) {
+    console.log("✅ Eligible for Leave");
+  } else {
+    console.log("❌ Not Eligible for Leave");
+  }
+
+  
+    return results;
+  }
+
+async saveTextFromDivLocators() {
+  const filePath = path.resolve(
+    process.cwd(),
+    "saveData",
+    "txt",
+    "supervisor",
+    "supervisorinfo.txt"
+  );
+
+  // auto create folder
+  fs.mkdirSync(path.dirname(filePath), { recursive: true });
+
+  const supervisorContainer = this.page.locator("div.flex.flex-col.items-start");
+  const infoLines = await supervisorContainer.locator("> div").allTextContents();
+
+  if (infoLines.length < 3) {
+    throw new Error(
+      `❌ Supervisor info incomplete. Expected 3 lines but got ${infoLines.length}`
+    );
+  }
+
+  const [supervisor_name, designation_name, supervisor_code] = infoLines.map(t =>
+    (t ?? "").trim()
+  );
+
+  const payload = {
+    supervisor_name,
+    designation_name,
+    supervisor_code,
+  };
+
+  fs.writeFileSync(filePath, JSON.stringify(payload, null, 2), "utf8");
+
+  console.log("✅ Supervisor info saved (JSON) at:", filePath);
+  console.log(supervisor_name);
+  console.log(designation_name);
+  console.log(supervisor_code);
+  
+  return payload;
+}
+
+async compareApiJsonWithTxtFiles({
+  apiJsonSubPath,
+  apiArrayPath = null,
+  apiDataPath = null,
+  apiIndex = 0,
+  comparisons = [],
+}) {
+  const apiBaseDir = path.resolve(process.cwd(), "SaveData/apiResponse");
+  const txtBaseDir = path.resolve(process.cwd(), "SaveData/txt");
+
+  const apiFilePath = path.join(apiBaseDir, apiJsonSubPath);
+
+  // ---------- Read API JSON ----------
+  const apiRaw = fs.readFileSync(apiFilePath, "utf8");
+  const apiData = JSON.parse(apiRaw);
+
+  let apiItem;
+
+  // ---------- Resolve API SOURCE ----------
+  if (apiArrayPath) {
+    const apiArray = apiArrayPath
+      .split(".")
+      .reduce((obj, key) => (obj ? obj[key] : undefined), apiData);
+
+    if (!Array.isArray(apiArray)) {
+      throw new Error(`❌ API path "${apiArrayPath}" is not an array`);
+    }
+
+    if (!apiArray[apiIndex]) {
+      throw new Error(
+        `❌ API array index ${apiIndex} invalid at "${apiArrayPath}"`
+      );
+    }
+
+    apiItem = apiArray[apiIndex];
+  } else if (apiDataPath) {
+    apiItem = apiDataPath
+      .split(".")
+      .reduce((obj, key) => (obj ? obj[key] : undefined), apiData);
+
+    if (!apiItem || typeof apiItem !== "object") {
+      throw new Error(`❌ API object not found at "${apiDataPath}"`);
+    }
+  } else {
+    throw new Error("❌ Either apiArrayPath or apiDataPath must be provided");
+  }
+
+  console.log("\n========== API vs TXT/JSON COMPARISON ==========");
+
+  for (const { label, apiField, txtSubPath, txtLineIndex = 0 } of comparisons) {
+    const apiValue = String(apiItem?.[apiField] ?? "").trim();
+
+    const txtPath = path.join(txtBaseDir, txtSubPath);
+
+    if (!fs.existsSync(txtPath)) {
+      throw new Error(`❌ TXT file not found: ${txtPath}`);
+    }
+
+    const raw = fs.readFileSync(txtPath, "utf8").trim();
+
+    let uiValue = "";
+
+    // ✅ If file content is JSON (even if extension is .txt)
+    if (raw.startsWith("{") || raw.startsWith("[")) {
+      const txtJson = JSON.parse(raw);
+      uiValue = String(txtJson?.[apiField] ?? "").trim();
+    } else {
+      // ✅ Fallback: old line-based TXT
+      const lines = raw
+        .split(/\r?\n/)
+        .map(l => l.trim())
+        .filter(Boolean);
+
+      uiValue = String(lines[txtLineIndex] ?? "").trim();
+    }
+
+    if (!uiValue) {
+      throw new Error(
+        `❌ UI value not found for "${label}" (apiField="${apiField}") in ${txtSubPath}`
+      );
+    }
+
+    console.log(
+      `[${label}] UI: ${uiValue} | API: ${apiValue} | ${
+        uiValue === apiValue ? "✅ MATCH" : "❌ MISMATCH"
+      }`
+    );
+
+    expect(uiValue, `Mismatch for "${label}" → UI vs API.${apiField}`).toBe(apiValue);
+  }
+
+  console.log("===============================================");
+  console.log("✅ All compared values MATCH (UI vs API)\n");
+}
+/* ---------------------------
+   * 🔹 saveApiResponse
+   * --------------------------- */
+
+  /*
+await this.saveApiResponse(
+"myDashboardApi",//apiread from apimap
+  "employee",//role
+  path); //saveDestination file name
+*/
+async saveApiResponse(apiKey, role, outputFileName) {
+  // 🔎 Validate API key
+  const apiConfig = apiMap[apiKey];
+  if (!apiConfig) {
+    throw new Error(`❌ API key "${apiKey}" not found in apiMap`);
+  }
+
+  const url = apiConfig.url;
+
+  // 🔑 Get role-based token
+  const token = await getAuthTokenForRole(role);
+
+  const response = await fetch(url, {
+    method: "GET",
+    headers: {
+      Authorization: `Bearer ${token}`,
+      Accept: "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    console.error("HTTP Error:", response.status, response.statusText);
+    return;
+  }
+
+  const data = await response.json();
+
+  const finalOutput = {
+    apiKey,
+    url,
+    body: data,
+  };
+
+  // 📁 FIXED OUTPUT PATH
+  const outputFolder = path.join(process.cwd(), "SaveData", "apiResponse");
+
+  if (!fs.existsSync(outputFolder)) {
+    fs.mkdirSync(outputFolder, { recursive: true });
+  }
+
+  const outFilePath = path.join(outputFolder, outputFileName);
+
+  fs.writeFileSync(outFilePath, JSON.stringify(finalOutput, null, 2));
+
+  console.log(`✅ Saved API response: ${outFilePath}`);
+}
+
+// /* ---------------------------
+//    * 🔹 assertStatus
+//    * --------------------------- */
+
+//   /*
+// // await this.assertStatus(
+// // "Tanzim Emon", [Employee Name]
+// //  "Pending",//status ["Pending","Approved","Rejected"]
+// // ); 
+
+
+async assertStatus(employeeName, expectedStatus) {
+  console.log(`🔍 Verifying status for employee: "${employeeName}"`);
+  console.log(`📌 Expected status: "${expectedStatus}"`);
+
+  const row = this.page.getByRole('row', { name: employeeName });
+
+  // log if row exists
+  const rowCount = await row.count();
+  console.log(`🧾 Rows found for "${employeeName}": ${rowCount}`);
+
+  const statusCell = row.getByRole('cell', { name: expectedStatus });
+
+  // log status cell count
+  const statusCount = await statusCell.count();
+  console.log(`📊 Status cells found with "${expectedStatus}": ${statusCount}`);
+
+  await expect(
+    statusCell.first(),
+    `❌ Status "${expectedStatus}" not found for ${employeeName}`
+  ).toBeVisible();
+
+  console.log(`✅ Status "${expectedStatus}" is visible for employee "${employeeName}"`);
+}    
+
   // Download file from API response
   // Usage: await this.callAPI({ apiKey: 'downloadFileApi', method: 'GET', role: 'supervisor', expectFile: true, outputFileName: 'myfile.pdf' });
   // Note: Ensure the API is configured to return a file in the response

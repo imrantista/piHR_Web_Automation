@@ -1,5 +1,5 @@
 import { setViewport, Desktop } from '../../../utils/viewports.js';
-import { test, employee } from '../../../utils/sessionUse.js';
+import { test, employee,admin,supervisor } from '../../../utils/sessionUse.js';
 import { reportConfig } from '../../../config/testConfig.js';
 
 test.describe('Dashboard component', () => {
@@ -14,5 +14,25 @@ test.describe('Dashboard component', () => {
       console.log("PDF Path:", pdfPath);
       console.log("JSON Path:", jsonPath);
     });
+  }
+});
+
+// Attendance Reconciliation
+test.describe('Attendance Reconciliation', () => {
+  for (const vp of [Desktop]) {
+    test(`${employee}-${vp.name}Employee can submit Attendance Reconciliation Business/Functional Self-1057`, async ({page, monthWiseAttendancereport,attendanceReconciliationPage,useSession,loginPage }) => {
+      await setViewport(page, vp.size);
+      await useSession(employee);
+      await loginPage.visit();
+      await attendanceReconciliationPage.employeeSubmitNewAttendanceReconciliation();
+
+  });
+    test(`${employee}-${vp.name}Employee can Edit Attendance Reconciliation Business/Functional Self-1058`, async ({page, monthWiseAttendancereport,attendanceReconciliationPage,useSession,loginPage }) => {
+      await setViewport(page, vp.size);
+      await useSession(employee);
+      await loginPage.visit();
+      await attendanceReconciliationPage.employeeUpdateAttendanceReconciliation();
+
+  });
   }
 });
