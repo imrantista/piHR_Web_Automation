@@ -1,5 +1,5 @@
 import dotenv from 'dotenv';
-import {generateRandomId} from '../utils/generateRandomNumber.js';
+import { generateRandomId } from '../utils/generateRandomNumber.js';
 dotenv.config();
 
 export const config = {
@@ -17,7 +17,7 @@ export const config = {
     "supervisorEmail": process.env.SUPERVISOR_EMAIL,
     "supervisorPassword": process.env.SUPERVISOR_PASSWORD,
     "resetPasswordEmail": 'shabitalahi123@gmail.com',
-    "newPassword":'Pihr@' + generateRandomId(100,999),
+    "newPassword": 'Pihr@' + generateRandomId(100, 999),
     "employeeAdminEmail": process.env.EMPLOYEE_ADMIN_EMAIL,
     "employeeAdminPassword": process.env.EMPLOYEE_ADMIN_PASSWORD,
     "deactivatedAdmin": process.env.DEACTIVATED_ADMIN,
@@ -40,23 +40,25 @@ export const config = {
     "myAdvanceSalary": 'selfservice/advancesalary',
     "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
     "advanceSalary": 'salary/advancesalary',
+    "myTask": 'selfservice/task',
+    "task": 'employee/task',
 
   },
   "data": {
-     "emplyeeName":"Tanzim Emon",
-     "leaveType":"Annual Leave",
-     "leaveStartDate":"28-12-2025",
-     "leaveEndDate":"30-12-2025",
-     "leavePurpose":"Vacation",
-     "deleteEmployeeName":"Tanzim"
+    "emplyeeName": "Tanzim Emon",
+    "leaveType": "Annual Leave",
+    "leaveStartDate": "28-12-2025",
+    "leaveEndDate": "30-12-2025",
+    "leavePurpose": "Vacation",
+    "deleteEmployeeName": "Tanzim"
   },
   "visitApplicationData": {
-     "visitFromtDate":"19-12-2025",
-     "visitEndDate":"20-12-2025",
-     "visitPurpose":"Vacation",
-     "employeeName":"Tanzim Emon",
-     "updatedVisitPurpose":"Client Visit",
-     "updatedVisitFromDate":"18-12-2025",
+    "visitFromtDate": "19-12-2025",
+    "visitEndDate": "20-12-2025",
+    "visitPurpose": "Vacation",
+    "employeeName": "Tanzim Emon",
+    "updatedVisitPurpose": "Client Visit",
+    "updatedVisitFromDate": "18-12-2025",
   },
   "deleteApplicationData": {
     "visitReason": "Vacation"
@@ -109,19 +111,39 @@ export const validUsers = [
   { name: 'Admin', email: config.credentials.adminEmail, password: config.credentials.adminPassword },
   { name: 'Employee', email: config.credentials.employeeEmail, password: config.credentials.employeePassword },
   { name: 'Emplyee Admin', email: config.credentials.employeeAdminEmail, password: config.credentials.employeeAdminPassword },
-  { name : 'Supervisor', email: config.credentials.supervisorEmail, password: config.credentials.supervisorPassword }
+  { name: 'Supervisor', email: config.credentials.supervisorEmail, password: config.credentials.supervisorPassword }
 ];
 
 export const branches = ['Banani', 'bKash', 'PiHR', 'Financfy', 'Kathmandu', 'Klikit', 'Mirpur DOHS', 'PiHR Support Rajshahi', 'Rajshahi'];
 
 export const invalidMobileNumbers = [
-    "017",         
-    "01712345678912414",     
-    "abc12345678",      
-    "01712@#$%1"        
+  "017",
+  "01712345678912414",
+  "abc12345678",
+  "01712@#$%1"
 ];
 //Attendance report config data
 export const reportConfig = {
   month: 12,
   year: 2025
+};
+
+export const taskStatusOptions = [
+  "Pending",
+  "In Progress",
+  "Completed",
+  "Uncompleted ",
+  "Need More Time"
+];
+
+export const taskPriorityOptions = [
+  "Low",
+  "Medium",
+  "High",
+  "My Priority"
+];
+
+export const taskEmployee = {
+  code: "00000276",
+  name: "Tanzim Emon"
 };
