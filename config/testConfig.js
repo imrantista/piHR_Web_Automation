@@ -33,10 +33,17 @@ export const config = {
     "monthWiseAttendanceReport": 'selfservice/selfattendancereport/selfattendancereport',
     "visitapplication": 'selfservice/visit',
     "supervisorVisitApplication": '/selfservice/appapproval?page_size=10&page_number=1',
+    "admidVisitApplication" : '/leave/visit?page_size=10&page_number=1',
 
     "myClaim": 'selfservice/claim',
     "claimRequest": 'salary/employeeclaimrequest',
     "claim": 'salary/claim',
+    "myAdvanceSalary": 'selfservice/advancesalary',
+    "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
+    "advanceSalary": 'salary/advancesalary',
+    "employeeasset": '/selfservice/myassignedasset',
+    "assetrequisitionrequest": 'employee/assetrequisitionrequest' 
+
   },
   "data": {
     //  "emplyeeName":"Tanzim Emon",
@@ -61,6 +68,20 @@ export const config = {
   },
   "deleteApplicationData": {
     "visitReason": "Vacation"
+  },
+  "viewEmployeeDetailsData": {
+    "employeeName" : "Tanzim  Emon",
+    "employeeId"   : "00000276",
+    "employeeRole" : "SQA Engineer L-II",
+    "joinDate"     : "06-10-2022",
+    "jobStatus"    : "Active",
+    "branch"       : "Banani",
+    "department"   : "SQA",
+    "fromDate"     : "02-12-2025, 12:00 AM",
+    "endDate"      : "03-12-2025, 12:00 AM",
+    "dayCount"     : "2",
+    "visitPurpose" : "d",
+    "status"       : "Pending"
   }
 }
 
@@ -125,4 +146,8 @@ export const invalidMobileNumbers = [
 export const reportConfig = {
   month: 12,
   year: 2025
+};
+//Asset config data
+export const assetConfig = {
+  emplyeeName: "Tanzim"
 };

@@ -287,10 +287,17 @@ docker compose up -d allure allure-ui
     │   │   │   ├── employeeWiseCashDistributionPage.js
     │   │   │   ├── attendanceBasedAllowancePolicyPage.js
     │   │   │   └── attendanceBasedAllowancePolicyMappingPage.js
-    │   │   └── Claim/
-    │   │       ├── claimPage.js
-    │   │       ├── claimCategoryPage.js
-    │   │       └── claimSettingPage.js
+    │   │   ├── Claim/
+    │   │   │   ├── claimPage.js
+    │   │   │   ├── claimCategoryPage.js
+    │   │   │   └── claimSettingPage.js
+    │   │   ├── AdvanceSalary/
+    │   │   │   └── advanceSalary.js
+    │   │   └── GratuityServiceBenefits/
+    │   │       ├── policyPage.js
+    │   │       ├── calculationPage.js
+    │   │       └── reportPage.js
+    │   │       
     │   ├── Employee/
     │   │   ├── EmployeeDashboard/
     │   │   │   └── employeeDashboardPage.js
