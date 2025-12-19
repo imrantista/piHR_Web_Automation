@@ -44,6 +44,7 @@ export const config = {
     "employeeasset": '/selfservice/myassignedasset',
     "assetrequisitionrequest": 'employee/assetrequisitionrequest',
     "employeeInTimeOutTime": 'selfservice/myattendance/inouttime',
+    "attendancedashboardAdmin": 'attendance/attendancedashboard',
 
   },
   "data": {
@@ -150,5 +151,9 @@ export const reportConfig = {
 };
 //Asset config data
 export const assetConfig = {
+  emplyeeName: "Tanzim"
+};
+//Attendance config data
+export const attendanceConfig = {
   emplyeeName: "Tanzim"
 };

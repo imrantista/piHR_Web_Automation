@@ -1,8 +1,10 @@
 import { setViewport, Desktop } from '../../../utils/viewports.js';
 import { test, employee,admin,supervisor } from '../../../utils/sessionUse.js';
 import { reportConfig } from '../../../config/testConfig.js';
+import { config } from '../../../config/testConfig.js';
+import { attendanceConfig } from '../../../config/testConfig.js';
 
-test.describe('Dashboard component', () => {
+test.describe('Attendance Report', () => {
   for (const vp of [Desktop]) {
     test(`Download & Convert Attendance PDF to JSON`, async ({ monthWiseAttendancereport }) => {
       const { pdfPath, jsonPath } = await monthWiseAttendancereport.downloadMonthWiseAttendancePDF({
@@ -16,6 +18,43 @@ test.describe('Dashboard component', () => {
     });
   }
 });
+
+test.describe('Employee Daily Attendance', () => {
+  for (const vp of [Desktop]) {
+    test(`${employee} Verify Submit Functionality of In-Time @Business/Functional Self-1050`, 
+    async ({ page, dailyAttendancePage, useSession, loginPage }) => {
+      await setViewport(page, vp.size);
+      await useSession(employee);
+      await loginPage.visit(config.slug.employeeInTimeOutTime);
+      await dailyAttendancePage.submitInTimeByEmployee();
+  });
+  } 
+  for (const vp of [Desktop]) {
+    test(`${employee} Verify Submit Functionality of Out-Time @Business/Functional Self-1051`, 
+    async ({ page, dailyAttendancePage, useSession, loginPage }) => {
+      await setViewport(page, vp.size);
+      await useSession(employee);
+      await loginPage.visit(config.slug.employeeInTimeOutTime);
+      await dailyAttendancePage.submitOutTimeByEmployee();
+  });
+  } 
+  
+ for (const vp of [Desktop]) {
+  test(`${employee,admin} Employee attendance reflected in admin view @Business/Functional Self-1052`, 
+    async ({ page, dailyAttendancePage, loginPage, useSession }) => {
+      await setViewport(page, vp.size);
+      await useSession(employee);
+      await loginPage.visit(config.slug.employeeInTimeOutTime);
+      const { inTime, outTime } = await dailyAttendancePage.getEmployeeAttendanceTimes();
+      await useSession(admin);
+      await loginPage.visit(config.slug.attendanceDashboard);
+      await dailyAttendancePage.verifyEmployeeAttendanceByAdmin(attendanceConfig.emplyeeName, inTime, outTime);
+    }
+  );
+}
+
+});
+
 
 // Attendance Reconciliation
 test.describe('Attendance Reconciliation', () => {
