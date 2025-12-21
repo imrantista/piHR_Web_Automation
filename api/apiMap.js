@@ -48,6 +48,8 @@ const apiPaths = {
   leaveCreateApi: '/api/v2/leave/admin-apply-leave',
   leaveDeleteApi: '/api/v2/leave',
   manageUserApi: 'api/v2/users',
+  hierarchyLeaveApi: '/api/v2/my-dashboard/hierarchy',
+  myDashboardApi: '/api/v2/my-dashboard',
 
   //User Claim APIs
   saveUserClam: '/api/v2/claim/save-claim',

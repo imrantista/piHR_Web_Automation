@@ -1,4 +1,4 @@
-import { request } from "@playwright/test";
+import { request, expect } from "@playwright/test";
 import { API_BASE_URL } from '../playwright.config.js';
 import { getAccessToken } from "./tokenHelper.js";
 import apiMap from "../api/apiMap.js";
@@ -41,4 +41,53 @@ export async function captureApiJson(page, apiKey, triggerFunc = null) {
 
   const data = await apiResponse.json();
   return data;
+}
+
+
+export async function validateDashboardWithApi(apiLeaveInfo, apiSupervisorInfo) {
+  const {
+    leave_type_name,
+    leave_taken,
+    remaining_leaves,
+    total_leaves
+  } = apiLeaveInfo;
+
+  const {
+    supervisor_name,
+    designation_name,
+    supervisor_code
+  } = apiSupervisorInfo;
+
+  // ----------------------------------------
+  // 🌿 LEAVE OVERVIEW VALIDATION
+  // ----------------------------------------
+
+  await expect(this.leaveOverview_remainingText)
+    .toContainText(`${remaining_leaves} Leave Remaining`);
+
+  await expect(this.leaveOverview_takenText)
+    .toContainText(`${leave_taken} Leave Taken`);
+
+  // ----------------------------------------
+  // 🌿 REMAINING CARD VALIDATION
+  // ----------------------------------------
+
+  await expect(this.remaining_header).toBeVisible();
+
+  await expect(this.page.getByText(leave_type_name)).toBeVisible();
+
+  await expect(
+    this.page.getByText(`${remaining_leaves}/${total_leaves}`)
+  ).toBeVisible();
+
+  // ----------------------------------------
+  // 🌿 SUPERVISOR SECTION VALIDATION
+  // ----------------------------------------
+
+  await this.hierarchy_section.click();
+  await this.hierarchy_supervisorTab.click();
+
+  await expect(this.page.getByText(supervisor_name)).toBeVisible();
+  await expect(this.page.getByText(designation_name)).toBeVisible();
+  await expect(this.page.getByText(supervisor_code)).toBeVisible();
 }

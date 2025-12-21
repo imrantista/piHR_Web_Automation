@@ -1,6 +1,6 @@
 import { expect } from '@playwright/test';
 import { setViewport, Laptop, Mobile, Desktop, Tablet } from '../../../utils/viewports.js';
-import { test, allAdmin, admin ,employee, supervisor} from '../../../utils/sessionUse.js';
+import { test, allAdmin, admin,employee, supervisor } from '../../../utils/sessionUse.js';
 import { config } from '../../../config/testConfig.js';
 
 // Helper function to setup dashboard
@@ -137,6 +137,134 @@ test.describe('Dashboard Leave Tests', () => {
   });*/
 });
 
+// //Employee Management Leave page
+test.describe('Employee Management Leave Page Tests', () => {
+ 
+    for (const vp of [Desktop]){
+      test(`${employee}-${vp.name} Verify Employee Leave Eligibility : @Business/Functional Self-1001`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.verifyLeaveEligibility();
+      });
+
+      test(`${employee}-${vp.name} Apply Leave : @Business/Functional Self-1002`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+
+        
+      });
+      test(`${supervisor}-${vp.name} Supervisor Reject Leave Request : @Business/Functional Self-1004`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.verifyLeaveEligibility();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.supervisorRejectLeave();
+        
+      });
+      test(`${supervisor,employee}-${vp.name} Supervisor Accept Leave Request : @Business/Functional Self-1003`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.approveLeaveApplication();
+      });
+
+     test(`${admin}-${vp.name} Admin Verify Leave Application : @Business/Functional123 Self-1005`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(admin);
+        await loginPage.visit();
+        await leavepage.adminVerifyLeaveApplication();
+    });
+
+     test(`${supervisor,employee}-${vp.name} Supervisor Accept Leave Request, Employee Check Leave Status After Accept and Before Accept : @Business/Functional self-1006`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit('selfservice/mydashboard');
+        await leavepage.verifyLeaveEligibility('employeeLeaveInformation.json');
+        await leavepage.compareUIAndApiLeaveTakenAndLeaveRemainingValueBreforeApproval();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.approveLeaveApplication();
+        await useSession(employee);
+        await loginPage.visit('selfservice/mydashboard');
+        await leavepage.verifyLeaveEligibility('AfterLeaveEmployeeLeaveInformation.json');
+        await leavepage.afterApproveCompareUIAndApiLeaveTakenAndLeaveRemainingValueBreforeApproval();
+    });
+
+    test(`${employee}-${vp.name} Update Leave Application : @Business/Functional123 Self-1008`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await leavepage.updateLeaveApplication(config.data.updateLeaveEndDate);
+    });
+
+    test(`${employee}-${vp.name} Delete Leave Application : @Business/Functional123 Self-1009`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.deleteLeaveApplication();
+    });
+
+    test(`${supervisor}-${vp.name} Supervisor Edit Leave Application : @Business/Functional123 Self-1011`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(supervisor);
+        await loginPage.visit();
+        await leavepage.supervisorEditLeaveApplication(config.data.supEditLeaveDate);
+    });
+
+       test(`${admin}-${vp.name} Admin Delete Leave Application : @Business/Functional123 Self-1013`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(admin);
+        await loginPage.visit();
+        await leavepage.adminRejectPendingLeaveApplication();
+    });
+
+    test(`${admin}-${vp.name} Admin Approve Leave Application : @Business/Functional123 Self-1012`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(admin);
+        await loginPage.visit();
+        await leavepage.adminApproveLeaveApplication();
+    });
+
+    test(`${admin}-${vp.name} Admin Update and Approve Leave Application : @Business/Functional123 Self-1014`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.applyLeave(config.data.leaveStartDate,config.data.leaveEndDate,config.data.leavePurpose);
+        await useSession(admin);
+        await loginPage.visit();
+        await leavepage.adminEditLeaveApplication();
+    });
+    test(`${employee}-${vp.name} Admin Update and Approve Leave Application : @Business/Functional123 Self-1014`,async({page,leavepage,loginPage,useSession})=>{
+        await setViewport(page, vp.size);
+        await useSession(employee);
+        await loginPage.visit();
+        await leavepage.checkIfLeavePresentOrNot();
+    });
+}
+});
 for (const vp of [Desktop]) {
     test(`Employee-${vp.name} Verify "Leave Remaining" count and dashboard validations: @Self-1016`,
     async ({ page, loginPage, useSession, visitApplication }) => {
@@ -238,3 +366,114 @@ for (const vp of [Desktop]) {
       await visitApplication.deleteLeave(config.deleteApplicationData.visitReason);
 });
  };
+ 
+ //Approve Visit Application As Supervisor
+for (const vp of [Desktop]) {
+  test(`Supervisor-${vp.name} Approve Visit Application @ Self-1020`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+   
+      await setViewport(page, vp.size);
+      await useSession(supervisor[0]);
+      await loginPage.visit(config.slug.supervisorVisitApplication);
+
+      await visitApplication.approveVisitApplication();
+});
+};
+
+//Reject Visit Application As Supervisor
+for (const vp of [Desktop]) {
+  test(`Supervisor-${vp.name} Reject Visit Application @ Self-1021`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+   
+      await setViewport(page, vp.size);
+      await useSession(supervisor[0]);
+      await loginPage.visit(config.slug.supervisorVisitApplication);
+
+      await visitApplication.rejectVisitApplication();
+});
+};
+
+//Edit Visit Application As Supervisor
+for (const vp of [Desktop]) {
+  test(`Supervisor-${vp.name} Edit Visit Application as Supervisor @ Self-1022`,
+    async ({ page, loginPage, useSession, visitApplication }) => {
+   
+      await setViewport(page, vp.size);
+      await useSession(supervisor[0]);
+      await loginPage.visit(config.slug.supervisorVisitApplication);
+      await visitApplication.editVisitApplicationAsSupervisor();
+});
+};
+
+//View Visit Application Details As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name} View Visit Application Details as Admin @ Self-1023`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+         const employeeData = await visitApplication.visitDetails();
+        console.log('Employee Details:', employeeData);
+    });
+  }
+}
+
+//Approve Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Approve as Admin @ Self-1024`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitApproveAsAdmin();
+    });
+  }
+}
+
+//Reject Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Reject as Admin @ Self-1025`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitRejectAsAdmin();
+    });
+  }
+}
+
+//Edit Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Updated as Admin @ Self-1026`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitEditAsAdmin();
+    });
+  }
+}
+
+//Delete Visit Application As Admin
+for (const adminUser of allAdmin) {
+  for (const vp of [Desktop]) {
+    test(`${adminUser}-${vp.name}  Visit Application Delete as Admin @ Self-1027`,
+      async ({ page, loginPage, useSession, visitApplication }) => {
+     
+        await setViewport(page, vp.size);
+        await useSession(adminUser);
+        await loginPage.visit(config.slug.admidVisitApplication);
+        await visitApplication.visitDeleteAsAdmin();
+    });
+  }
+}
+
+
