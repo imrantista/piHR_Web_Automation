@@ -1,5 +1,5 @@
-import dotenv from 'dotenv';
 import {generateRandomId} from '../utils/generateRandomNumber.js';
+import dotenv from 'dotenv';
 dotenv.config();
 
 export const config = {
@@ -41,17 +41,24 @@ export const config = {
     "myAdvanceSalary": 'selfservice/advancesalary',
     "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
     "advanceSalary": 'salary/advancesalary',
+    "employeeasset": '/selfservice/myassignedasset',
+    "assetrequisitionrequest": 'employee/assetrequisitionrequest' ,
     "documentRequest": 'selfservice/mydocumentrequest',
     "adminDocumentRequest" : 'employee/employeedocumentrequest'
 
   },
   "data": {
-     "emplyeeName":"Tanzim Emon",
+    //  "emplyeeName":"Tanzim Emon",
      "leaveType":"Annual Leave",
-     "leaveStartDate":"28-12-2025",
-     "leaveEndDate":"30-12-2025",
+     "leaveStartDate":"13-12-2025",
+     "leaveEndDate":"15-12-2025",
      "leavePurpose":"Vacation",
-     "deleteEmployeeName":"Tanzim"
+     "deleteEmployeeName":"Tanzim",
+     "updateLeaveEndDate":"24-12-2025",
+     "supEditLeaveDate":"24-12-2025",
+     "adminEditLeaveDate":"24-12-2025",
+     "newLeaveStartDate": "",
+     "newLeaveEndDate": "",
   },
   "visitApplicationData": {
      "visitFromtDate":"19-12-2025",
@@ -147,4 +154,8 @@ export const invalidMobileNumbers = [
 export const reportConfig = {
   month: 12,
   year: 2025
+};
+//Asset config data
+export const assetConfig = {
+  emplyeeName: "Tanzim"
 };
