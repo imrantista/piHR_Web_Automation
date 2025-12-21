@@ -41,6 +41,8 @@ export const config = {
     "myAdvanceSalary": 'selfservice/advancesalary',
     "approveApplication": 'selfservice/appapproval?page_size=10&page_number=1',
     "advanceSalary": 'salary/advancesalary',
+    "documentRequest": 'selfservice/mydocumentrequest',
+    "adminDocumentRequest" : 'employee/employeedocumentrequest'
 
   },
   "data": {
@@ -75,7 +77,13 @@ export const config = {
     "dayCount"     : "2",
     "visitPurpose" : "d",
     "status"       : "Pending"
-  }
+  },
+   "documentRequest": {
+    "documentPurpose": "Personal",
+    "remarks": "NOC",
+    "expectedDate": "22-12-2025",
+    "updatedDocumentPurpose": "Official",
+  },
 }
 
 export const invalidCredentials = [
