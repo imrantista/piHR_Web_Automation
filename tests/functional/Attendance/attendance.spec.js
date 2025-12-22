@@ -4,7 +4,7 @@ import { breakTimeConfig, reportConfig } from '../../../config/testConfig.js';
 import { config } from '../../../config/testConfig.js';
 import { attendanceConfig } from '../../../config/testConfig.js';
 
-test.describe('Attendance Report', () => {
+test.describe('Dashboard component', () => {
   for (const vp of [Desktop]) {
     test(`Download & Convert Attendance PDF to JSON`, async ({ monthWiseAttendancereport }) => {
       const { pdfPath, jsonPath } = await monthWiseAttendancereport.downloadMonthWiseAttendancePDF({
