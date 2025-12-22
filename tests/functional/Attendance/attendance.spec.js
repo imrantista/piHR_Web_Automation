@@ -12,7 +12,6 @@ test.describe('Dashboard component', () => {
         year: reportConfig.year,
         role: employee
       });
-
       console.log("PDF Path:", pdfPath);
       console.log("JSON Path:", jsonPath);
     });
