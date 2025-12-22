@@ -24,8 +24,16 @@ export class DailyAttendancePage extends BasePage {
   detailsBtn = () => this.page.getByRole("main").getByRole("button");
   inTimeColumn = () => this.page.locator('th:has-text("In Time")').locator("..").locator("td");
   outTimeColumn = () => this.page.locator('th:has-text("Out Time")').locator("..").locator("td");
-
-
+  //
+  inTimeDiv = () => this.page.locator('div.text-sm.text-center.text-gray-500:has-text("Your In Time")').first();
+  outTimeDiv = () => this.page.locator('div.text-sm.text-center.text-gray-500:has-text("Your Out Time")').first();
+  employeeRow = () => this.page.locator('table tbody tr').first();
+  employeeNameCell = (row) => row.locator('td:nth-of-type(1) p.font-normal');
+  employeeInTimeCell = (row) => row.locator('td:nth-of-type(3) span');
+  employeeOutTimeCell = (row) => row.locator('td:nth-of-type(4) span');
+  searchBox = () => this.page.locator('input[placeholder="Search"]');
+  saveBtn = () => this.page.locator('button:has-text("Save")');
+  
   //Utility
   async isVisible(locator) {
     return await locator().isVisible().catch(() => false);
@@ -123,37 +131,35 @@ export class DailyAttendancePage extends BasePage {
       await this.submitOutTimeByEmployee();
     }
   }
+getText = async (element) => {
+    await expect(element).toBeVisible({ timeout: 5000 });
+    return (await element.textContent())?.trim() || '';
+}
 // Get employee in/out time from employee page
-async getEmployeeAttendanceTimes() {
-    const inTimeDiv = this.page.locator('div.text-sm.text-center.text-gray-500:has-text("Your In Time")').first();
-    const outTimeDiv = this.page.locator('div.text-sm.text-center.text-gray-500:has-text("Your Out Time")').first();
-    await expect(inTimeDiv).toBeVisible({ timeout: 5000 });
-    await expect(outTimeDiv).toBeVisible({ timeout: 5000 });
-    const inTime = (await inTimeDiv.locator('span').nth(1).textContent())?.trim() || '';
-    const outTime = (await outTimeDiv.locator('span').nth(1).textContent())?.trim() || '';
+getEmployeeAttendanceTimes = async () => {
+    const inTime = await this.getText(this.inTimeDiv().locator('span').nth(1));
+    const outTime = await this.getText(this.outTimeDiv().locator('span').nth(1));
     expect(inTime).not.toBe('');
     expect(outTime).not.toBe('');
     console.log(`[Step 6] Final values – In Time: "${inTime}", Out Time: "${outTime}"`);
     return { inTime, outTime };
 }
-
-
 // Verify employee attendance in admin Quick View
-async verifyEmployeeAttendanceByAdmin(employeeName, expectedInTime, expectedOutTime) {
+verifyEmployeeAttendanceByAdmin = async (employeeName, expectedInTime, expectedOutTime) => {
     await this.searchBox().fill(employeeName);
     await this.searchBox().press('Enter');
-    await this.page.waitForTimeout(2000);
-    const row = this.page.locator('table tbody tr').first();
-    await expect(row).toBeVisible({ timeout: 5000 });
-    const nameCell = await row.locator('td:nth-of-type(1) p.font-normal').textContent();
-    const inTime = await row.locator('td:nth-of-type(3) span').textContent();
-    const outTime = await row.locator('td:nth-of-type(4) span').textContent();
-    console.log(`[Admin Page] Name Cell: ${nameCell?.trim()}`);
-    console.log(`[Admin Page] In Time: ${inTime?.trim()}, Out Time: ${outTime?.trim()}`);
+    const row = this.employeeRow();
+    await expect(row).toBeVisible({ timeout: 10000 });
+    const nameCell = await this.getText(this.employeeNameCell(row));
+    const inTime = await this.getText(this.employeeInTimeCell(row));
+    const outTime = await this.getText(this.employeeOutTimeCell(row));
+    console.log(`[Admin Page] Name Cell: ${nameCell}`);
+    console.log(`[Admin Page] In Time: ${inTime}, Out Time: ${outTime}`);
     console.log(`[Expected] In Time: ${expectedInTime}, Out Time: ${expectedOutTime}`);
-    expect(nameCell?.trim().toLowerCase()).toContain(employeeName.toLowerCase());
-    expect(inTime?.trim()).toBe(expectedInTime);
-    expect(outTime?.trim()).toBe(expectedOutTime);
-    console.log(` Verified In Time (${expectedInTime}) and Out Time (${expectedOutTime}) for ${employeeName} in Admin Quick View`);
+    expect(nameCell.toLowerCase()).toContain(employeeName.toLowerCase());
+    expect(inTime).toBe(expectedInTime);
+    expect(outTime).toBe(expectedOutTime);
+    console.log(`Verified In Time (${expectedInTime}) and Out Time (${expectedOutTime}) for ${employeeName} in Admin Quick View`);
 }
+
 }
