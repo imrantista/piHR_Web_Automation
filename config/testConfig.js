@@ -157,3 +157,6 @@ export const assetConfig = {
 export const attendanceConfig = {
   emplyeeName: "Tanzim"
 };
+export const breakTimeConfig = {
+  emplyeeName: "Tanzim"
+};
