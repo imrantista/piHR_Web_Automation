@@ -47,7 +47,9 @@ export const config = {
     "task": 'employee/task',
     "myDashboard": 'selfservice/mydashboard',
     "documentRequest": 'selfservice/mydocumentrequest',
-    "adminDocumentRequest" : 'employee/employeedocumentrequest'
+    "adminDocumentRequest" : 'employee/employeedocumentrequest',
+    "employeeInTimeOutTime": 'selfservice/myattendance/inouttime',
+    "attendancedashboardAdmin": 'attendance/attendancedashboard'
 
   },
   "data": {
@@ -181,4 +183,11 @@ export const taskPriorityOptions = [
 export const taskEmployee = {
   code: "00000276",
   name: "Tanzim Emon"
+};
+//Attendance config data
+export const attendanceConfig = {
+  emplyeeName: "Tanzim"
+};
+export const breakTimeConfig = {
+  emplyeeName: "Tanzim"
 };
