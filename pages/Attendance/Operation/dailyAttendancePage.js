@@ -149,6 +149,7 @@ getEmployeeAttendanceTimes = async () => {
 verifyEmployeeAttendanceByAdmin = async (employeeName, expectedInTime, expectedOutTime) => {
     await this.searchBox().fill(employeeName);
     await this.searchBox().press('Enter');
+    await this.page.waitForTimeout(2000);
     const row = this.employeeRow();
     await expect(row).toBeVisible({ timeout: 10000 });
     const nameCell = await this.getText(this.employeeNameCell(row));
