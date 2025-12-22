@@ -95,6 +95,7 @@ export class DailyAttendancePage extends BasePage {
     await expect(this.successToaster()).toBeVisible({ timeout: 5000 });
     console.log("Break time started successfully");
   }
+  // Verify Admin Can See Which Employee Is Currently on Break
   async adminCanSeeEmployeeBreakStatus(employeeName) {
     await expect(this.onBreakNowCard()).toBeVisible({ timeout: 5000 });
     await this.expectAndClick(this.onBreakNowCard(), "On Break Now card");
