@@ -106,6 +106,8 @@ jobs:
           echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}"   >> .env
           echo "DEACTIVATED_ADMIN=${{ secrets.DEACTIVATED_ADMIN }}"   >> .env
           echo "DEACTIVATED_PASSWORD=${{ secrets.DEACTIVATED_PASSWORD }}" >> .env
+          echo "SUPERVISOR_EMAIL=${{ secrets.SUPERVISOR_EMAIL }}" >> .env
+          echo "SUPERVISOR_PASSWORD=${{ secrets.SUPERVISOR_PASSWORD }}" >> .env
           echo "ENV=${ENV}" >> .env
           echo "----- .env (sanitized) -----"
           grep -E '^(ENV|BASE_URL)' .env || true
