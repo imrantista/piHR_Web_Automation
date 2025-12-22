@@ -45,6 +45,7 @@ export const config = {
     "assetrequisitionrequest": 'employee/assetrequisitionrequest',
     "myTask": 'selfservice/task',
     "task": 'employee/task',
+    "myDashboard": 'selfservice/mydashboard',
 
   },
   "data": {
