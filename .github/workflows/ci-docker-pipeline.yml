@@ -35,12 +35,18 @@ jobs:
         shell: bash
         run: |
           set -e
-          echo "BASE_URL_PIHR_PROD=${{ vars.BASE_URL_PIHR_PROD }}"   >> .env
-          echo "BASE_URL_PIHR_QA=${{ vars.BASE_URL_PIHR_QA }}"       >> .env
-          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"               >> .env
-          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"         >> .env
-          echo "EMPLOYEE_EMAIL=${{ secrets.EMPLOEE_EMAIL }}"         >> .env
-          echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}"   >> .env
+          echo "BASE_URL_PIHR_PROD=${{ vars.BASE_URL_PIHR_PROD }}" >> .env
+          echo "BASE_URL_PIHR_QA=${{ vars.BASE_URL_PIHR_QA }}" >> .env
+          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> .env
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> .env
+          echo "EMPLOYEE_ADMIN_EMAIL=${{ secrets.EMPLOYEE_ADMIN_EMAIL }}" >> .env
+          echo "EMPLOYEE_ADMIN_PASSWORD=${{ secrets.EMPLOYEE_ADMIN_PASSWORD }}" >> .env
+          echo "EMPLOYEE_EMAIL=${{ secrets.EMPLOYEE_EMAIL }}" >> .env
+          echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}" >> .env
+          echo "DEACTIVATED_ADMIN=${{ secrets.DEACTIVATED_ADMIN }}" >> .env
+          echo "DEACTIVATED_PASSWORD=${{ secrets.DEACTIVATED_PASSWORD }}" >> .env
+          echo "SUPERVISOR_EMAIL=${{ secrets.SUPERVISOR_EMAIL }}" >> .env
+          echo "SUPERVISOR_PASSWORD=${{ secrets.SUPERVISOR_PASSWORD }}" >> .env
           echo "ENV=${ENV}" >> .env
           echo "----- .env (sanitized) -----"
           grep -E '^(ENV|BASE_URL)' .env || true
@@ -203,7 +209,7 @@ jobs:
         run: |
           echo "## ✅ Docker Test Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "[👉 View Docker Report](https://ashfaq-viva.github.io/PIHR.webAutomation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
+          echo "[👉 View Docker Report](https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
 # ===============================
 # 🔽 Sent Email of results
 # ===============================
@@ -228,11 +234,11 @@ jobs:
           if [ -f "$REPORT_PATH" ]; then
             jq -r '"PIHR Automation Report(Docker): Passed: \(.statistic.passed) | Failed: \(.statistic.failed) | Total: \(.statistic.total)"' $REPORT_PATH > summary.txt
             echo "" >> summary.txt
-            echo "👉 View full report(Docker): https://ashfaq-viva.github.io/PIHR.webAutomation/projects/${{ env.REPORT_ID }}" >> summary.txt
+            echo "👉 View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> summary.txt
           else
             echo "No summary found. Check if tests executed correctly." > summary.txt
             echo "" >> summary.txt
-            echo "👉 View full report(Docker): https://ashfaq-viva.github.io/PIHR.webAutomation/projects/${{ env.REPORT_ID }}" >> summary.txt
+            echo "👉 View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> summary.txt
           fi
         shell: /usr/bin/bash -e {0}
         env:
@@ -246,5 +252,4 @@ jobs:
 
       - name: Send Email with Allure Report
         run: |
-          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  ashfaq.ahmed@vivasoftltd.com
-
+          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  mostafa.imran@vivasoftltd.com
