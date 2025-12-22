@@ -114,7 +114,7 @@ jobs:
 # Run Test
 
       - name: Run Playwright Tests
-        run: npx cross-env ENV=${ENV} playwright test --grep "@Business/Functional
+        run: npx cross-env ENV=${ENV} playwright test --grep @Business/Functional
 
 # Always run uploads even if global setup/tests fail
       - name: Upload Global Setup Artifacts
