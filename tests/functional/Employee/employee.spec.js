@@ -227,3 +227,56 @@ for (const vp of [Desktop]) {
     );
   }
 });
+
+
+test.describe("Self Dashboard Tests", () => {
+    test.beforeEach(async ({ page, loginPage, useSession }) => {
+        await setViewport(page, Desktop.size);
+        await useSession('employee');
+        await loginPage.visit(config.slug.myDashboard);
+    });
+
+    test("Verify Employee Can View Task Summary on Dashboard : @Business/Functional Self-1100", async ({ page, selfDashboard }) => {
+        await selfDashboard.uploadProfileImageAndVerify();
+    });
+
+    test("Verify Profile Information Displays Correct Employee Details : @Business/Functional Self-1101", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyProfileInformation();
+    });
+
+    test("Verify Leave Spent Count Displays Correctly : @Business/Functional Self-1102", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyLeaveSpentCount();
+    });
+
+    test("Verify Visit Taken Count Displays Correctly : @Business/Functional Self-1103", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyVisitTakenCount();
+    });
+
+    test("Verify Missed Attendance Count Displays Correctly : @Business/Functional Self-1104", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyMissedAttendanceCount();
+    });
+
+    test("Verify Asset Assigned Count Displays Correctly : @Business/Functional Self-1105", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyAssetAssignedCount();
+    });
+
+    test("Verify Pending Approval Displays Correct Subordinate Applications : @Business/Functional Self-1106", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyPendingApprovalSection();
+    });
+
+    test("Verify Leave Overview Chart Displays Correct Leave Counts and Types : @Business/Functional Self-1107", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyLeaveOverviewChart();
+    });
+
+    test("Verify Supervisor Tab Displays Correct Supervisor List : @Business/Functional Self-1108", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifySupervisorTab();
+    });
+
+    test("Verify Subordinates Tab Displays All Subordinate Data : @Business/Functional Self-1109", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifySubordinateTab();
+    });
+
+    test("Verify Attendance Overview Calendar and Graph Displays Correct Data : @Business/Functional Self-1110", async ({ page, selfDashboard }) => {
+        await selfDashboard.verifyAttendanceCalendarColors();
+    });
+});
