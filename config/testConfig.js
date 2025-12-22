@@ -45,6 +45,8 @@ export const config = {
     "assetrequisitionrequest": 'employee/assetrequisitionrequest',
     "myTask": 'selfservice/task',
     "task": 'employee/task',
+    "documentRequest": 'selfservice/mydocumentrequest',
+    "adminDocumentRequest" : 'employee/employeedocumentrequest'
 
   },
   "data": {
@@ -84,7 +86,13 @@ export const config = {
     "dayCount"     : "2",
     "visitPurpose" : "d",
     "status"       : "Pending"
-  }
+  },
+   "documentRequest": {
+    "documentPurpose": "Personal",
+    "remarks": "NOC",
+    "expectedDate": "22-12-2025",
+    "updatedDocumentPurpose": "Official",
+  },
 }
 
 export const invalidCredentials = [
