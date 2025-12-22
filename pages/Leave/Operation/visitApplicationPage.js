@@ -65,13 +65,6 @@ export class VisitApplicationPage extends BasePage {
     this.editConfirmationModalApproveBtn = page.getByRole('button', { name: 'Approve' }).nth(1);
 
     //Visit Application Details Modal Locators.
-    // this.employeeName = page.locator("//div[contains(@class,'bg-gray-50')]//p[contains(@class,'font-medium')]");
-    // this.employeeId = page.locator("//div[contains(@class,'bg-gray-50')]//p[@class='text-xs text-gray-500'][1]");
-    // this.designation = page.locator("//div[contains(@class,'bg-gray-50')]//p[@class='text-xs text-gray-500'][2]");
-    // this.joinDate = page.locator("//p[normalize-space()='Join Date']/following-sibling::p");
-    // this.jobStatus = page.locator("//p[normalize-space()='Job Status']/following-sibling::p");
-    // this.branch = page.locator("//p[normalize-space()='Branch']/following-sibling::p");
-    // this.department = page.locator("//p[normalize-space()='Department']/following-sibling::p");
     this.employeeName = page.locator("//div[contains(@class,'bg-gray-50')]//p[contains(@class,'font-medium')]");
     this.employeeId = page.locator("//p[normalize-space()='00000276']");
     this.designation = page.locator("//p[normalize-space()='SQA Engineer L-II']");

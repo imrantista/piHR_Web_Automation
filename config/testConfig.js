@@ -49,8 +49,7 @@ export const config = {
     "documentRequest": 'selfservice/mydocumentrequest',
     "adminDocumentRequest" : 'employee/employeedocumentrequest',
     "employeeInTimeOutTime": 'selfservice/myattendance/inouttime',
-    "attendancedashboardAdmin": 'attendance/attendancedashboard',
-
+    "attendancedashboardAdmin": 'attendance/attendancedashboard'
 
   },
   "data": {
