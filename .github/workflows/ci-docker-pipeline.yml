@@ -34,6 +34,8 @@ jobs:
           EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
           DEACTIVATED_ADMIN: ${{ secrets.DEACTIVATED_ADMIN }}
           DEACTIVATED_PASSWORD: ${{ secrets.DEACTIVATED_PASSWORD }}
+          SUPERVISOR_EMAIL: ${{ secrets.SUPERVISOR_EMAIL }}
+          SUPERVISOR_PASSWORD: ${{ secrets.SUPERVISOR_PASSWORD }}
         shell: bash
         run: |
           echo " Checking required GitHub repo Variables and Secrets..."
@@ -73,6 +75,19 @@ jobs:
           else
             echo " Secret: EMPLOYEE_PASSWORD"
           fi
+          if [ -z "$SUPERVISOR_EMAIL" ]; then
+            echo "❌ Missing Secret: SUPERVISOR_EMAIL"
+            MISSING=1
+          else
+            echo "✅ Secret: SUPERVISOR_EMAIL"
+          fi
+        
+          if [ -z "$SUPERVISOR_PASSWORD" ]; then
+            echo "❌ Missing Secret: SUPERVISOR_PASSWORD"
+            MISSING=1
+          else
+            echo "✅ Secret: SUPERVISOR_PASSWORD"
+          fi
           
           if [ $MISSING -eq 1 ]; then
             echo ""
@@ -93,6 +108,8 @@ jobs:
           EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
           DEACTIVATED_ADMIN: ${{ secrets.DEACTIVATED_ADMIN }}
           DEACTIVATED_PASSWORD: ${{ secrets.DEACTIVATED_PASSWORD }}
+          SUPERVISOR_EMAIL: ${{ secrets.SUPERVISOR_EMAIL }}
+          SUPERVISOR_PASSWORD: ${{ secrets.SUPERVISOR_PASSWORD }}
         shell: bash
         run: |
           set -e
@@ -104,6 +121,10 @@ jobs:
           echo "EMPLOYEE_ADMIN_PASSWORD=${EMPLOYEE_ADMIN_PASSWORD}" >> .env
           echo "EMPLOYEE_EMAIL=${EMPLOEE_EMAIL:-$EMPLOYEE_EMAIL}"         >> .env
           echo "EMPLOYEE_PASSWORD=${EMPLOYEE_PASSWORD}"   >> .env
+          echo "DEACTIVATED_ADMIN=${{ secrets.DEACTIVATED_ADMIN }}"   >> .env
+          echo "DEACTIVATED_PASSWORD=${{ secrets.DEACTIVATED_PASSWORD }}" >> .env
+          echo "SUPERVISOR_EMAIL=${{ secrets.SUPERVISOR_EMAIL }}" >> .env
+          echo "SUPERVISOR_PASSWORD=${{ secrets.SUPERVISOR_PASSWORD }}" >> .env
           echo "ENV=${ENV}" >> .env
           echo "----- .env (sanitized) -----"
           grep -E '^(ENV|BASE_URL)' .env || true
