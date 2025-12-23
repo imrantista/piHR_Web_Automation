@@ -1,19 +1,10 @@
-name: CI_PIHR-Docker
+name: CI_PIHR-docker
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
   workflow_dispatch:
-    inputs:
-      target_env:
-        description: "Target environment"
-        required: true
-        default: "PIHR_PROD"
-        type: choice
-        options: [PIHR_PROD, PIHR_QA, PIHR_DEV]
-
-permissions:
-  contents: write
 
 jobs:
   e2e-docker:
@@ -22,14 +13,14 @@ jobs:
       ENV: ${{ github.event.inputs.target_env || 'PIHR_PROD' }}
       PROJECT_ID: docker
       REPORT_ID: ${{ github.run_number }}-${{ github.run_id }}
-
     steps:
-      # 1️⃣ Checkout repo
-      - name: Checkout code
+      - name: Checkout
         uses: actions/checkout@v4
 
-      # 2️⃣ Validate required Variables & Secrets
-      - name: Validate Variables & Secrets
+      - name: Print effective ENV
+        run: echo "Effective ENV: $ENV"
+
+      - name: Validate Variables and Secrets
         env:
           BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
           BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
@@ -39,100 +30,92 @@ jobs:
           EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
           SUPERVISOR_EMAIL: ${{ secrets.SUPERVISOR_EMAIL }}
           SUPERVISOR_PASSWORD: ${{ secrets.SUPERVISOR_PASSWORD }}
-        shell: bash
         run: |
-          echo "Checking required Variables and Secrets..."
+          echo "Checking required Variables & Secrets..."
           MISSING=0
-          for var in BASE_URL_PIHR_PROD BASE_URL_PIHR_QA ADMIN_EMAIL ADMIN_PASSWORD EMPLOYEE_EMAIL EMPLOYEE_PASSWORD SUPERVISOR_EMAIL SUPERVISOR_PASSWORD; do
+          for var in BASE_URL_PIHR_PROD ADMIN_EMAIL ADMIN_PASSWORD EMPLOYEE_EMAIL EMPLOYEE_PASSWORD SUPERVISOR_EMAIL SUPERVISOR_PASSWORD; do
             if [ -z "${!var}" ]; then
-              echo "❌ Missing: $var"
+              echo "❌ Missing $var"
               MISSING=1
             else
-              echo "✅ Present: $var"
+              echo "✅ $var found"
             fi
           done
           if [ $MISSING -eq 1 ]; then
-            echo "See GITHUB_ACTIONS_SETUP.md for setup instructions"
+            echo "Setup missing. See GITHUB_ACTIONS_SETUP.md"
             exit 1
           fi
 
-      # 3️⃣ Create .env for Docker tests
-      - name: Generate .env
-        shell: bash
+      - name: Generate .env for tests
+        env:
+          BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
+          BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
+          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
+          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
+          EMPLOYEE_EMAIL: ${{ secrets.EMPLOYEE_EMAIL }}
+          EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
+          SUPERVISOR_EMAIL: ${{ secrets.SUPERVISOR_EMAIL }}
+          SUPERVISOR_PASSWORD: ${{ secrets.SUPERVISOR_PASSWORD }}
         run: |
-          set -e
-          echo "BASE_URL_PIHR_PROD=${BASE_URL_PIHR_PROD}" >> .env
-          echo "BASE_URL_PIHR_QA=${BASE_URL_PIHR_QA}" >> .env
-          echo "ADMIN_EMAIL=${ADMIN_EMAIL}" >> .env
-          echo "ADMIN_PASSWORD=${ADMIN_PASSWORD}" >> .env
-          echo "EMPLOYEE_EMAIL=${EMPLOYEE_EMAIL}" >> .env
-          echo "EMPLOYEE_PASSWORD=${EMPLOYEE_PASSWORD}" >> .env
-          echo "SUPERVISOR_EMAIL=${SUPERVISOR_EMAIL}" >> .env
-          echo "SUPERVISOR_PASSWORD=${SUPERVISOR_PASSWORD}" >> .env
-          echo "ENV=${ENV}" >> .env
-          echo "✅ .env generated"
+          cat <<EOF > .env
+          BASE_URL_PIHR_PROD=${BASE_URL_PIHR_PROD}
+          BASE_URL_PIHR_QA=${BASE_URL_PIHR_QA}
+          ADMIN_EMAIL=${ADMIN_EMAIL}
+          ADMIN_PASSWORD=${ADMIN_PASSWORD}
+          EMPLOYEE_EMAIL=${EMPLOYEE_EMAIL}
+          EMPLOYEE_PASSWORD=${EMPLOYEE_PASSWORD}
+          SUPERVISOR_EMAIL=${SUPERVISOR_EMAIL}
+          SUPERVISOR_PASSWORD=${SUPERVISOR_PASSWORD}
+          ENV=${ENV}
+          EOF
+          echo "----- .env -----"
+          grep 'BASE_URL\|ENV' .env
 
-      # 4️⃣ Docker build
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build e2e Docker image
+      - name: Build e2e image
         run: docker compose -f docker-compose.yml build e2e
 
-      # 5️⃣ Run tests in Docker
       - name: Run tests in Docker
-        shell: bash
         run: |
-          rm -rf allure-results allure-report playwright-report || true
-          mkdir -p allure-results allure-report playwright-report
-          export ALLURE_RESULTS_MOUNT=./allure-results
-          export PLAYWRIGHT_REPORT_MOUNT=./playwright-report
-          export ALLURE_REPORT_MOUNT=./allure-report
-          export ALLURE_HISTORY_MOUNT=./allure-history
+          rm -rf allure-results allure-report || true
+          mkdir -p allure-results allure-report
           ENV="${ENV}" docker compose run --rm e2e
 
-      # 6️⃣ Install Java for Allure
-      - name: Set up Java
+      - name: Set up Java for Allure
         uses: actions/setup-java@v4
         with:
           distribution: temurin
           java-version: '17'
 
-      # 7️⃣ Install Allure CLI
       - name: Install Allure CLI
         run: |
           curl -L -o allure.tgz https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
           sudo tar -zxvf allure.tgz -C /opt/
           echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
 
-      # 8️⃣ Generate Allure report
       - name: Generate Allure Report
         run: |
-          allure --version
           allure generate allure-results --clean -o allure-report/projects/${REPORT_ID}
 
-      # 9️⃣ Merge history
-      - name: Merge Allure History
-        run: |
-          mkdir -p allure-report/projects/${REPORT_ID}/history
-          cp -r allure-results/history/* allure-report/projects/${REPORT_ID}/history/ || true
-          touch allure-report/projects/${REPORT_ID}/.nojekyll
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
 
-      # 🔟 Deploy to GitHub Pages
-      - name: Deploy Allure Report to GitHub Pages
+      - name: Upload Allure Report to Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: allure-report/projects/${REPORT_ID}
+
+      - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
-          destination_dir: projects/${{ env.REPORT_ID }}
+          publish_dir: allure-report/projects/${REPORT_ID}
+          destination_dir: projects/${REPORT_ID}
           keep_files: true
 
-      # 1️⃣1️⃣ Send Email with report link
-      - name: Send Email with Allure Report
+      - name: Send Email with Allure Report Link
         run: |
-          REPORT_URL="https://imrantista.github.io/piHR_Web_Automation/projects/${REPORT_ID}/"
-          echo "PIHR Automation Test Report (Docker)
-Passed / Failed / Total: Check in Allure report
-
-View full report: $REPORT_URL" \
-          | mailx -s "PIHR Automation Test Report" mostafa.imran@vivasoftltd.com
+          REPORT_URL="https://github.com/${{ github.repository }}/projects/${REPORT_ID}"
+          echo "Your PIHR Automation Test Report is ready: $REPORT_URL" | mailx -s "PIHR Automation Test Report" mostafa.imran@vivasoftltd.com
