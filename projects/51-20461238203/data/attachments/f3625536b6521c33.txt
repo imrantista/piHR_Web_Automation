@@ -1,0 +1,12 @@
+curl -X GET \
+  -H "sec-ch-ua-platform: "Linux"" \
+  -H "authorization: Bearer 110805_1f0461e5-9818-48fc-85cb-4f9da6f85161_1766494481" \
+  -H "referer: https://viva.pihr.xyz/" \
+  -H "accept-language: en-US" \
+  -H "sec-ch-ua: "HeadlessChrome";v="141", "Not?A_Brand";v="8", "Chromium";v="141"" \
+  -H "x-test-env: PIHR_PROD" \
+  -H "sec-ch-ua-mobile: ?0" \
+  -H "user-agent: Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/141.0.7390.37 Safari/537.36" \
+  -H "apikey: QOV0rgp9-bLqdJV77iPRvSKhFQ5m9YMw" \
+  -H "service: pihr" \
+  'https://api.pihr.xyz/api/v2/dashboard/on-break-now?page_size=10'

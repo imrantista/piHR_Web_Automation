@@ -1,0 +1,104 @@
+[
+  {
+    "break_time_id": 233857,
+    "break_time_start": "06:56 PM",
+    "break_time_close": null,
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233847,
+    "break_time_start": "06:42 PM",
+    "break_time_close": "06:43 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233844,
+    "break_time_start": "06:31 PM",
+    "break_time_close": "06:32 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233841,
+    "break_time_start": "06:22 PM",
+    "break_time_close": "06:22 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233835,
+    "break_time_start": "06:08 PM",
+    "break_time_close": "06:09 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233828,
+    "break_time_start": "05:59 PM",
+    "break_time_close": "06:00 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233812,
+    "break_time_start": "05:28 PM",
+    "break_time_close": "05:29 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233802,
+    "break_time_start": "05:11 PM",
+    "break_time_close": "05:11 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233743,
+    "break_time_start": "03:51 PM",
+    "break_time_close": "05:03 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233729,
+    "break_time_start": "03:36 PM",
+    "break_time_close": "03:37 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233722,
+    "break_time_start": "03:28 PM",
+    "break_time_close": "03:28 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233716,
+    "break_time_start": "03:26 PM",
+    "break_time_close": "03:26 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233703,
+    "break_time_start": "03:14 PM",
+    "break_time_close": "03:21 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233700,
+    "break_time_start": "03:13 PM",
+    "break_time_close": "03:14 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233463,
+    "break_time_start": "11:44 AM",
+    "break_time_close": "12:53 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233462,
+    "break_time_start": "11:43 AM",
+    "break_time_close": "11:43 AM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 233459,
+    "break_time_start": "11:36 AM",
+    "break_time_close": "11:36 AM",
+    "is_roaster_eligible": false
+  }
+]
