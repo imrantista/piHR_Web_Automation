@@ -18,7 +18,7 @@ test.describe('Dashboard component', () => {
   }
 });
 
-test.describe('Employee Daily Attendance', () => {
+test.describe.serial('Employee Daily Attendance', () => {
   for (const vp of [Desktop]) {
     test(`${employee} Verify Submit Functionality of In-Time @Business/Functional Self-1050`, 
     async ({ page, dailyAttendancePage, useSession, loginPage }) => {
