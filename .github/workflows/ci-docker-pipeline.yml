@@ -286,7 +286,7 @@ jobs:
         run: |
           echo "## Docker Test Report" >> $GITHUB_STEP_SUMMARY
           echo "" >> $GITHUB_STEP_SUMMARY
-          echo "[ View Docker Report](https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
+          echo "[ View Docker Report](https://imrantista.github.io/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
 
 #  Sent Email of results
       - name: Install mailx
@@ -310,11 +310,11 @@ jobs:
           if [ -f "$REPORT_PATH" ]; then
             jq -r '"PIHR Automation Report(Docker): Passed: \(.statistic.passed) | Failed: \(.statistic.failed) | Total: \(.statistic.total)"' $REPORT_PATH > summary.txt
             echo "" >> summary.txt
-            echo "View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
+            echo "View full report(Docker): https://imrantista.github.io/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
           else
             echo "No summary found. Check if tests executed correctly." > summary.txt
             echo "" >> summary.txt
-            echo "View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
+            echo "View full report(Docker): https://imrantista.github.io/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
           fi
         shell: /usr/bin/bash -e {0}
         env:
