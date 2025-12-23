@@ -1,0 +1,16 @@
+{
+  "general_attendances": [
+    {
+      "daily_attendance_id": 19541812,
+      "employee_id": 0,
+      "employee_code": null,
+      "employee_name": null,
+      "attendance_date": "23-12-2025",
+      "day_name": null,
+      "in_time": "11:35 AM",
+      "out_time": "06:07 PM",
+      "flag": null
+    }
+  ],
+  "roaster_attendances": null
+}
