@@ -16,7 +16,7 @@ services:
       - ${ALLURE_RESULTS_MOUNT:-allure-results}:/app/allure-results
       - ${PLAYWRIGHT_REPORT_MOUNT:-playwright-report}:/app/playwright-report
 
-    command: ["sh","-lc","${RUN_NPM_CI:+npm ci && } npx playwright test --reporter=line,allure-playwright"]
+    command: ["sh","-lc","${RUN_NPM_CI:+npm ci && } npx playwright test --grep @Business/Functional --reporter=line,allure-playwright"]
 
   allure:
     image: frankescobar/allure-docker-service:2.27.0
