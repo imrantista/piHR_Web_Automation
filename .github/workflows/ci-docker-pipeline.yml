@@ -1,326 +1,138 @@
-name: CI_PIHR-docker
+name: CI_PIHR-Docker
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
+    inputs:
+      target_env:
+        description: "Target environment"
+        required: true
+        default: "PIHR_PROD"
+        type: choice
+        options: [PIHR_PROD, PIHR_QA, PIHR_DEV]
+
+permissions:
+  contents: write
 
 jobs:
   e2e-docker:
     runs-on: ubuntu-latest
     env:
-      # Always set ENV to PIHR_PROD unless workflow_dispatch provides target_env
       ENV: ${{ github.event.inputs.target_env || 'PIHR_PROD' }}
       PROJECT_ID: docker
       REPORT_ID: ${{ github.run_number }}-${{ github.run_id }}
+
     steps:
-      - name: Checkout
+      # 1️⃣ Checkout repo
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Print effective ENV
-        run: |
-          echo "Effective ENV: $ENV"
-
-      - name: Validate Variables and Secrets
+      # 2️⃣ Validate required Variables & Secrets
+      - name: Validate Variables & Secrets
         env:
           BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
           BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
           ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
           ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          EMPLOYEE_ADMIN_EMAIL: ${{ secrets.EMPLOYEE_ADMIN_EMAIL }}
-          EMPLOYEE_ADMIN_PASSWORD: ${{ secrets.EMPLOYEE_ADMIN_PASSWORD }}
           EMPLOYEE_EMAIL: ${{ secrets.EMPLOYEE_EMAIL }}
           EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
-          DEACTIVATED_ADMIN: ${{ secrets.DEACTIVATED_ADMIN }}
-          DEACTIVATED_PASSWORD: ${{ secrets.DEACTIVATED_PASSWORD }}
           SUPERVISOR_EMAIL: ${{ secrets.SUPERVISOR_EMAIL }}
           SUPERVISOR_PASSWORD: ${{ secrets.SUPERVISOR_PASSWORD }}
         shell: bash
         run: |
-          echo " Checking required GitHub repo Variables and Secrets..."
+          echo "Checking required Variables and Secrets..."
           MISSING=0
-          
-          if [ -z "$BASE_URL_PIHR_PROD" ]; then
-            echo " Missing Variable: BASE_URL_PIHR_PROD"
-            MISSING=1
-          else
-            echo " Variable: BASE_URL_PIHR_PROD"
-          fi
-          
-          if [ -z "$ADMIN_EMAIL" ]; then
-            echo " Missing Secret: ADMIN_EMAIL"
-            MISSING=1
-          else
-            echo " Secret: ADMIN_EMAIL"
-          fi
-          
-          if [ -z "$ADMIN_PASSWORD" ]; then
-            echo " Missing Secret: ADMIN_PASSWORD"
-            MISSING=1
-          else
-            echo " Secret: ADMIN_PASSWORD"
-          fi
-          
-          if [ -z "$EMPLOEE_EMAIL" ] && [ -z "$EMPLOYEE_EMAIL" ]; then
-            echo " Missing Secret: EMPLOEE_EMAIL or EMPLOYEE_EMAIL"
-            MISSING=1
-          else
-            echo " Secret: Email"
-          fi
-          
-          if [ -z "$EMPLOYEE_PASSWORD" ]; then
-            echo " Missing Secret: EMPLOYEE_PASSWORD"
-            MISSING=1
-          else
-            echo " Secret: EMPLOYEE_PASSWORD"
-          fi
-          if [ -z "$SUPERVISOR_EMAIL" ]; then
-            echo "❌ Missing Secret: SUPERVISOR_EMAIL"
-            MISSING=1
-          else
-            echo "✅ Secret: SUPERVISOR_EMAIL"
-          fi
-        
-          if [ -z "$SUPERVISOR_PASSWORD" ]; then
-            echo "❌ Missing Secret: SUPERVISOR_PASSWORD"
-            MISSING=1
-          else
-            echo "✅ Secret: SUPERVISOR_PASSWORD"
-          fi
-          
+          for var in BASE_URL_PIHR_PROD BASE_URL_PIHR_QA ADMIN_EMAIL ADMIN_PASSWORD EMPLOYEE_EMAIL EMPLOYEE_PASSWORD SUPERVISOR_EMAIL SUPERVISOR_PASSWORD; do
+            if [ -z "${!var}" ]; then
+              echo "❌ Missing: $var"
+              MISSING=1
+            else
+              echo "✅ Present: $var"
+            fi
+          done
           if [ $MISSING -eq 1 ]; then
-            echo ""
-            echo "  See GITHUB_ACTIONS_SETUP.md for setup instructions"
+            echo "See GITHUB_ACTIONS_SETUP.md for setup instructions"
             exit 1
           fi
 
-#  Create a .env for the tests from Variables + Secrets
-      - name: Generate .env for tests
-        env:
-          BASE_URL_PIHR_PROD: ${{ vars.BASE_URL_PIHR_PROD }}
-          BASE_URL_PIHR_QA: ${{ vars.BASE_URL_PIHR_QA }}
-          ADMIN_EMAIL: ${{ secrets.ADMIN_EMAIL }}
-          ADMIN_PASSWORD: ${{ secrets.ADMIN_PASSWORD }}
-          EMPLOYEE_ADMIN_EMAIL: ${{ secrets.EMPLOYEE_ADMIN_EMAIL }}
-          EMPLOYEE_ADMIN_PASSWORD: ${{ secrets.EMPLOYEE_ADMIN_PASSWORD }}
-          EMPLOYEE_EMAIL: ${{ secrets.EMPLOYEE_EMAIL }}
-          EMPLOYEE_PASSWORD: ${{ secrets.EMPLOYEE_PASSWORD }}
-          DEACTIVATED_ADMIN: ${{ secrets.DEACTIVATED_ADMIN }}
-          DEACTIVATED_PASSWORD: ${{ secrets.DEACTIVATED_PASSWORD }}
-          SUPERVISOR_EMAIL: ${{ secrets.SUPERVISOR_EMAIL }}
-          SUPERVISOR_PASSWORD: ${{ secrets.SUPERVISOR_PASSWORD }}
+      # 3️⃣ Create .env for Docker tests
+      - name: Generate .env
         shell: bash
         run: |
           set -e
-          echo "BASE_URL_PIHR_PROD=${BASE_URL_PIHR_PROD}"   >> .env
-          echo "BASE_URL_PIHR_QA=${BASE_URL_PIHR_QA}"       >> .env
-          echo "ADMIN_EMAIL=${ADMIN_EMAIL}"               >> .env
-          echo "ADMIN_PASSWORD=${ADMIN_PASSWORD}"         >> .env
-          echo "EMPLOYEE_ADMIN_EMAIL=${EMPLOYEE_ADMIN_EMAIL}" >> .env
-          echo "EMPLOYEE_ADMIN_PASSWORD=${EMPLOYEE_ADMIN_PASSWORD}" >> .env
-          echo "EMPLOYEE_EMAIL=${EMPLOEE_EMAIL:-$EMPLOYEE_EMAIL}"         >> .env
-          echo "EMPLOYEE_PASSWORD=${EMPLOYEE_PASSWORD}"   >> .env
-          echo "DEACTIVATED_ADMIN=${{ secrets.DEACTIVATED_ADMIN }}"   >> .env
-          echo "DEACTIVATED_PASSWORD=${{ secrets.DEACTIVATED_PASSWORD }}" >> .env
-          echo "SUPERVISOR_EMAIL=${{ secrets.SUPERVISOR_EMAIL }}" >> .env
-          echo "SUPERVISOR_PASSWORD=${{ secrets.SUPERVISOR_PASSWORD }}" >> .env
+          echo "BASE_URL_PIHR_PROD=${BASE_URL_PIHR_PROD}" >> .env
+          echo "BASE_URL_PIHR_QA=${BASE_URL_PIHR_QA}" >> .env
+          echo "ADMIN_EMAIL=${ADMIN_EMAIL}" >> .env
+          echo "ADMIN_PASSWORD=${ADMIN_PASSWORD}" >> .env
+          echo "EMPLOYEE_EMAIL=${EMPLOYEE_EMAIL}" >> .env
+          echo "EMPLOYEE_PASSWORD=${EMPLOYEE_PASSWORD}" >> .env
+          echo "SUPERVISOR_EMAIL=${SUPERVISOR_EMAIL}" >> .env
+          echo "SUPERVISOR_PASSWORD=${SUPERVISOR_PASSWORD}" >> .env
           echo "ENV=${ENV}" >> .env
-          echo "----- .env (sanitized) -----"
-          grep -E '^(ENV|BASE_URL)' .env || true
-          echo "----------------------------"
+          echo "✅ .env generated"
 
-#  Docker build & compose run
-
+      # 4️⃣ Docker build
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
 
-      - name: Build e2e image (from your Dockerfile)
+      - name: Build e2e Docker image
         run: docker compose -f docker-compose.yml build e2e
 
-# Run Test
-      - name: Run tests in Docker (bind-mount results)
+      # 5️⃣ Run tests in Docker
+      - name: Run tests in Docker
         shell: bash
         run: |
           rm -rf allure-results allure-report playwright-report || true
           mkdir -p allure-results allure-report playwright-report
-
-          # Tell Compose to use bind mounts in CI
           export ALLURE_RESULTS_MOUNT=./allure-results
           export PLAYWRIGHT_REPORT_MOUNT=./playwright-report
           export ALLURE_REPORT_MOUNT=./allure-report
           export ALLURE_HISTORY_MOUNT=./allure-history
-
-          export RUN_NPM_CI=1
-          export E2E_USER=root
-
           ENV="${ENV}" docker compose run --rm e2e
 
-# Check gh-pages existence & restore
-      - name: Check gh-pages existence
-        id: has-ghpages
-        shell: bash
-        run: |
-          if git ls-remote --heads "https://github.com/${{ github.repository }}.git" gh-pages | grep gh-pages >/dev/null; then
-            echo "exists=true" >> "$GITHUB_OUTPUT"
-            echo " gh-pages exists"
-          else
-            echo "exists=false" >> "$GITHUB_OUTPUT"
-            echo " gh-pages does not exist yet (first deploy)"
-          fi
-
-      - name: Checkout gh-pages (history restore)
-        if: always() && steps.has-ghpages.outputs.exists == 'true'
-        uses: actions/checkout@v4
+      # 6️⃣ Install Java for Allure
+      - name: Set up Java
+        uses: actions/setup-java@v4
         with:
-          ref: gh-pages
-          path: gh-pages
-          persist-credentials: false
+          distribution: temurin
+          java-version: '17'
 
-      - name: Restore Allure history
-        if: always()
+      # 7️⃣ Install Allure CLI
+      - name: Install Allure CLI
         run: |
-          if [ -d gh-pages/projects/${PROJECT_ID}/history ]; then
-            echo "Restoring Allure history for project=${PROJECT_ID}"
-            rm -rf allure-results/history
-            mkdir -p allure-results/history
-            cp -r gh-pages/projects/${PROJECT_ID}/history/* allure-results/history/ || true
-          else
-            echo " No previous history found for ${PROJECT_ID}"
-          fi
-
-# Generate Allure report
-      # NEW: Allure needs Java, install on runner
-      - name: Set up Java (for Allure)               
-        if: always()                                 
-        uses: actions/setup-java@v4                  
-        with:                                        
-          distribution: temurin                      
-          java-version: '17'                         
-
-      # NEW: Install Allure CLI on the runner (avoid docker pull/auth issues)
-      - name: Install Allure CLI                     
-        if: always()                                 
-        run: |                                   
           curl -L -o allure.tgz https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
           sudo tar -zxvf allure.tgz -C /opt/
           echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
 
-      # CHANGED: Use local allure CLI instead of dockerized CLI
-      - name: Generate Allure Report                
-        if: always()                                 
-        run: |                                       
+      # 8️⃣ Generate Allure report
+      - name: Generate Allure Report
+        run: |
           allure --version
           allure generate allure-results --clean -o allure-report/projects/${REPORT_ID}
-          ls -lah allure-report/projects/${REPORT_ID} || true
 
-# Merge history and upload
-      - name: Merge existing history with the new report
-        if: always()
+      # 9️⃣ Merge history
+      - name: Merge Allure History
         run: |
           mkdir -p allure-report/projects/${REPORT_ID}/history
           cp -r allure-results/history/* allure-report/projects/${REPORT_ID}/history/ || true
           touch allure-report/projects/${REPORT_ID}/.nojekyll
 
-# Upload helpful artifacts
-      - name: Upload Allure HTML (artifact)
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-report-${{ env.REPORT_ID }}
-          path: allure-report/projects/${{ env.REPORT_ID }}
-          if-no-files-found: warn
-
-      - name: Upload Global Setup Artifacts
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: global-setup-artifacts
-          path: artifacts/global-setup/**/*
-          if-no-files-found: ignore 
-          
-      - name: Upload Videos
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: allure-videos-${{ env.REPORT_ID }}
-          path: allure-report/projects/${{ env.REPORT_ID }}/data/attachments/*.webm
-          if-no-files-found: ignore
-
-      - name: Upload Failure Screenshots
-        if: always()
-        uses: actions/upload-artifact@v4
-        with:
-          name: failure-screenshots-${{ env.REPORT_ID }}
-          path: allure-report/projects/${{ env.REPORT_ID }}/data/attachments/*.png
-          if-no-files-found: ignore
-          retention-days: 7
-
-# GitHub Pages publish
-      - name: Setup Pages
-        if: always()
-        uses: actions/configure-pages@v5
-
-      - name: Upload Allure site to Pages
-        if: always()
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: allure-report/projects/${{ env.REPORT_ID }}
-
-      - name: Deploy to GitHub Pages
-        if: always()
+      # 🔟 Deploy to GitHub Pages
+      - name: Deploy Allure Report to GitHub Pages
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report/projects/${{ env.REPORT_ID }}
+          publish_dir: allure-report
           destination_dir: projects/${{ env.REPORT_ID }}
           keep_files: true
 
-      - name: Add Report Link to Summary
-        if: always()
-        run: |
-          echo "## Docker Test Report" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "[ View Docker Report](https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
-
-#  Sent Email of results
-      - name: Install mailx
-        run: sudo apt-get install -y mailutils
-
-      - name: Install jq
-        run: sudo apt-get install -y jq
-
-      - name: Configure mailx for SMTP
-        run: |
-          echo "set smtp=smtps://smtp.gmail.com:465" >> ~/.mailrc
-          echo "set smtp-auth=login" >> ~/.mailrc
-          echo "set smtp-auth-user=${{ secrets.SMTP_USERNAME }}" >> ~/.mailrc
-          echo "set smtp-auth-password=${{ secrets.SMTP_PASSWORD }}" >> ~/.mailrc
-          echo "set ssl-verify=ignore" >> ~/.mailrc
-
-      - name: Extract Key Test Summary
-        run: |
-          REPORT_PATH="allure-report/projects/${{ env.REPORT_ID }}/widgets/summary.json"
-          
-          if [ -f "$REPORT_PATH" ]; then
-            jq -r '"PIHR Automation Report(Docker): Passed: \(.statistic.passed) | Failed: \(.statistic.failed) | Total: \(.statistic.total)"' $REPORT_PATH > summary.txt
-            echo "" >> summary.txt
-            echo "View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
-          else
-            echo "No summary found. Check if tests executed correctly." > summary.txt
-            echo "" >> summary.txt
-            echo "View full report(Docker): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
-          fi
-        shell: /usr/bin/bash -e {0}
-        env:
-          ENV: PIHR_PROD
-          PROJECT_ID: docker
-          REPORT_ID: ${{ github.run_number }}-${{ github.run_id }}
-          JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.16-8/x64
-          JAVA_HOME_17_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/17.0.16-8/x64
-          GITHUB_PAGES: true
-
-
+      # 1️⃣1️⃣ Send Email with report link
       - name: Send Email with Allure Report
         run: |
-          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  mostafa.imran@vivasoftltd.com
+          REPORT_URL="https://imrantista.github.io/piHR_Web_Automation/projects/${REPORT_ID}/"
+          echo "PIHR Automation Test Report (Docker)
+Passed / Failed / Total: Check in Allure report
+
+View full report: $REPORT_URL" \
+          | mailx -s "PIHR Automation Test Report" mostafa.imran@vivasoftltd.com
