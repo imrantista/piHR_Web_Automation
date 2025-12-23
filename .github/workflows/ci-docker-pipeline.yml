@@ -328,4 +328,4 @@ jobs:
 
       - name: Send Email with Allure Report
         run: |
-          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  mostafa.imran@vivasoftltd.com
+          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  mostafa.imran@vivasoftltd.com biplab.sarker@vivasoftltd.com imran.cse04@gmail.com hossain.muhee@vivasoftltd.com
