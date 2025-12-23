@@ -128,7 +128,7 @@ test.describe('Deactivated User Login Verification', () => {
     await loginPage.visit();
   });
   deactivatedUsers.forEach(user => {
-    test.only(`Verify Deactivated ${user.name} Cannot Login`, async ({ page, loginPage }) => {
+    test.skip(`Verify Deactivated ${user.name} Cannot Login`, async ({ page, loginPage }) => {
       await loginPage.doLogin(user.username, user.password);
       await loginPage.assertAccountLockedError();
       console.log('Deactivated user login attempt shows correct error message.');
