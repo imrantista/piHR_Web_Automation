@@ -22,16 +22,14 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
-      ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'PIHR_PROD' || github.event.inputs.target_env }}
-      PROJECT_ID: ci
-      REPORT_ID: ${{ github.run_number }}-${{ github.run_id }}
-
+        ENV: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' && 'PIHR_PROD' || github.event.inputs.target_env }}
+        PROJECT_ID: ci
+        REPORT_ID: ${{ github.run_number }}-${{ github.run_id }}
     steps:
-      # 1️⃣ Checkout repository
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # 2️⃣ Setup NodeJS with npm cache
+# Caches npm’s download cache automatically
       - name: Setup NodeJS
         uses: actions/setup-node@v4
         with:
@@ -41,11 +39,11 @@ jobs:
             package-lock.json
             **/package-lock.json
 
-      # 3️⃣ Install dependencies
+#  Install dependencies
       - name: Install dependencies
         run: npm ci
 
-      # 4️⃣ Cache & install Playwright browsers
+# Cache Playwright browsers (Linux path)
       - name: Cache Playwright Browsers
         id: cache-pw
         uses: actions/cache@v3
@@ -54,65 +52,73 @@ jobs:
           key: pw-browsers-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
           restore-keys: pw-browsers-${{ runner.os }}-
 
+#  Install browsers only if cache miss
       - name: Install Playwright Browsers
         if: steps.cache-pw.outputs.cache-hit != 'true'
         run: npx playwright install
 
-      # 5️⃣ Cache & install Allure CLI
+# Cache & Install Allure
       - name: Cache Allure CLI
         id: cache-allure
         uses: actions/cache@v3
         with:
-          path: /opt/allure-2.27.0
-          key: allure-${{ runner.os }}-2.27.0
+          path: /opt/allure-2.24.0
+          key: allure-${{ runner.os }}-2.24.0
           restore-keys: allure-${{ runner.os }}-
 
+      # Install when cache MISS
       - name: Install Allure CLI
         if: steps.cache-allure.outputs.cache-hit != 'true'
         run: |
           sudo apt update
           sudo apt install -y curl unzip
-          curl -L -o allure.tgz https://github.com/allure-framework/allure2/releases/download/2.27.0/allure-2.27.0.tgz
+          curl -L -o allure.tgz https://github.com/allure-framework/allure2/releases/download/2.24.0/allure-2.24.0.tgz
           sudo tar -zxvf allure.tgz -C /opt/
-          echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
+          # add to PATH for subsequent steps
+          echo "/opt/allure-2.24.0/bin" >> $GITHUB_PATH
 
+      # Use cached Allure (also add PATH)
       - name: Setup Allure from cache
         if: steps.cache-allure.outputs.cache-hit == 'true'
-        run: echo "/opt/allure-2.27.0/bin" >> $GITHUB_PATH
+        run: echo "/opt/allure-2.24.0/bin" >> $GITHUB_PATH
 
+      # Verify Allure (separate step so PATH works)
       - name: Verify Allure
         run: allure --version
 
-      # 6️⃣ Clear previous results
       - name: Clear Previous Allure Results
         run: |
           rm -rf allure-results allure-report allure-history || true
           mkdir -p allure-results allure-report allure-history
 
-      # 7️⃣ Generate .env for tests
-      - name: Generate .env
+# Create a .env for the tests from Variables + Secrets
+      - name: Generate .env for tests
+        shell: bash
         run: |
           set -e
-          echo "BASE_URL_PIHR_PROD=${{ vars.BASE_URL_PIHR_PROD }}" >> .env
-          echo "BASE_URL_PIHR_QA=${{ vars.BASE_URL_PIHR_QA }}" >> .env
-          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}" >> .env
-          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}" >> .env
+          echo "BASE_URL_PIHR_PROD=${{ vars.BASE_URL_PIHR_PROD }}"   >> .env
+          echo "BASE_URL_PIHR_QA=${{ vars.BASE_URL_PIHR_QA }}"       >> .env
+          echo "ADMIN_EMAIL=${{ secrets.ADMIN_EMAIL }}"               >> .env
+          echo "ADMIN_PASSWORD=${{ secrets.ADMIN_PASSWORD }}"         >> .env
           echo "EMPLOYEE_ADMIN_EMAIL=${{ secrets.EMPLOYEE_ADMIN_EMAIL }}" >> .env
           echo "EMPLOYEE_ADMIN_PASSWORD=${{ secrets.EMPLOYEE_ADMIN_PASSWORD }}" >> .env
-          echo "EMPLOYEE_EMAIL=${{ secrets.EMPLOYEE_EMAIL }}" >> .env
-          echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}" >> .env
-          echo "DEACTIVATED_ADMIN=${{ secrets.DEACTIVATED_ADMIN }}" >> .env
+          echo "EMPLOYEE_EMAIL=${{ secrets.EMPLOYEE_EMAIL }}"         >> .env
+          echo "EMPLOYEE_PASSWORD=${{ secrets.EMPLOYEE_PASSWORD }}"   >> .env
+          echo "DEACTIVATED_ADMIN=${{ secrets.DEACTIVATED_ADMIN }}"   >> .env
           echo "DEACTIVATED_PASSWORD=${{ secrets.DEACTIVATED_PASSWORD }}" >> .env
           echo "SUPERVISOR_EMAIL=${{ secrets.SUPERVISOR_EMAIL }}" >> .env
           echo "SUPERVISOR_PASSWORD=${{ secrets.SUPERVISOR_PASSWORD }}" >> .env
           echo "ENV=${ENV}" >> .env
-          echo "✅ .env generated"
+          echo "----- .env (sanitized) -----"
+          grep -E '^(ENV|BASE_URL)' .env || true
+          echo "----------------------------"
 
-      # 8️⃣ Run Playwright tests
+# Run Test
+
       - name: Run Playwright Tests
         run: npx cross-env ENV=${ENV} playwright test --grep @Business/Functional
 
-      # 9️⃣ Upload artifacts even if tests fail
+# Always run uploads even if global setup/tests fail
       - name: Upload Global Setup Artifacts
         if: always()
         uses: actions/upload-artifact@v4
@@ -121,18 +127,22 @@ jobs:
           path: artifacts/global-setup/**/*
           if-no-files-found: ignore  
 
-      # 🔟 Handle Allure history for Pages
+# Allure GitHub Pages publish
       - name: Check gh-pages existence
         id: has-ghpages
+        shell: bash
         run: |
           if git ls-remote --heads "https://github.com/${{ github.repository }}.git" gh-pages | grep gh-pages >/dev/null; then
             echo "exists=true" >> "$GITHUB_OUTPUT"
+            echo " gh-pages exists"
           else
             echo "exists=false" >> "$GITHUB_OUTPUT"
+            echo " gh-pages does not exist yet (first deploy)"
           fi
 
+      # Only checkout gh-pages when it actually exists
       - name: Checkout gh-pages (history restore)
-        if: steps.has-ghpages.outputs.exists == 'true'
+        if: always() && steps.has-ghpages.outputs.exists == 'true'
         uses: actions/checkout@v4
         with:
           ref: gh-pages
@@ -140,42 +150,106 @@ jobs:
           persist-credentials: false
 
       - name: Restore Allure history
+        if: always()
         run: |
           if [ -d gh-pages/projects/${PROJECT_ID}/history ]; then
+            echo "" Restoring Allure history from gh-pages/projects/${PROJECT_ID}/history"
             rm -rf allure-history
             mkdir -p allure-history
-            cp -r gh-pages/projects/${PROJECT_ID}/history/* allure-history
+            cp -r gh-pages/projects/${PROJECT_ID}/history allure-history
+          else
+            echo " No previous history found"
           fi
 
-      # 1️⃣1️⃣ Generate Allure Report
-      - name: Generate Allure Report
-        run: allure generate allure-results --clean -o allure-report/projects/${REPORT_ID}
+      - name: Generate Allure Report for Pages
+        if: always()
+        run: |
+          allure generate allure-results --clean -o allure-report/projects/${REPORT_ID}
+          ls -lah allure-report/projects/${REPORT_ID} || true
 
-      - name: Merge Allure history
+# Merge history and upload
+      - name: Merge existing history with the new report
+        if: always()
         run: |
           mkdir -p allure-report/projects/${REPORT_ID}/history
           cp -r allure-results/history/* allure-report/projects/${REPORT_ID}/history/ || true
           touch allure-report/projects/${REPORT_ID}/.nojekyll
 
-      # 1️⃣2️⃣ Deploy Allure Report to GitHub Pages
-      - name: Deploy Allure Report
+# Upload Videos Of Tests
+      - name: Upload Allure Report Videos 
+        if: always() 
+        uses: actions/upload-artifact@v4 
+        with: 
+          name: allure-videos 
+          path: allure-report/projects/${{ env.REPORT_ID }}/data/attachments/*.webm 
+          if-no-files-found: ignore
+
+#Upload Failure Screenshots 
+      - name: Upload Failure Screenshots
+        if: always()
+        continue-on-error: true
+        uses: actions/upload-artifact@v4
+        with:
+          name: failure-screenshots
+          path: allure-report/projects/${{ env.REPORT_ID }}/data/attachments/*.png
+          retention-days: 7
+          if-no-files-found: ignore
+
+      - name: Setup Pages
+        if: always()
+        uses: actions/configure-pages@v5
+
+      - name: Upload Allure site to Pages
+        if: always()
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: allure-report/projects/${{ env.REPORT_ID }}
+
+      - name: Deploy to GitHub Pages
+        if: always()
         uses: peaceiris/actions-gh-pages@v4
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: allure-report
-          destination_dir: projects/${REPORT_ID}
+          publish_dir: allure-report/projects/${{ env.REPORT_ID }}
+          destination_dir: projects/${{ env.REPORT_ID }}
           keep_files: true
 
-      # 1️⃣3️⃣ Add clickable report link to summary
       - name: Add Report Link to Summary
+        if: always()
         run: |
-          echo "## PIHR Automation Test Report" >> $GITHUB_STEP_SUMMARY
-          echo "[Click here to view report](https://imrantista.github.io/piHR_Web_Automation/projects/${REPORT_ID}/)" >> $GITHUB_STEP_SUMMARY
+          echo "## Test Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo " Click to view report](https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }})" >> $GITHUB_STEP_SUMMARY
 
-      # 1️⃣4️⃣ Send Email
+# Sent Email of results
+      - name: Install mailx
+        run: sudo apt-get install -y mailutils
+
+      - name: Install jq
+        run: sudo apt-get install -y jq
+
+      - name: Configure mailx for SMTP
+        run: |
+          echo "set smtp=smtps://smtp.gmail.com:465" >> ~/.mailrc
+          echo "set smtp-auth=login" >> ~/.mailrc
+          echo "set smtp-auth-user=${{ secrets.SMTP_USERNAME }}" >> ~/.mailrc
+          echo "set smtp-auth-password=${{ secrets.SMTP_PASSWORD }}" >> ~/.mailrc
+          echo "set ssl-verify=ignore" >> ~/.mailrc
+
+      - name: Extract Key Test Summary
+        run: |
+          REPORT_PATH="allure-report/projects/${{ env.REPORT_ID }}/widgets/summary.json"
+          
+          if [ -f "$REPORT_PATH" ]; then
+            jq -r '"PIHR Automation Report(CI): Passed: \(.statistic.passed) | Failed: \(.statistic.failed) | Total: \(.statistic.total)"' $REPORT_PATH > summary.txt
+            echo "" >> summary.txt
+            echo "View full report(CI): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
+          else
+            echo "No summary found. Check if tests executed correctly." > summary.txt
+            echo "" >> summary.txt
+            echo " View full report(CI): https://github.com/imrantista/piHR_Web_Automation/projects/${{ env.REPORT_ID }}" >> summary.txt
+          fi
+
       - name: Send Email with Allure Report
         run: |
-          REPORT_URL="https://imrantista.github.io/piHR_Web_Automation/projects/${REPORT_ID}/"
-          echo "PIHR Automation Test Report (CI)
-View full report: $REPORT_URL" \
-          | mailx -s "PIHR Automation Test Report Summary" mostafa.imran@vivasoftltd.com
+          cat summary.txt | mailx -s "PIHR Automation Test Report Summary"  mostafa.imran@vivasoftltd.com
