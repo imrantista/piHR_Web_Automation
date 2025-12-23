@@ -1,0 +1,418 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e8]
+      - navigation [ref=e9]:
+        - button [ref=e10] [cursor=pointer]:
+          - img [ref=e11]
+        - list [ref=e13]:
+          - listitem [ref=e14]:
+            - group [ref=e15]:
+              - generic "Attendance" [ref=e16] [cursor=pointer]:
+                - generic [ref=e17]: Attendance
+                - img [ref=e19]
+          - listitem [ref=e21]:
+            - group [ref=e22]:
+              - generic "Leave" [ref=e23] [cursor=pointer]:
+                - generic [ref=e24]: Leave
+                - img [ref=e26]
+          - listitem [ref=e28]:
+            - group [ref=e29]:
+              - generic "Salary" [ref=e30] [cursor=pointer]:
+                - generic [ref=e31]: Salary
+                - img [ref=e33]
+          - listitem [ref=e35]:
+            - group [ref=e36]:
+              - generic "Employee" [ref=e37] [cursor=pointer]:
+                - generic [ref=e38]: Employee
+                - img [ref=e40]
+          - listitem [ref=e42]:
+            - group [ref=e43]:
+              - generic "Tax" [ref=e44] [cursor=pointer]:
+                - generic [ref=e45]: Tax
+                - img [ref=e47]
+          - listitem [ref=e49]:
+            - group [ref=e50]:
+              - generic "Settings" [ref=e51] [cursor=pointer]:
+                - generic [ref=e52]: Settings
+                - img [ref=e54]
+      - list [ref=e57]:
+        - listitem [ref=e58]:
+          - paragraph [ref=e59] [cursor=pointer]:
+            - generic [ref=e60]: Attendance
+            - img [ref=e61]
+        - listitem [ref=e63]:
+          - paragraph [ref=e64] [cursor=pointer]:
+            - generic [ref=e65]: Leave
+            - img [ref=e66]
+        - listitem [ref=e68]:
+          - paragraph [ref=e69] [cursor=pointer]:
+            - generic [ref=e70]: Salary
+            - img [ref=e71]
+        - listitem [ref=e73]:
+          - paragraph [ref=e74] [cursor=pointer]:
+            - generic [ref=e75]: Employee
+            - img [ref=e76]
+        - listitem [ref=e78]:
+          - paragraph [ref=e79] [cursor=pointer]:
+            - generic [ref=e80]: Tax
+            - img [ref=e81]
+        - listitem [ref=e83]:
+          - paragraph [ref=e84] [cursor=pointer]:
+            - generic [ref=e85]: Settings
+            - img [ref=e86]
+    - generic [ref=e88]:
+      - generic [ref=e90] [cursor=pointer]:
+        - img [ref=e93]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - textbox "Search..."
+      - generic [ref=e97] [cursor=pointer]:
+        - img [ref=e99]
+        - generic [ref=e102]: "121"
+      - generic [ref=e103]:
+        - generic [ref=e105]:
+          - generic:
+            - generic:
+              - generic:
+                - img
+                - heading "Meet Our AI Assistant!" [level=3]
+              - generic:
+                - generic:
+                  - img
+                  - generic: Intelligent responses in seconds
+                - generic:
+                  - img
+                  - generic: 24/7 instant support
+              - button "Start Chatting":
+                - text: Start Chatting
+                - img
+          - button [ref=e109]:
+            - img [ref=e110]
+          - button [ref=e112] [cursor=pointer]:
+            - img [ref=e113]
+        - img "profile" [ref=e117] [cursor=pointer]
+  - generic [ref=e119]:
+    - generic [ref=e120]:
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - generic [ref=e123]:
+            - link "Attendance" [ref=e124] [cursor=pointer]:
+              - /url: /attendance/attendancedashboard
+            - img [ref=e125]
+            - link "Dashboard" [ref=e128] [cursor=pointer]:
+              - /url: /attendance/attendancedashboard
+          - heading "Dashboard" [level=3] [ref=e129]
+        - generic [ref=e130]:
+          - button [ref=e133] [cursor=pointer]:
+            - img [ref=e134]
+          - button [ref=e137] [cursor=pointer]:
+            - img [ref=e138]
+          - button [ref=e142] [cursor=pointer]:
+            - img [ref=e143]
+          - generic [ref=e150] [cursor=pointer]:
+            - generic [ref=e152]: All Wings
+            - img [ref=e153]
+      - generic [ref=e157]:
+        - generic [ref=e159]:
+          - generic [ref=e161] [cursor=pointer]:
+            - img [ref=e163]
+            - generic [ref=e171]:
+              - generic [ref=e172]: Pending Break Time Recon.
+              - generic [ref=e174]: "17"
+          - generic [ref=e176] [cursor=pointer]:
+            - img [ref=e178]
+            - generic [ref=e184]:
+              - generic [ref=e185]: Pending Attendance Approval
+              - generic [ref=e187]: "35"
+          - generic [ref=e189] [cursor=pointer]:
+            - img [ref=e191]
+            - generic [ref=e196]:
+              - generic [ref=e197]: Pending Attendance Recon.
+              - generic [ref=e199]: "185"
+          - generic [ref=e201]:
+            - img [ref=e203]
+            - generic [ref=e205]:
+              - generic [ref=e206]: On Break Now
+              - generic [ref=e208]: "0"
+        - generic [ref=e211]:
+          - generic [ref=e212]:
+            - generic [ref=e214]: Quick View
+            - generic [ref=e216]:
+              - generic [ref=e221]:
+                - textbox "Search" [active] [ref=e222]: Tanzim
+                - img [ref=e224]
+              - generic [ref=e226]:
+                - generic [ref=e227]:
+                  - generic [ref=e228] [cursor=pointer]: All
+                  - generic [ref=e230]: "289"
+                - generic [ref=e231]:
+                  - generic [ref=e232] [cursor=pointer]: E
+                  - generic [ref=e234]: "1"
+          - table [ref=e238]:
+            - rowgroup [ref=e239]:
+              - row "Name Designation In Time Out Time Status Action" [ref=e240]:
+                - cell "Name" [ref=e241]
+                - cell "Designation" [ref=e242]
+                - cell "In Time" [ref=e243]
+                - cell "Out Time" [ref=e244]
+                - cell "Status" [ref=e245]
+                - cell "Action" [ref=e246]
+            - rowgroup [ref=e247]:
+              - row "Tanzim Emon Tanzim Emon Banani SQA Engineer L-II 11:35 AM 06:20 PM Extreme Delay" [ref=e248]:
+                - cell "Tanzim Emon Tanzim Emon Banani" [ref=e249]:
+                  - generic [ref=e251]:
+                    - img "Tanzim Emon" [ref=e252]
+                    - generic [ref=e253]:
+                      - paragraph [ref=e254]: Tanzim Emon
+                      - paragraph [ref=e255]: Banani
+                - cell "SQA Engineer L-II" [ref=e256]:
+                  - generic [ref=e257]: SQA Engineer L-II
+                - cell "11:35 AM" [ref=e258]:
+                  - generic [ref=e260]: 11:35 AM
+                - cell "06:20 PM" [ref=e261]:
+                  - generic [ref=e263]: 06:20 PM
+                - cell "Extreme Delay" [ref=e264]:
+                  - generic [ref=e266]: Extreme Delay
+                - cell [ref=e267]:
+                  - img [ref=e273] [cursor=pointer]
+        - generic [ref=e278]:
+          - generic [ref=e279]:
+            - generic [ref=e281]: Attendance Missed
+            - generic [ref=e286]:
+              - img [ref=e287] [cursor=pointer]
+              - textbox "Start Date - End Date" [ref=e300]: 08-12-2025 - 23-12-2025
+          - table [ref=e304]:
+            - rowgroup [ref=e305]:
+              - row "Date Name In Time Out Time Action" [ref=e306]:
+                - cell "Date" [ref=e307]
+                - cell "Name" [ref=e308]
+                - cell "In Time" [ref=e309]
+                - cell "Out Time" [ref=e310]
+                - cell "Action" [ref=e311]
+            - rowgroup [ref=e312]:
+              - row "Tue, Dec 23 Shafiul Hasan Md Tareq Shafiul Hasan Md Tareq Banani - -" [ref=e313]:
+                - cell "Tue, Dec 23" [ref=e314]:
+                  - generic [ref=e315]: Tue, Dec 23
+                - cell "Shafiul Hasan Md Tareq Shafiul Hasan Md Tareq Banani" [ref=e316]:
+                  - generic [ref=e318]:
+                    - img "Shafiul Hasan Md Tareq" [ref=e319]
+                    - generic [ref=e320]:
+                      - paragraph [ref=e321]: Shafiul Hasan Md Tareq
+                      - paragraph [ref=e322]: Banani
+                - cell "-" [ref=e323]:
+                  - generic [ref=e324]: "-"
+                - cell "-" [ref=e325]:
+                  - generic [ref=e326]: "-"
+                - cell [ref=e327]:
+                  - img [ref=e330] [cursor=pointer]
+              - row "Tue, Dec 23 Md. Ashiqul Amin Md. Ashiqul Amin Banani - -" [ref=e333]:
+                - cell "Tue, Dec 23" [ref=e334]:
+                  - generic [ref=e335]: Tue, Dec 23
+                - cell "Md. Ashiqul Amin Md. Ashiqul Amin Banani" [ref=e336]:
+                  - generic [ref=e338]:
+                    - img "Md. Ashiqul Amin" [ref=e339]
+                    - generic [ref=e340]:
+                      - paragraph [ref=e341]: Md. Ashiqul Amin
+                      - paragraph [ref=e342]: Banani
+                - cell "-" [ref=e343]:
+                  - generic [ref=e344]: "-"
+                - cell "-" [ref=e345]:
+                  - generic [ref=e346]: "-"
+                - cell [ref=e347]:
+                  - img [ref=e350] [cursor=pointer]
+              - row "Tue, Dec 23 Biplab Chandra Sarker Biplab Chandra Sarker Banani - -" [ref=e353]:
+                - cell "Tue, Dec 23" [ref=e354]:
+                  - generic [ref=e355]: Tue, Dec 23
+                - cell "Biplab Chandra Sarker Biplab Chandra Sarker Banani" [ref=e356]:
+                  - generic [ref=e358]:
+                    - img "Biplab Chandra Sarker" [ref=e359]
+                    - generic [ref=e360]:
+                      - paragraph [ref=e361]: Biplab Chandra Sarker
+                      - paragraph [ref=e362]: Banani
+                - cell "-" [ref=e363]:
+                  - generic [ref=e364]: "-"
+                - cell "-" [ref=e365]:
+                  - generic [ref=e366]: "-"
+                - cell [ref=e367]:
+                  - img [ref=e370] [cursor=pointer]
+              - row "Tue, Dec 23 Md. Nur Hossain Rasel Md. Nur Hossain Rasel Banani - -" [ref=e373]:
+                - cell "Tue, Dec 23" [ref=e374]:
+                  - generic [ref=e375]: Tue, Dec 23
+                - cell "Md. Nur Hossain Rasel Md. Nur Hossain Rasel Banani" [ref=e376]:
+                  - generic [ref=e378]:
+                    - img "Md. Nur Hossain Rasel" [ref=e379]
+                    - generic [ref=e380]:
+                      - paragraph [ref=e381]: Md. Nur Hossain Rasel
+                      - paragraph [ref=e382]: Banani
+                - cell "-" [ref=e383]:
+                  - generic [ref=e384]: "-"
+                - cell "-" [ref=e385]:
+                  - generic [ref=e386]: "-"
+                - cell [ref=e387]:
+                  - img [ref=e390] [cursor=pointer]
+              - row "Tue, Dec 23 Md. Imrul Hasan Md. Imrul Hasan Banani - -" [ref=e393]:
+                - cell "Tue, Dec 23" [ref=e394]:
+                  - generic [ref=e395]: Tue, Dec 23
+                - cell "Md. Imrul Hasan Md. Imrul Hasan Banani" [ref=e396]:
+                  - generic [ref=e398]:
+                    - img "Md. Imrul Hasan" [ref=e399]
+                    - generic [ref=e400]:
+                      - paragraph [ref=e401]: Md. Imrul Hasan
+                      - paragraph [ref=e402]: Banani
+                - cell "-" [ref=e403]:
+                  - generic [ref=e404]: "-"
+                - cell "-" [ref=e405]:
+                  - generic [ref=e406]: "-"
+                - cell [ref=e407]:
+                  - img [ref=e410] [cursor=pointer]
+              - row "Tue, Dec 23 Rahat Niloy Shanto Rahat Niloy Shanto PiHR - -" [ref=e413]:
+                - cell "Tue, Dec 23" [ref=e414]:
+                  - generic [ref=e415]: Tue, Dec 23
+                - cell "Rahat Niloy Shanto Rahat Niloy Shanto PiHR" [ref=e416]:
+                  - generic [ref=e418]:
+                    - img "Rahat Niloy Shanto" [ref=e419]
+                    - generic [ref=e420]:
+                      - paragraph [ref=e421]: Rahat Niloy Shanto
+                      - paragraph [ref=e422]: PiHR
+                - cell "-" [ref=e423]:
+                  - generic [ref=e424]: "-"
+                - cell "-" [ref=e425]:
+                  - generic [ref=e426]: "-"
+                - cell [ref=e427]:
+                  - img [ref=e430] [cursor=pointer]
+              - row "Tue, Dec 23 Md. Shadman Sakib Md. Shadman Sakib Banani - -" [ref=e433]:
+                - cell "Tue, Dec 23" [ref=e434]:
+                  - generic [ref=e435]: Tue, Dec 23
+                - cell "Md. Shadman Sakib Md. Shadman Sakib Banani" [ref=e436]:
+                  - generic [ref=e438]:
+                    - img "Md. Shadman Sakib" [ref=e439]
+                    - generic [ref=e440]:
+                      - paragraph [ref=e441]: Md. Shadman Sakib
+                      - paragraph [ref=e442]: Banani
+                - cell "-" [ref=e443]:
+                  - generic [ref=e444]: "-"
+                - cell "-" [ref=e445]:
+                  - generic [ref=e446]: "-"
+                - cell [ref=e447]:
+                  - img [ref=e450] [cursor=pointer]
+              - row "Tue, Dec 23 Md. Asadur Rahman Md. Asadur Rahman Banani - -" [ref=e453]:
+                - cell "Tue, Dec 23" [ref=e454]:
+                  - generic [ref=e455]: Tue, Dec 23
+                - cell "Md. Asadur Rahman Md. Asadur Rahman Banani" [ref=e456]:
+                  - generic [ref=e458]:
+                    - img "Md. Asadur Rahman" [ref=e459]
+                    - generic [ref=e460]:
+                      - paragraph [ref=e461]: Md. Asadur Rahman
+                      - paragraph [ref=e462]: Banani
+                - cell "-" [ref=e463]:
+                  - generic [ref=e464]: "-"
+                - cell "-" [ref=e465]:
+                  - generic [ref=e466]: "-"
+                - cell [ref=e467]:
+                  - img [ref=e470] [cursor=pointer]
+              - row "Tue, Dec 23 Md. Mustafijur Rahman Nebir Md. Mustafijur Rahman Nebir Banani - -" [ref=e473]:
+                - cell "Tue, Dec 23" [ref=e474]:
+                  - generic [ref=e475]: Tue, Dec 23
+                - cell "Md. Mustafijur Rahman Nebir Md. Mustafijur Rahman Nebir Banani" [ref=e476]:
+                  - generic [ref=e478]:
+                    - img "Md. Mustafijur Rahman Nebir" [ref=e479]
+                    - generic [ref=e480]:
+                      - paragraph [ref=e481]: Md. Mustafijur Rahman Nebir
+                      - paragraph [ref=e482]: Banani
+                - cell "-" [ref=e483]:
+                  - generic [ref=e484]: "-"
+                - cell "-" [ref=e485]:
+                  - generic [ref=e486]: "-"
+                - cell [ref=e487]:
+                  - img [ref=e490] [cursor=pointer]
+              - row "Tue, Dec 23 Faisal Islam Faisal Islam Banani - -" [ref=e493]:
+                - cell "Tue, Dec 23" [ref=e494]:
+                  - generic [ref=e495]: Tue, Dec 23
+                - cell "Faisal Islam Faisal Islam Banani" [ref=e496]:
+                  - generic [ref=e498]:
+                    - img "Faisal Islam" [ref=e499]
+                    - generic [ref=e500]:
+                      - paragraph [ref=e501]: Faisal Islam
+                      - paragraph [ref=e502]: Banani
+                - cell "-" [ref=e503]:
+                  - generic [ref=e504]: "-"
+                - cell "-" [ref=e505]:
+                  - generic [ref=e506]: "-"
+                - cell [ref=e507]:
+                  - img [ref=e510] [cursor=pointer]
+        - generic [ref=e514]:
+          - generic [ref=e515]:
+            - generic [ref=e517]: Attendance Summary
+            - generic [ref=e521]:
+              - img [ref=e522] [cursor=pointer]
+              - textbox "Start Date - End Date" [ref=e535]: 23-11-2025 - 23-12-2025
+          - img [ref=e538]:
+            - generic [ref=e545]: Attendance Count
+            - generic [ref=e702]:
+              - generic [ref=e704] [cursor=pointer]: Weekend
+              - generic [ref=e707] [cursor=pointer]: Absent
+              - generic [ref=e710] [cursor=pointer]: Present
+              - generic [ref=e713] [cursor=pointer]: Delay
+              - generic [ref=e716] [cursor=pointer]: Extreme Delay
+              - generic [ref=e719] [cursor=pointer]: Leave
+              - generic [ref=e722] [cursor=pointer]: Visit
+              - generic [ref=e725] [cursor=pointer]: Leave 2nd half
+              - generic [ref=e728] [cursor=pointer]: Leave 1st half
+              - generic [ref=e731] [cursor=pointer]: Holiday
+            - generic [ref=e733]:
+              - generic [ref=e734]: 23/11
+              - generic [ref=e735]: 24/11
+              - generic [ref=e736]: 25/11
+              - generic [ref=e737]: 26/11
+              - generic [ref=e738]: 27/11
+              - generic [ref=e739]: 28/11
+              - generic [ref=e740]: 29/11
+              - generic [ref=e741]: 30/11
+              - generic [ref=e742]: 1/12
+              - generic [ref=e743]: 2/12
+              - generic [ref=e744]: 3/12
+              - generic [ref=e745]: 4/12
+              - generic [ref=e746]: 5/12
+              - generic [ref=e747]: 6/12
+              - generic [ref=e748]: 7/12
+              - generic [ref=e749]: 8/12
+              - generic [ref=e750]: 9/12
+              - generic [ref=e751]: 10/12
+              - generic [ref=e752]: 11/12
+              - generic [ref=e753]: 12/12
+              - generic [ref=e754]: 13/12
+              - generic [ref=e755]: 14/12
+              - generic [ref=e756]: 15/12
+              - generic [ref=e757]: 16/12
+              - generic [ref=e758]: 17/12
+              - generic [ref=e759]: 18/12
+              - generic [ref=e760]: 19/12
+              - generic [ref=e761]: 20/12
+              - generic [ref=e762]: 21/12
+              - generic [ref=e763]: 22/12
+              - generic [ref=e764]: 23/12
+            - generic [ref=e765]:
+              - generic [ref=e766]: "0"
+              - generic [ref=e767]: "50"
+              - generic [ref=e768]: "100"
+              - generic [ref=e769]: "150"
+              - generic [ref=e770]: "200"
+              - generic [ref=e771]: "250"
+              - generic [ref=e772]: "300"
+              - generic [ref=e773]: "350"
+    - contentinfo [ref=e774]:
+      - paragraph [ref=e775]: "For support please call +8809606881188 or mail : support@pihr.xyz For further queries please visit https://www.mypihr.com/"
+      - paragraph [ref=e776]:
+        - text: "@2025 Developed & Maintained by"
+        - link "Vivasoft Limited" [ref=e777] [cursor=pointer]:
+          - /url: http://www.vivasoftltd.com
+```

@@ -1,0 +1,4 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Start break time @ Desktop] → "Start Break"
+✅ Clicked [Save break time @ Desktop] → "Save"
+Break time started successfully

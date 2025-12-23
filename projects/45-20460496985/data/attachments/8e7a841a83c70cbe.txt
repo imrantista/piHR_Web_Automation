@@ -1,0 +1,4 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Save Out Time @ Desktop] → "Out Time"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/my-attendances/out-time?out_time_remarks= | Status: 200
+Out Time submitted successfully
