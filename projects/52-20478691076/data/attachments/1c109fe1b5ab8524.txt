@@ -1,0 +1,7 @@
+✅ Restored session for employee on viva.pihr.xyz
+[Step 6] Final values – In Time: "11:05 AM", Out Time: "11:05 AM"
+✅ Restored session for admin on viva.pihr.xyz
+[Admin Page] Name Cell: Tanzim Emon
+[Admin Page] In Time: 11:05 AM, Out Time: 11:05 AM
+[Expected] In Time: 11:05 AM, Out Time: 11:05 AM
+Verified In Time (11:05 AM) and Out Time (11:05 AM) for Tanzim in Admin Quick View

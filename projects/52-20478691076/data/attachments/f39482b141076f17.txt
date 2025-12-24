@@ -1,0 +1,5 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Start break time @ Desktop] → "Start Break"
+✅ Clicked [Save break time @ Desktop] → "Save"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/my-attendances/save-break-time | Status: 201
+Break time started successfully
