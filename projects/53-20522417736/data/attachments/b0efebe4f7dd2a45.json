@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "employee_info": {
+        "employee_id": 27027,
+        "employee_code": "00000276",
+        "employee_name": "Tanzim Emon",
+        "branch": "Banani",
+        "employee_image": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg"
+      },
+      "break_info": {
+        "break_time_id": 235016,
+        "break_start_time": "06:30 PM",
+        "break_close_time": "",
+        "duration": null
+      }
+    }
+  ],
+  "pagination": {
+    "total_row": 1,
+    "page_size": 10,
+    "page_number": 1,
+    "next_page_number": 0
+  }
+}

@@ -1,0 +1,44 @@
+[
+  {
+    "break_time_id": 235016,
+    "break_time_start": "06:30 PM",
+    "break_time_close": "06:31 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 235005,
+    "break_time_start": "05:23 PM",
+    "break_time_close": "05:24 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 235002,
+    "break_time_start": "05:05 PM",
+    "break_time_close": "05:06 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 234996,
+    "break_time_start": "04:53 PM",
+    "break_time_close": "04:54 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 234992,
+    "break_time_start": "04:45 PM",
+    "break_time_close": "04:46 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 234980,
+    "break_time_start": "04:34 PM",
+    "break_time_close": "04:38 PM",
+    "is_roaster_eligible": false
+  },
+  {
+    "break_time_id": 234965,
+    "break_time_start": "04:05 PM",
+    "break_time_close": "04:06 PM",
+    "is_roaster_eligible": false
+  }
+]
