@@ -1,0 +1,6 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Save In Time @ Desktop] → "In Time"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/my-attendances/in-time?in_time_remarks= | Status: 201
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/today-break-time | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/today-attendance | Status: 200
+In Time submitted successfully
