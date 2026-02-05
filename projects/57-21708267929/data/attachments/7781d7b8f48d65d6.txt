@@ -1,0 +1,13 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Stop break button @ Desktop] → "Stop Break"
+✅ Clicked [Save break end @ Desktop] → "Save"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/my-attendances/save-break-time | Status: 201
+Break ended successfully
+Submitting Out Time after break...
+✅ Clicked [Save Out Time @ Desktop] → "Out Time"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/today-attendance | Status: 200
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/my-attendances/out-time?out_time_remarks= | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/today-break-time | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/today-break-time | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/today-attendance | Status: 200
+Out Time submitted successfully
