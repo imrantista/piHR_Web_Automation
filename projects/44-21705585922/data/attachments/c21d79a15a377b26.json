@@ -1,0 +1,50 @@
+[
+  {
+    "value": "1",
+    "text": "Office Accessories"
+  },
+  {
+    "value": "2",
+    "text": "Computer Accessories"
+  },
+  {
+    "value": "3",
+    "text": "Mobile Accessories"
+  },
+  {
+    "value": "4",
+    "text": "Medical Accessories"
+  },
+  {
+    "value": "5",
+    "text": "Electronics Item"
+  },
+  {
+    "value": "6",
+    "text": "Laptop"
+  },
+  {
+    "value": "7",
+    "text": "Desktop"
+  },
+  {
+    "value": "8",
+    "text": "Computer Monitor"
+  },
+  {
+    "value": "9",
+    "text": "Mobile"
+  },
+  {
+    "value": "10",
+    "text": "Tab"
+  },
+  {
+    "value": "11",
+    "text": "Furniture"
+  },
+  {
+    "value": "12",
+    "text": "Vehicle"
+  }
+]

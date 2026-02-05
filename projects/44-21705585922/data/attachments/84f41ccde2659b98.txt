@@ -1,0 +1,9 @@
+✅ Restored session for supervisor on viva.pihr.xyz
+✅ Clicked [Edit Button @ Desktop] → "Edit"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/salary-reports/claim-category-dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/employee?is_active_employee=true&query_data= | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/employee-claim-requests/531846 | Status: 200
+✅ Clicked [Reject Button @ Desktop] → "Reject"
+🌐 Captured API → PUT https://api.pihr.xyz/api/v2/employee-claim-requests/reject?claim_id=531846&note= | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/employee-claim-requests?from_date=&to_date=&page_size=10&page_number=1&q= | Status: 200
+✅ Assert: element is visible [Application rejected successfully. @ Desktop]

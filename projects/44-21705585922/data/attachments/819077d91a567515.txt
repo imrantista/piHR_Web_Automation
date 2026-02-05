@@ -1,0 +1,15 @@
+✅ Restored session for admin on viva.pihr.xyz
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Request an asset Button @ Desktop] → "Request an asset"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset-category/categories-sli | Status: 200
+✅ Clicked [New Asset Request Modal @ Desktop] → "New Asset Request"
+✅ Clicked [Category Dropdown @ Desktop] → "Category Dropdown"
+✅ Clicked [Save Button @ Desktop] → "Save"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/asset-requisition/request | Status: 201
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset-category/categories-sli | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset-requisition/employee-requisitions?page_size=10&page_number=1 | Status: 200
+✅ Restored session for admin on viva.pihr.xyz
+✅ Clicked [Search Box @ Desktop] → "Search Box"
+✅ Clicked [Reject Button @ Desktop] → "Reject Button"
+🌐 Captured API → PUT https://api.pihr.xyz/api/v2/asset-requisition/reject/2516 | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset-requisition/subordinate-requisitions?page_size=10&page_number=1&q=Tanzim | Status: 200

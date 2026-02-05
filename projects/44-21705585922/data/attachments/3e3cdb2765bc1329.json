@@ -1,0 +1,366 @@
+{
+  "data": [
+    {
+      "task_id": 32999,
+      "title": "Task - 1770282973339",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "05-02-2026",
+      "task_end": "09-02-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "High",
+      "priority_color": "#e8384f",
+      "status_name": "In Progress",
+      "status_color": "#ff8c00",
+      "is_monitoring": false,
+      "task_status_id": 2,
+      "task_priority_id": 3,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 32998,
+      "title": "Task - 1770282973192",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "05-02-2026",
+      "task_end": "05-02-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "Low",
+      "priority_color": "#8b008b",
+      "status_name": "In Progress",
+      "status_color": "#ff8c00",
+      "is_monitoring": false,
+      "task_status_id": 2,
+      "task_priority_id": 1,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 32997,
+      "title": "Task - 1770282944948",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "05-02-2026",
+      "task_end": "09-02-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "Low",
+      "priority_color": "#8b008b",
+      "status_name": "In Progress",
+      "status_color": "#ff8c00",
+      "is_monitoring": false,
+      "task_status_id": 2,
+      "task_priority_id": 1,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 32996,
+      "title": "Task - 1770282891999",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "05-02-2026",
+      "task_end": "05-02-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "High",
+      "priority_color": "#e8384f",
+      "status_name": "In Progress",
+      "status_color": "#ff8c00",
+      "is_monitoring": false,
+      "task_status_id": 2,
+      "task_priority_id": 3,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 32995,
+      "title": "Task - 1770282891873",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "05-02-2026",
+      "task_end": "09-02-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "Medium",
+      "priority_color": "#ffc400",
+      "status_name": "In Progress",
+      "status_color": "#ff8c00",
+      "is_monitoring": false,
+      "task_status_id": 2,
+      "task_priority_id": 2,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 32994,
+      "title": "Task - 1770282891871",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "05-02-2026",
+      "task_end": "09-02-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "My Priority",
+      "priority_color": "#000000",
+      "status_name": "Pending",
+      "status_color": "#e8384f",
+      "is_monitoring": false,
+      "task_status_id": 1,
+      "task_priority_id": 4,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 32993,
+      "title": "Task - 1770282891407",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "05-02-2026",
+      "task_end": "10-02-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "Medium",
+      "priority_color": "#ffc400",
+      "status_name": "Pending",
+      "status_color": "#e8384f",
+      "is_monitoring": false,
+      "task_status_id": 1,
+      "task_priority_id": 2,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 31667,
+      "title": "Market Bus Stop to Kawran BazarThe dista to Kawr.. · পৃষ্ঠাটি অনুবাদ korun Mapcarta",
+      "description": "Market Bus Stop to Kawran Bazar\nThe distance between Saddam Market Bus Stop to Kawran Bazar is 12 Km by road. You can also find the distance from Saddam Market Bus Stop lllto Kawran Bazar using ... · পৃষ্ঠাটি অনুবাদ করুন\n\nMapcarta\n\nworking properly..\n12\t\\<>>][(+৳*#&#+:'/!?!",
+      "task_start": "20-01-2026",
+      "task_end": "",
+      "category": {
+        "task_category_id": 2,
+        "task_category_name": "Without Branch Check in/out",
+        "is_supervisor_notify": true,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "High",
+      "priority_color": "#e8384f",
+      "status_name": "Pending",
+      "status_color": "#e8384f",
+      "is_monitoring": true,
+      "task_status_id": 1,
+      "task_priority_id": 3,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": false,
+      "assigned_by_employee_information": null,
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    },
+    {
+      "task_id": 30345,
+      "title": "Task - 1767118282636",
+      "description": "This is an auto-generated description for testing purposes.",
+      "task_start": "31-12-2025",
+      "task_end": "05-01-2026",
+      "category": {
+        "task_category_id": 25,
+        "task_category_name": "Online Support ",
+        "is_supervisor_notify": false,
+        "is_check_in_enabled": false,
+        "is_comment_allowed": true
+      },
+      "customer_name": null,
+      "customer_branch_name": null,
+      "file_path": null,
+      "task_creator_name": null,
+      "priority_name": "Medium",
+      "priority_color": "#ffc400",
+      "status_name": "In Progress",
+      "status_color": "#ff8c00",
+      "is_monitoring": false,
+      "task_status_id": 2,
+      "task_priority_id": 2,
+      "task_comment_count": 0,
+      "is_task_update_blocked": false,
+      "is_user_task_creator": true,
+      "assigned_by_employee_information": {
+        "employee_id": 96969,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+        "employee_name": "Shabit -A -Alahi"
+      },
+      "assigned_employees": [
+        {
+          "employee_id": 27027,
+          "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+          "employee_name": "Tanzim Emon"
+        }
+      ]
+    }
+  ],
+  "pagination": {
+    "total_row": 9,
+    "page_size": 10,
+    "page_number": 1,
+    "next_page_number": 0
+  }
+}

@@ -1,0 +1,26 @@
+{
+  "basic_information": {
+    "date_of_birth": "11-09-1999",
+    "blood_group": "B+",
+    "religion": "Islam",
+    "present_address": " ",
+    "permanent_address": ""
+  },
+  "official_information": {
+    "employee_code": "00000276",
+    "branch_name": "Banani",
+    "department_name": "SQA",
+    "supervisor_name": "Shabit -A -Alahi",
+    "join_date": "06-10-2022",
+    "job_status": "Active",
+    "service_length": "3Y-3M-30D"
+  },
+  "profile_information": {
+    "employee_id": 27027,
+    "employee_name": "Tanzim Emon",
+    "designation": "SQA Engineer L-II",
+    "email": "tanzim.emon@vivasoftltd.com",
+    "mobile_number": "01910120608",
+    "employee_image": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg"
+  }
+}

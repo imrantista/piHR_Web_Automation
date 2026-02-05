@@ -1,0 +1,75 @@
+{
+  "advance_salary": {
+    "advance_salary_id": 19203,
+    "advance_salary_amount": 31000,
+    "payment_start_month": 2,
+    "payment_start_year": 2026,
+    "due_amount": 0,
+    "duration_month": 6,
+    "payment_method": 2,
+    "employee_id": 27027,
+    "employee_name": "Tanzim  Emon",
+    "purpose": "Advance Salary Request",
+    "job_status": "Active"
+  },
+  "payment_methods": [
+    {
+      "value": "1",
+      "text": "Salary Deduction"
+    },
+    {
+      "value": "2",
+      "text": "By Cash"
+    }
+  ],
+  "months": [
+    {
+      "value": "1",
+      "text": "January"
+    },
+    {
+      "value": "2",
+      "text": "February"
+    },
+    {
+      "value": "3",
+      "text": "March"
+    },
+    {
+      "value": "4",
+      "text": "April"
+    },
+    {
+      "value": "5",
+      "text": "May"
+    },
+    {
+      "value": "6",
+      "text": "June"
+    },
+    {
+      "value": "7",
+      "text": "July"
+    },
+    {
+      "value": "8",
+      "text": "August"
+    },
+    {
+      "value": "9",
+      "text": "September"
+    },
+    {
+      "value": "10",
+      "text": "October"
+    },
+    {
+      "value": "11",
+      "text": "November"
+    },
+    {
+      "value": "12",
+      "text": "December"
+    }
+  ]
+}

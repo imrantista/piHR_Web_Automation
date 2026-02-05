@@ -1,0 +1,82 @@
+{
+  "task": {
+    "task_id": 32995,
+    "title": "Task - 1770282891873",
+    "description": "This is an auto-generated description for testing purposes.",
+    "task_start": "05-02-2026",
+    "task_end": "09-02-2026",
+    "category": {
+      "task_category_id": 25,
+      "task_category_name": "Online Support ",
+      "is_supervisor_notify": false,
+      "is_check_in_enabled": false,
+      "is_comment_allowed": true
+    },
+    "customer_name": null,
+    "customer_branch_name": null,
+    "file_path": null,
+    "task_creator_name": "Shabit -A -Alahi",
+    "priority_name": "Medium",
+    "priority_color": "#ffc400",
+    "status_name": "In Progress",
+    "status_color": "#ff8c00",
+    "is_monitoring": false,
+    "task_status_id": 2,
+    "task_priority_id": 2,
+    "task_comment_count": 0,
+    "is_task_update_blocked": true,
+    "is_user_task_creator": false,
+    "assigned_by_employee_information": null,
+    "assigned_employees": [
+      {
+        "employee_id": 27027,
+        "employee_image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/27027.jpeg",
+        "employee_name": "Tanzim Emon"
+      }
+    ]
+  },
+  "check_in_time": null,
+  "check_out_time": null,
+  "is_user_checked_in": false,
+  "is_user_checked_out": false,
+  "customerbranch_id": null,
+  "customer_id": null,
+  "task_comments": [],
+  "task_status_list": [
+    {
+      "task_status_id": 1,
+      "status_name": "Pending",
+      "ordinal": 1,
+      "status_color": "#e8384f",
+      "is_task_update_blocked": false
+    },
+    {
+      "task_status_id": 2,
+      "status_name": "In Progress",
+      "ordinal": 10,
+      "status_color": "#ff8c00",
+      "is_task_update_blocked": true
+    },
+    {
+      "task_status_id": 15,
+      "status_name": "Need More Time",
+      "ordinal": 12,
+      "status_color": "#ffc400",
+      "is_task_update_blocked": false
+    },
+    {
+      "task_status_id": 4,
+      "status_name": "Uncompleted ",
+      "ordinal": 15,
+      "status_color": "#8b4513",
+      "is_task_update_blocked": false
+    },
+    {
+      "task_status_id": 3,
+      "status_name": "Completed",
+      "ordinal": 20,
+      "status_color": "#1ebea5",
+      "is_task_update_blocked": false
+    }
+  ]
+}

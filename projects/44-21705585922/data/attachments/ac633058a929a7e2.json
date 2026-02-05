@@ -1,0 +1,8 @@
+{
+  "allow_pc_browser_attendance": true,
+  "allow_mobile_browser_attendance": false,
+  "enable_attendance_location_tracking": false,
+  "accept_browser_attendance_from_whitelisted_ip_only": false,
+  "maximum_attendance_hour": 16,
+  "max_device_past_sync_days": 10
+}

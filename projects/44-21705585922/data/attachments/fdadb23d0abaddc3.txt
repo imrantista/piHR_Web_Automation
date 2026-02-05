@@ -1,0 +1,15 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Add New Button @ Desktop] → "Add New"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/utilities/year-sli | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/advance-salary/payment-methods-dropdown | Status: 200
+✅ Filled [Advance Amount Field @ Desktop] → "advance_salary_amount" with: "42000"
+✅ Clicked [Payment Method Field @ Desktop] → "Payment Method Field"
+✅ Clicked [Payment Method Option: Salary Deduction @ Desktop] → "Salary Deduction"
+✅ Filled [Payment Duration Field @ Desktop] → "duration_month" with: "6"
+✅ Clicked [Start Month Field @ Desktop] → "Start Month Field"
+✅ Clicked [Start Month Option: February @ Desktop] → "February"
+✅ Clicked [Year Field @ Desktop] → "Year Field"
+✅ Clicked [Year Option: 2026 @ Desktop] → "2026"
+✅ Filled [Remarks Field @ Desktop] → "remarks" with: "Advance Salary Request"
+✅ Clicked [Save Button @ Desktop] → "Save"
+✅ Assert: element is visible [Data saved successfully. @ Desktop]

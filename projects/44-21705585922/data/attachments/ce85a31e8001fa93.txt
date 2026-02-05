@@ -1,0 +1,346 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e3]:
+  - navigation [ref=e4]:
+    - generic [ref=e5]:
+      - link [ref=e7] [cursor=pointer]:
+        - /url: /dashboard
+        - img [ref=e8]
+      - navigation [ref=e9]:
+        - button [ref=e10] [cursor=pointer]:
+          - img [ref=e11]
+        - list [ref=e13]:
+          - listitem [ref=e14]:
+            - group [ref=e15]:
+              - generic "Attendance" [ref=e16] [cursor=pointer]:
+                - generic [ref=e17]: Attendance
+                - img [ref=e19]
+          - listitem [ref=e21]:
+            - group [ref=e22]:
+              - generic "Salary" [ref=e23] [cursor=pointer]:
+                - generic [ref=e24]: Salary
+                - img [ref=e26]
+          - listitem [ref=e28]:
+            - group [ref=e29]:
+              - generic "Employee" [ref=e30] [cursor=pointer]:
+                - generic [ref=e31]: Employee
+                - img [ref=e33]
+          - listitem [ref=e35]:
+            - group [ref=e36]:
+              - generic "Self Service" [ref=e37] [cursor=pointer]:
+                - generic [ref=e38]: Self Service
+                - img [ref=e40]
+      - list [ref=e43]:
+        - listitem [ref=e44]:
+          - paragraph [ref=e45] [cursor=pointer]:
+            - generic [ref=e46]: Attendance
+            - img [ref=e47]
+        - listitem [ref=e49]:
+          - paragraph [ref=e50] [cursor=pointer]:
+            - generic [ref=e51]: Salary
+            - img [ref=e52]
+        - listitem [ref=e54]:
+          - paragraph [ref=e55] [cursor=pointer]:
+            - generic [ref=e56]: Employee
+            - img [ref=e57]
+        - listitem [ref=e59]:
+          - paragraph [ref=e60] [cursor=pointer]:
+            - generic [ref=e61]: Self Service
+            - img [ref=e62]
+    - generic [ref=e64]:
+      - generic [ref=e66] [cursor=pointer]:
+        - img [ref=e69]
+        - generic:
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - textbox "Search..."
+      - generic [ref=e73] [cursor=pointer]:
+        - img [ref=e75]
+        - generic [ref=e78]: "1304"
+      - generic [ref=e79]:
+        - generic [ref=e81]:
+          - generic:
+            - generic:
+              - generic:
+                - img
+                - heading "Meet Our AI Assistant!" [level=3]
+              - generic:
+                - generic:
+                  - img
+                  - generic: Intelligent responses in seconds
+                - generic:
+                  - img
+                  - generic: 24/7 instant support
+              - button "Start Chatting":
+                - text: Start Chatting
+                - img
+          - button [ref=e85]:
+            - img [ref=e86]
+          - button [ref=e88] [cursor=pointer]:
+            - img [ref=e89]
+        - img "profile" [ref=e93] [cursor=pointer]
+  - generic [ref=e96]:
+    - generic [ref=e97]:
+      - generic [ref=e98]:
+        - generic [ref=e99]:
+          - generic [ref=e100]: Asset
+          - img [ref=e101]
+          - link "Employee Assets Requisition To Be Approved" [ref=e104] [cursor=pointer]:
+            - /url: /employee/assetrequisitionrequest
+        - heading "Pending Asset Requisition" [level=3] [ref=e105]
+      - generic [ref=e106]:
+        - button [ref=e109] [cursor=pointer]:
+          - img [ref=e110]
+        - button [ref=e113] [cursor=pointer]:
+          - img [ref=e114]
+        - button [ref=e118] [cursor=pointer]:
+          - img [ref=e119]
+    - generic [ref=e125]:
+      - generic [ref=e126]:
+        - generic [ref=e131]:
+          - textbox "Search" [ref=e132]: Tanzim
+          - img [ref=e134]
+        - generic [ref=e138]:
+          - img [ref=e139] [cursor=pointer]
+          - textbox "Select Date" [ref=e152]
+      - generic [ref=e154]:
+        - table [ref=e156]:
+          - rowgroup [ref=e157]:
+            - row "Employee Code Employee Name Designation Job Status Asset Category Requisition Status Requisition Details From Date To Date Actions" [ref=e158]:
+              - cell "Employee Code" [ref=e159]
+              - cell "Employee Name" [ref=e160]
+              - cell "Designation" [ref=e161]
+              - cell "Job Status" [ref=e162]
+              - cell "Asset Category" [ref=e163]
+              - cell "Requisition Status" [ref=e164]
+              - cell "Requisition Details" [ref=e165]
+              - cell "From Date" [ref=e166]
+              - cell "To Date" [ref=e167]
+              - cell "Actions" [ref=e168]
+          - rowgroup [ref=e169]:
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM Approved" [ref=e170]:
+              - cell "00000276" [ref=e171]
+              - cell "Tanzim Emon Banani" [ref=e172]:
+                - generic [ref=e173]:
+                  - img [ref=e174]
+                  - generic [ref=e175]:
+                    - generic [ref=e176]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e177]
+              - cell "Active" [ref=e178]
+              - cell "Office Accessories" [ref=e179]
+              - cell "Pending" [ref=e180]
+              - cell "test assets" [ref=e181]
+              - cell "30-12-2025 06:00 AM" [ref=e182]
+              - cell "30-12-2025 06:00 AM" [ref=e183]
+              - cell "Approved" [ref=e184]:
+                - generic [ref=e185]:
+                  - generic [ref=e186]:
+                    - img [ref=e188] [cursor=pointer]
+                    - generic [ref=e195]: Approved
+                  - img [ref=e198] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e201]:
+              - cell "00000276" [ref=e202]
+              - cell "Tanzim Emon Banani" [ref=e203]:
+                - generic [ref=e204]:
+                  - img [ref=e205]
+                  - generic [ref=e206]:
+                    - generic [ref=e207]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e208]
+              - cell "Active" [ref=e209]
+              - cell "Office Accessories" [ref=e210]
+              - cell "Pending" [ref=e211]
+              - cell "test assets" [ref=e212]
+              - cell "30-12-2025 06:00 AM" [ref=e213]
+              - cell "30-12-2025 06:00 AM" [ref=e214]
+              - cell [ref=e215]:
+                - generic [ref=e216]:
+                  - img [ref=e219] [cursor=pointer]
+                  - img [ref=e224] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e227]:
+              - cell "00000276" [ref=e228]
+              - cell "Tanzim Emon Banani" [ref=e229]:
+                - generic [ref=e230]:
+                  - img [ref=e231]
+                  - generic [ref=e232]:
+                    - generic [ref=e233]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e234]
+              - cell "Active" [ref=e235]
+              - cell "Office Accessories" [ref=e236]
+              - cell "Pending" [ref=e237]
+              - cell "test assets" [ref=e238]
+              - cell "30-12-2025 06:00 AM" [ref=e239]
+              - cell "30-12-2025 06:00 AM" [ref=e240]
+              - cell [ref=e241]:
+                - generic [ref=e242]:
+                  - img [ref=e245] [cursor=pointer]
+                  - img [ref=e250] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending Updated details 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e253]:
+              - cell "00000276" [ref=e254]
+              - cell "Tanzim Emon Banani" [ref=e255]:
+                - generic [ref=e256]:
+                  - img [ref=e257]
+                  - generic [ref=e258]:
+                    - generic [ref=e259]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e260]
+              - cell "Active" [ref=e261]
+              - cell "Office Accessories" [ref=e262]
+              - cell "Pending" [ref=e263]
+              - cell "Updated details" [ref=e264]
+              - cell "30-12-2025 06:00 AM" [ref=e265]
+              - cell "30-12-2025 06:00 AM" [ref=e266]
+              - cell [ref=e267]:
+                - generic [ref=e268]:
+                  - img [ref=e271] [cursor=pointer]
+                  - img [ref=e276] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e279]:
+              - cell "00000276" [ref=e280]
+              - cell "Tanzim Emon Banani" [ref=e281]:
+                - generic [ref=e282]:
+                  - img [ref=e283]
+                  - generic [ref=e284]:
+                    - generic [ref=e285]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e286]
+              - cell "Active" [ref=e287]
+              - cell "Office Accessories" [ref=e288]
+              - cell "Pending" [ref=e289]
+              - cell "test assets" [ref=e290]
+              - cell "30-12-2025 06:00 AM" [ref=e291]
+              - cell "30-12-2025 06:00 AM" [ref=e292]
+              - cell [ref=e293]:
+                - generic [ref=e294]:
+                  - img [ref=e297] [cursor=pointer]
+                  - img [ref=e302] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e305]:
+              - cell "00000276" [ref=e306]
+              - cell "Tanzim Emon Banani" [ref=e307]:
+                - generic [ref=e308]:
+                  - img [ref=e309]
+                  - generic [ref=e310]:
+                    - generic [ref=e311]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e312]
+              - cell "Active" [ref=e313]
+              - cell "Office Accessories" [ref=e314]
+              - cell "Pending" [ref=e315]
+              - cell "test assets" [ref=e316]
+              - cell "30-12-2025 06:00 AM" [ref=e317]
+              - cell "30-12-2025 06:00 AM" [ref=e318]
+              - cell [ref=e319]:
+                - generic [ref=e320]:
+                  - img [ref=e323] [cursor=pointer]
+                  - img [ref=e328] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e331]:
+              - cell "00000276" [ref=e332]
+              - cell "Tanzim Emon Banani" [ref=e333]:
+                - generic [ref=e334]:
+                  - img [ref=e335]
+                  - generic [ref=e336]:
+                    - generic [ref=e337]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e338]
+              - cell "Active" [ref=e339]
+              - cell "Office Accessories" [ref=e340]
+              - cell "Pending" [ref=e341]
+              - cell "test assets" [ref=e342]
+              - cell "30-12-2025 06:00 AM" [ref=e343]
+              - cell "30-12-2025 06:00 AM" [ref=e344]
+              - cell [ref=e345]:
+                - generic [ref=e346]:
+                  - img [ref=e349] [cursor=pointer]
+                  - img [ref=e354] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e357]:
+              - cell "00000276" [ref=e358]
+              - cell "Tanzim Emon Banani" [ref=e359]:
+                - generic [ref=e360]:
+                  - img [ref=e361]
+                  - generic [ref=e362]:
+                    - generic [ref=e363]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e364]
+              - cell "Active" [ref=e365]
+              - cell "Office Accessories" [ref=e366]
+              - cell "Pending" [ref=e367]
+              - cell "test assets" [ref=e368]
+              - cell "30-12-2025 06:00 AM" [ref=e369]
+              - cell "30-12-2025 06:00 AM" [ref=e370]
+              - cell [ref=e371]:
+                - generic [ref=e372]:
+                  - img [ref=e375] [cursor=pointer]
+                  - img [ref=e380] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e383]:
+              - cell "00000276" [ref=e384]
+              - cell "Tanzim Emon Banani" [ref=e385]:
+                - generic [ref=e386]:
+                  - img [ref=e387]
+                  - generic [ref=e388]:
+                    - generic [ref=e389]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e390]
+              - cell "Active" [ref=e391]
+              - cell "Office Accessories" [ref=e392]
+              - cell "Pending" [ref=e393]
+              - cell "test assets" [ref=e394]
+              - cell "30-12-2025 06:00 AM" [ref=e395]
+              - cell "30-12-2025 06:00 AM" [ref=e396]
+              - cell [ref=e397]:
+                - generic [ref=e398]:
+                  - img [ref=e401] [cursor=pointer]
+                  - img [ref=e406] [cursor=pointer]
+            - row "00000276 Tanzim Emon Banani SQA Engineer L-II Active Office Accessories Pending test assets 30-12-2025 06:00 AM 30-12-2025 06:00 AM" [ref=e409]:
+              - cell "00000276" [ref=e410]
+              - cell "Tanzim Emon Banani" [ref=e411]:
+                - generic [ref=e412]:
+                  - img [ref=e413]
+                  - generic [ref=e414]:
+                    - generic [ref=e415]: Tanzim Emon
+                    - text: Banani
+              - cell "SQA Engineer L-II" [ref=e416]
+              - cell "Active" [ref=e417]
+              - cell "Office Accessories" [ref=e418]
+              - cell "Pending" [ref=e419]
+              - cell "test assets" [ref=e420]
+              - cell "30-12-2025 06:00 AM" [ref=e421]
+              - cell "30-12-2025 06:00 AM" [ref=e422]
+              - cell [ref=e423]:
+                - generic [ref=e424]:
+                  - img [ref=e427] [cursor=pointer]
+                  - img [ref=e432] [cursor=pointer]
+        - generic [ref=e435]:
+          - generic [ref=e436]:
+            - generic [ref=e437]: Items per page
+            - generic [ref=e440]: "10"
+          - generic [ref=e442]:
+            - generic [ref=e443]:
+              - generic [ref=e444]: 1 - 10
+              - generic [ref=e445]:
+                - generic [ref=e446]: of
+                - generic [ref=e447]: "18"
+            - navigation [ref=e448]:
+              - list [ref=e449]:
+                - listitem [ref=e450]:
+                  - button [ref=e451] [cursor=pointer]:
+                    - img [ref=e453]
+                - listitem [ref=e456]:
+                  - button "Previous" [ref=e457] [cursor=pointer]:
+                    - img [ref=e459]
+                    - generic [ref=e461]: Previous
+                - listitem [ref=e462]:
+                  - button "1" [ref=e463] [cursor=pointer]
+                - listitem [ref=e464]:
+                  - button "2" [ref=e465] [cursor=pointer]
+                - listitem [ref=e466]:
+                  - button "Next" [ref=e467] [cursor=pointer]:
+                    - generic [ref=e468]: Next
+                    - img [ref=e470]
+                - listitem [ref=e472]:
+                  - button [ref=e473] [cursor=pointer]:
+                    - img [ref=e475]
+```

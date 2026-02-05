@@ -1,0 +1,10 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Self Service Tab @ Desktop] → "Self Service"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-dashboard/hierarchy | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/employee-profiles/employee-information? | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-dashboard/flag-wise-attendance-count?from_date=01-02-2026&to_date=28-02-2026 | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-dashboard | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/users/user-quick-links | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/today-break-time | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-attendances/company-attendance-rules | Status: 200
+✅ Clicked [Leave Application Button @ Desktop] → "Leave Application"

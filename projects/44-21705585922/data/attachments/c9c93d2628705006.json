@@ -1,0 +1,22 @@
+[
+  {
+    "value": "1",
+    "text": "Low",
+    "color": "#8b008b"
+  },
+  {
+    "value": "2",
+    "text": "Medium",
+    "color": "#ffc400"
+  },
+  {
+    "value": "3",
+    "text": "High",
+    "color": "#e8384f"
+  },
+  {
+    "value": "4",
+    "text": "My Priority",
+    "color": "#000000"
+  }
+]

@@ -1,0 +1,9 @@
+✅ Restored session for supervisor on viva.pihr.xyz
+✅ Clicked [Status Filter @ Desktop] → "Status"
+✅ Clicked [Select Status: Pending @ Desktop] → "Pending"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026&task_status_id=1 | Status: 200
+✅ Clicked [Reset Button @ Desktop] → "Reset"
+🌐 Captured API: https://api.pihr.xyz/api/v2/task/employee-tasks?start_date=05-01-2026&end_date=05-02-2026 → Method: GET | Status: 200
+🔗 Expected API: https://api.pihr.xyz/api/v2/task/employee-tasks → Method: GET | Status: 200
+✅Assertion API: Passed 
+✅ Reset Button API verified with previous month start and today end: https://api.pihr.xyz/api/v2/task/employee-tasks?start_date=05-01-2026&end_date=05-02-2026

@@ -1,0 +1,21 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Filled [element @ Desktop] → "claim_date" with: "05-02-2026"
+✅ Filled [element @ Desktop] → "claim_amount" with: "110"
+✅ Filled [element @ Desktop] → "from_date" with: "29-01-2026"
+✅ Filled [element @ Desktop] → "to_date" with: "05-02-2026"
+✅ Clicked [Add Now Button @ Desktop] → "Add Now"
+✅ Clicked [Save Button @ Desktop] → "Save"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/claim/save-claim | Status: 201
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/claim/self-claims?page_size=10&page_number=1 | Status: 200
+✅ Clicked [Edit Button @ Desktop] → "Edit"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/claim/531845 | Status: 200
+✅ Filled [element @ Desktop] → "claim_date" with: "05-02-2026"
+✅ Filled [element @ Desktop] → "claim_amount" with: "297"
+✅ Filled [element @ Desktop] → "from_date" with: "29-01-2026"
+✅ Filled [element @ Desktop] → "to_date" with: "05-02-2026"
+✅ Clicked [Update Button @ Desktop] → "Update"
+✅ Clicked [Save Button @ Desktop] → "Save"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/claim/save-claim | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/claim/531845 | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/claim/self-claims?page_size=10&page_number=1 | Status: 200
+✅ Assert: element is visible [Data updated successfully. @ Desktop]

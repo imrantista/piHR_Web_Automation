@@ -1,0 +1,6 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Self Service Tab @ Desktop] → "Self Service"
+✅ Clicked [Leave Application Button @ Desktop] → "Leave Application"
+Leave data is present
+
+📌 Saving table data for headers: From, To, Approved

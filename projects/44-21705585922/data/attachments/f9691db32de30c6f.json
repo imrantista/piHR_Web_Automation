@@ -1,0 +1,24 @@
+{
+  "data": [
+    {
+      "distribution_id": 9454,
+      "asset_name": "iphone",
+      "asset_info": "Test description",
+      "status_id": 2,
+      "asset_status_name": "Occupied",
+      "category_name": "Mobile Accessories",
+      "start_date": "19-12-2025",
+      "start_day": "Fri",
+      "end_date": "",
+      "end_day": "_",
+      "total_days": 0,
+      "file_path": "https://pihr-bucket.s3.ap-southeast-1.amazonaws.com/Production/PihrDocument/OfficeEquipments/categories/mobile-accessories.png"
+    }
+  ],
+  "pagination": {
+    "total_row": 1,
+    "page_size": 10,
+    "page_number": 1,
+    "next_page_number": 0
+  }
+}

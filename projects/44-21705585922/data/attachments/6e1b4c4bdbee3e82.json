@@ -1,0 +1,339 @@
+{
+  "claim": {
+    "claim_id": 531845,
+    "claim_no": "006464",
+    "employee_id": 27027,
+    "creation_date": null,
+    "claim_date": "05-02-2026",
+    "advanced_date": "",
+    "approve_date": "",
+    "advanced_amount": 0,
+    "claim_amount": 329,
+    "sanctioned_amount": 0,
+    "approved_amount": 0,
+    "claim_status_id": 2,
+    "claim_status": "Claimed",
+    "description": "",
+    "note": null,
+    "employee_name": "Tanzim Emon",
+    "employee_code": "00000276",
+    "designation_name": "SQA Engineer L-II",
+    "branch_name": "Banani",
+    "department_name": "SQA",
+    "remaining_amount": 329,
+    "claim_details": [
+      {
+        "claim_detail_id": 663473,
+        "claim_category_id": 61,
+        "category_name": "Advance",
+        "from_date": "29-01-2026",
+        "to_date": "05-02-2026",
+        "claim_amount": 329,
+        "approved_amount": 0,
+        "remarks": "",
+        "claim_attachments": []
+      }
+    ]
+  },
+  "claim_category_sli": [
+    {
+      "value": "",
+      "text": "Select category"
+    },
+    {
+      "value": "5",
+      "text": "ADN SmS"
+    },
+    {
+      "value": "61",
+      "text": "Advance"
+    },
+    {
+      "value": "40",
+      "text": "Bank"
+    },
+    {
+      "value": "136",
+      "text": "Bank Charge"
+    },
+    {
+      "value": "393",
+      "text": "BASIS"
+    },
+    {
+      "value": "354",
+      "text": "Calendar "
+    },
+    {
+      "value": "366",
+      "text": "Cash"
+    },
+    {
+      "value": "352",
+      "text": "CASH "
+    },
+    {
+      "value": "1390",
+      "text": "Commission"
+    },
+    {
+      "value": "80",
+      "text": "Company Tax"
+    },
+    {
+      "value": "357",
+      "text": "Conference"
+    },
+    {
+      "value": "1",
+      "text": "Conveyance"
+    },
+    {
+      "value": "353",
+      "text": "Credit Card"
+    },
+    {
+      "value": "204",
+      "text": "CRM Software"
+    },
+    {
+      "value": "356",
+      "text": "Device"
+    },
+    {
+      "value": "358",
+      "text": "Digital Marketing "
+    },
+    {
+      "value": "176",
+      "text": "Digital Marketing Course"
+    },
+    {
+      "value": "22",
+      "text": "Diss Bill"
+    },
+    {
+      "value": "7",
+      "text": "e-GP"
+    },
+    {
+      "value": "16",
+      "text": "Electric & Electrical"
+    },
+    {
+      "value": "81",
+      "text": "Employee Tax"
+    },
+    {
+      "value": "228",
+      "text": "Entertainment"
+    },
+    {
+      "value": "14",
+      "text": "Equipment"
+    },
+    {
+      "value": "17",
+      "text": "Furniture"
+    },
+    {
+      "value": "13",
+      "text": "Gas Bill"
+    },
+    {
+      "value": "426",
+      "text": "Gift"
+    },
+    {
+      "value": "24",
+      "text": "Groceries"
+    },
+    {
+      "value": "66",
+      "text": "Insurance"
+    },
+    {
+      "value": "1145",
+      "text": "Internat Bill"
+    },
+    {
+      "value": "203",
+      "text": "Internet Bill 6th Floor"
+    },
+    {
+      "value": "25",
+      "text": "Internet Bill House"
+    },
+    {
+      "value": "11",
+      "text": "Internet Bill Office(Optimax)"
+    },
+    {
+      "value": "423",
+      "text": "IP Phone"
+    },
+    {
+      "value": "355",
+      "text": "Jersey"
+    },
+    {
+      "value": "18",
+      "text": "Kitchenware & Krokarij"
+    },
+    {
+      "value": "402",
+      "text": "Lead Purpose"
+    },
+    {
+      "value": "42",
+      "text": "Loan"
+    },
+    {
+      "value": "360",
+      "text": "Loan Return "
+    },
+    {
+      "value": "2",
+      "text": "Lunch Bill"
+    },
+    {
+      "value": "23",
+      "text": "Miscellaneous"
+    },
+    {
+      "value": "3",
+      "text": "Mobile Bill"
+    },
+    {
+      "value": "6",
+      "text": "Modem"
+    },
+    {
+      "value": "4",
+      "text": "Modem Recharge"
+    },
+    {
+      "value": "1456",
+      "text": "Money Return "
+    },
+    {
+      "value": "41",
+      "text": "Office"
+    },
+    {
+      "value": "10",
+      "text": "Office Rent"
+    },
+    {
+      "value": "367",
+      "text": "Opening Balance"
+    },
+    {
+      "value": "1715",
+      "text": "Others"
+    },
+    {
+      "value": "424",
+      "text": "Pi-HR"
+    },
+    {
+      "value": "422",
+      "text": "PiHR Payment Refund"
+    },
+    {
+      "value": "1242",
+      "text": "Reference Clients"
+    },
+    {
+      "value": "15",
+      "text": "Salary Vivacom"
+    },
+    {
+      "value": "9",
+      "text": "Salary Vivasoft"
+    },
+    {
+      "value": "1946",
+      "text": "Sales Return"
+    },
+    {
+      "value": "392",
+      "text": "Sanitary"
+    },
+    {
+      "value": "394",
+      "text": "Seminar"
+    },
+    {
+      "value": "20",
+      "text": "Service Charge DOHS"
+    },
+    {
+      "value": "21",
+      "text": "Service Charge Office"
+    },
+    {
+      "value": "351",
+      "text": "SOFTEXPO"
+    },
+    {
+      "value": "19",
+      "text": "Stationary"
+    },
+    {
+      "value": "8",
+      "text": "Tender"
+    },
+    {
+      "value": "62",
+      "text": "Test"
+    },
+    {
+      "value": "2215",
+      "text": "test100"
+    },
+    {
+      "value": "79",
+      "text": "Vat"
+    },
+    {
+      "value": "12",
+      "text": "Water Bill"
+    },
+    {
+      "value": "260",
+      "text": "Website Content"
+    }
+  ],
+  "claim_status_sli": [
+    {
+      "value": "1",
+      "text": "Select Status"
+    },
+    {
+      "value": "2",
+      "text": "Claimed"
+    },
+    {
+      "value": "3",
+      "text": "Under Process"
+    },
+    {
+      "value": "4",
+      "text": "Approved by supervisor"
+    },
+    {
+      "value": "5",
+      "text": "Approved"
+    },
+    {
+      "value": "6",
+      "text": "Disbursed"
+    },
+    {
+      "value": "7",
+      "text": "Rejected"
+    }
+  ],
+  "claim_open_as": 2
+}

@@ -1,0 +1,30 @@
+✅ Restored session for supervisor on viva.pihr.xyz
+✅ Clicked [New Task Button @ Desktop] → "New Task"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/employee?is_active_employee=true&query_data= | Status: 200
+✅ Filled [Task Title Field @ Desktop] → "title" with: "Task - 1770282973192"
+✅ Filled [element @ Desktop] → "task_start" with: "05-02-2026"
+✅ Filled [element @ Desktop] → "task_end" with: "05-02-2026"
+✅ Filled [Assign To Employee Field @ Desktop] → "Select" with: "00000276"
+✅ Clicked [Select Employee from Dropdown @ Desktop] → "Tanzim Emon"
+✅ Clicked [Task Category Field @ Desktop] → "Task Category Field"
+✅ Clicked [Task Category @ Desktop] → "Online Support"
+✅ Clicked [Task Priority Field @ Desktop] → "Task Priority Field"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/is-check-in-enabled?task_category_id=25 | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/customer-info-sli | Status: 200
+✅ Clicked [Task Priority @ Desktop] → "Low"
+✅ Clicked [Task Status Field @ Desktop] → "Task Status Field"
+✅ Clicked [Task Status @ Desktop] → "Pending"
+✅ Filled [Task Description Field @ Desktop] → "decription" with: "This is an auto-generated description for testing purposes."
+✅ Clicked [Create Button @ Desktop] → "Create"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/task | Status: 201
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026 | Status: 200
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Select Task: Task - 1770282973192 @ Desktop] → "Task - 1770282973192"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/32998 | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/is-check-in-enabled?task_category_id=25 | Status: 200
+✅ Clicked [Current Status Field @ Desktop] → "Pending"
+✅ Clicked [Select Status: In Progress @ Desktop] → "In Progress"
+🌐 Captured API → PATCH https://api.pihr.xyz/api/v2/task | Status: 201
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/32998 | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026 | Status: 200
+Initial Count: 4, Updated Count: 6

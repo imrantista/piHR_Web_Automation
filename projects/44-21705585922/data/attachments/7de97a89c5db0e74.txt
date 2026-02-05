@@ -1,0 +1,16 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Self Service Tab @ Desktop] → "Self Service"
+✅ Clicked [DashBoard @ Desktop] → "Dashboard"
+✅ Saved API response: /home/runner/work/piHR_Web_Automation/piHR_Web_Automation/SaveData/apiResponse/employeeLeaveInformation.json
+✅ Supervisor info saved (JSON) at: /home/runner/work/piHR_Web_Automation/piHR_Web_Automation/saveData/txt/supervisor/supervisorinfo.txt
+Shabit -A -Alahi
+SQA Engineer L-I
+00000586
+Final collected values: { 'Leave Remaining': 15 }
+Final collected values: { 'Leave Remaining': 15, 'Leave Taken': 0 }
+✅ Eligible for Leave
+Final collected values: { 'Leave Remaining': 15 }
+Final collected values: { 'Leave Remaining': 15, 'Leave Taken': 0 }
+✅ Eligible for Leave
+
+========== API vs TXT/JSON COMPARISON ==========

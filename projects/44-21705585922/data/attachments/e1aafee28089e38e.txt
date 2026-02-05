@@ -1,0 +1,3 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Asset Assigned Button @ Desktop] → "Asset Assigned"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset/assigned?page_size=10&page_number=1 | Status: 200

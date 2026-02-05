@@ -1,0 +1,6 @@
+✅ Restored session for supervisor on viva.pihr.xyz
+✅ Clicked [Edit Button @ Desktop] → "Edit"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/employee-claim-requests/531847 | Status: 404
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/salary-reports/claim-category-dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/employee?is_active_employee=true&query_data= | Status: 200
+✅ Clicked [Approve Button @ Desktop] → "Approve"

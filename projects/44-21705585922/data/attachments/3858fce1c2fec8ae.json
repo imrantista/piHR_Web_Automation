@@ -1,0 +1,10 @@
+{
+  "supervisor": {
+    "supervisor_code": "00000586",
+    "supervisor_name": "Shabit -A -Alahi",
+    "image_path": "https://d3bzmy4d3wmab2.cloudfront.net/Production/PihrDocument/Employee/EmployeeImages/2/96969.jpeg",
+    "designation_name": "SQA Engineer L-I",
+    "mobile_number": "01704670152"
+  },
+  "subordinates": []
+}

@@ -1,0 +1,24 @@
+{
+  "series": [
+    {
+      "name": "Absent",
+      "value": 2,
+      "color": "#F04438"
+    },
+    {
+      "name": "Extreme Delay",
+      "value": 1,
+      "color": "#F79009"
+    },
+    {
+      "name": "Holiday",
+      "value": 1,
+      "color": "#98A2B3"
+    },
+    {
+      "name": "Weekend",
+      "value": 8,
+      "color": "#AFA4F9"
+    }
+  ]
+}

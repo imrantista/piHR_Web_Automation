@@ -1,0 +1,8 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Self Service Tab @ Desktop] → "Self Service"
+✅ Clicked [Leave Application Button @ Desktop] → "Leave Application"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/my-dashboard/attendance-calendar?from_date=01-02-2026&to_date=28-02-2026 | Status: 200
+✅ Clicked [Delete Leave Application @ Desktop] → "Delete Leave Application"
+✅ Clicked [Delete Button @ Desktop] → "Delete"
+🌐 Captured API → DELETE https://api.pihr.xyz/api/v2/leave/581968 | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/leave/leaves?page_size=10&page_number=1&q=&is_current_leave_year=false | Status: 200

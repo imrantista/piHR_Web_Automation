@@ -1,0 +1,25 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [Add New Button @ Desktop] → "Add New"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/utilities/year-sli | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/advance-salary/payment-methods-dropdown | Status: 200
+✅ Filled [Advance Amount Field @ Desktop] → "advance_salary_amount" with: "22000"
+✅ Clicked [Payment Method Field @ Desktop] → "Payment Method Field"
+✅ Clicked [Payment Method Option: By Cash @ Desktop] → "By Cash"
+✅ Filled [Payment Duration Field @ Desktop] → "duration_month" with: "6"
+✅ Clicked [Start Month Field @ Desktop] → "Start Month Field"
+✅ Clicked [Start Month Option: February @ Desktop] → "February"
+✅ Clicked [Year Field @ Desktop] → "Year Field"
+✅ Clicked [Year Option: 2026 @ Desktop] → "2026"
+✅ Filled [Remarks Field @ Desktop] → "remarks" with: "Advance Salary Request"
+✅ Clicked [Save Button @ Desktop] → "Save"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/advance-salary | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/advance-salary/employee-advance-salaries?page_size=10&page_number=1&q= | Status: 200
+✅ Assert: element is visible [Data saved successfully. @ Desktop]
+✅ Restored session for supervisor on viva.pihr.xyz
+✅ Clicked [Advance Salary Tab @ Desktop] → "Advance Salary"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/app-approval/approver-pending-advance-salary?page_size=10&page_number=1 | Status: 200
+✅ Clicked [Reject Button @ Desktop] → "Reject"
+✅ Clicked [Confirm Reject Button @ Desktop] → "Reject"
+🌐 Captured API → PUT https://api.pihr.xyz/api/v2/app-approval/reject-all-advance-salaries | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/app-approval/approver-pending-advance-salary?page_size=10&page_number=1 | Status: 200
+✅ Assert: element is visible [Application rejected successfully. @ Desktop]

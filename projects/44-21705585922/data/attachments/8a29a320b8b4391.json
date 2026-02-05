@@ -1,0 +1,65 @@
+{
+  "summaries": [
+    {
+      "title": "Leave Spent",
+      "count": 0
+    },
+    {
+      "title": "Visit Taken",
+      "count": 0
+    },
+    {
+      "title": "Missed Attendance",
+      "count": 0
+    },
+    {
+      "title": "Pending Approval",
+      "count": 4
+    },
+    {
+      "title": "Asset Assigned",
+      "count": 1
+    }
+  ],
+  "today_attendance": {
+    "daily_attendance_id": 20518915,
+    "in_time": "02:52 PM",
+    "out_time": "03:17 PM"
+  },
+  "today_break": [
+    {
+      "break_time_id": 252820,
+      "break_start_time": "03:16 PM",
+      "break_close_time": "03:17 PM",
+      "duration": "00:00"
+    },
+    {
+      "break_time_id": 252788,
+      "break_start_time": "02:53 PM",
+      "break_close_time": "02:54 PM",
+      "duration": "00:00"
+    }
+  ],
+  "leave_information": [
+    {
+      "leave_type_id": 2,
+      "leave_type_name": "Annual Leave",
+      "adjusted_leave_balance": 0,
+      "leave_taken": 0,
+      "allowed_leaves": 15,
+      "remaining_leaves": 15,
+      "total_leaves": 15
+    }
+  ],
+  "is_employee_roster_eligible": false,
+  "roster_attendance": null,
+  "missed_attendances": [
+    {
+      "date": "08-01-2026",
+      "daily_attendance_id": 19879206,
+      "in_time": "12:54 PM",
+      "out_time": null
+    }
+  ],
+  "local_ip": "4.227.173.112"
+}

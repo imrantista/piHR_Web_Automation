@@ -1,0 +1,150 @@
+[
+  {
+    "value": "1",
+    "text": "With Branch Check In And Out"
+  },
+  {
+    "value": "2",
+    "text": "Without Branch Check in/out"
+  },
+  {
+    "value": "3",
+    "text": "PiHR  Employee Training"
+  },
+  {
+    "value": "25",
+    "text": "Online Support "
+  },
+  {
+    "value": "26",
+    "text": "Admin Training ( Visit Physically)"
+  },
+  {
+    "value": "27",
+    "text": "Online Implementation "
+  },
+  {
+    "value": "28",
+    "text": "Health Check "
+  },
+  {
+    "value": "29",
+    "text": "Payment Collection physically"
+  },
+  {
+    "value": "30",
+    "text": "User Training  Physically "
+  },
+  {
+    "value": "31",
+    "text": "Implementation Visit Physically "
+  },
+  {
+    "value": "32",
+    "text": "Device integration "
+  },
+  {
+    "value": "33",
+    "text": "Problem Solve "
+  },
+  {
+    "value": "38",
+    "text": "Demonstration"
+  },
+  {
+    "value": "39",
+    "text": "Admin training Online"
+  },
+  {
+    "value": "112",
+    "text": "Device integration visit  Physically "
+  },
+  {
+    "value": "151",
+    "text": "User Training Online"
+  },
+  {
+    "value": "152",
+    "text": "Demo Online"
+  },
+  {
+    "value": "153",
+    "text": "Demo Physically "
+  },
+  {
+    "value": "154",
+    "text": "Office work"
+  },
+  {
+    "value": "155",
+    "text": "Change Schedule"
+  },
+  {
+    "value": "161",
+    "text": "Payment collection"
+  },
+  {
+    "value": "162",
+    "text": "Phone call "
+  },
+  {
+    "value": "163",
+    "text": "PiHR API Testing"
+  },
+  {
+    "value": "164",
+    "text": "PiHR Web Testing"
+  },
+  {
+    "value": "165",
+    "text": "Data Input"
+  },
+  {
+    "value": "166",
+    "text": "PiHR Internal Meeting"
+  },
+  {
+    "value": "167",
+    "text": "Visit Physically"
+  },
+  {
+    "value": "170",
+    "text": "Scrum meeting"
+  },
+  {
+    "value": "171",
+    "text": "Task Update"
+  },
+  {
+    "value": "175",
+    "text": "Help Tips update"
+  },
+  {
+    "value": "701",
+    "text": "V3  Supervisor can access"
+  },
+  {
+    "value": "702",
+    "text": "V3  Employees can check-in"
+  },
+  {
+    "value": "703",
+    "text": "V3  Commenting is allowed"
+  },
+  {
+    "value": "704",
+    "text": "V3  Supervisor can access, Employees can check-in, Commenting is allowed"
+  },
+  {
+    "value": "1173",
+    "text": "New Task Module Test"
+  },
+  {
+    "value": "1268",
+    "text": "Physically Implementation "
+  },
+  {
+    "value": "1442",
+    "text": "Daily Work Update "
+  }
+]

@@ -1,0 +1,625 @@
+[
+  {
+    "customer_branch_sli": [
+      {
+        "value": "11730",
+        "text": "Head Office "
+      }
+    ],
+    "value": "10102",
+    "text": "Glory Trade center Limited."
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "11666",
+        "text": "Head Office"
+      }
+    ],
+    "value": "10050",
+    "text": "Anjuman"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "11111",
+        "text": "Head Office (HQ)"
+      }
+    ],
+    "value": "9483",
+    "text": "pihr"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "1644",
+    "text": "Codeminers IT Ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "1643",
+    "text": "Noor Trade House"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "1853",
+        "text": "Head Office"
+      }
+    ],
+    "value": "1642",
+    "text": "Everlife Biopharma Limited"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "80",
+        "text": "Head office"
+      }
+    ],
+    "value": "335",
+    "text": "ISSBL"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "78",
+        "text": "Faylez (BD) Ltd."
+      }
+    ],
+    "value": "334",
+    "text": "Faylez (BD) Ltd."
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "77",
+        "text": "Greenspot"
+      }
+    ],
+    "value": "333",
+    "text": "Greenspot"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "75",
+        "text": "Platinum Head Office "
+      }
+    ],
+    "value": "332",
+    "text": "Platinum Group"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "73",
+        "text": "Head Office "
+      }
+    ],
+    "value": "319",
+    "text": "Head Office"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "72",
+        "text": "Nexgen system"
+      }
+    ],
+    "value": "318",
+    "text": "Nextgen System"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "76",
+        "text": "Easytrax"
+      }
+    ],
+    "value": "118",
+    "text": "Easy Trax"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "117",
+    "text": "\" Bizmotion\""
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "116",
+    "text": "Odomo Foundation"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "115",
+    "text": "Velik Systems Ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "114",
+    "text": "A1 tech Solutions"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "113",
+    "text": "ANH Enterprise"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "112",
+    "text": "After Clap Technologies"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "111",
+    "text": "British American Resource Center (BARC)"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "110",
+    "text": "Bit Net Technology "
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "109",
+    "text": "Banani Trading House"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "108",
+    "text": "BD Tech solution"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "107",
+    "text": "Blue Moon"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "106",
+    "text": "BTCN"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "105",
+    "text": "Careers hub"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "104",
+    "text": "COCOA LAB CHOCOLATE "
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "103",
+    "text": "Chem Tech"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "102",
+    "text": "Cybernet"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "101",
+    "text": "Clothing Partner ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "100",
+    "text": "D.zignscape"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "99",
+    "text": "DHAKA FIBER NET LTD(Nationwide ISP)"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "98",
+    "text": "Dhali Trading"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "97",
+    "text": "DEVNET Limited"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "96",
+    "text": "D.zignscape"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "95",
+    "text": "Everest Drinks"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "94",
+    "text": "Eco Energy Solutions"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "93",
+    "text": "Expert Online"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "92",
+    "text": "Fortune Tech"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "91",
+    "text": "FNF Trading link LTD"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "90",
+    "text": "Farazy Dental"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "89",
+    "text": "Fame & Faith"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "88",
+    "text": "Farazy Hospital"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "87",
+    "text": "Famous Super Washing"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "86",
+    "text": "Greenbud"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "85",
+    "text": "Great western Energy"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "83",
+    "text": "Global World"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "82",
+    "text": "Holidays Story Ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "81",
+    "text": "HASIB ELECTRONICS"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "80",
+    "text": "iSocial"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "79",
+    "text": "Ismart"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "78",
+    "text": "Jat Bangla"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "77",
+    "text": "JOLCHHOBi developments"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "76",
+    "text": "Konita Trade International"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "75",
+    "text": "KG Hospital & Dialysis Center"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "74",
+    "text": "Lucas Fashion"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "73",
+    "text": "Link Technologies"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "72",
+    "text": "MINIMAL LTD "
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "71",
+    "text": "\"Mohona Developments Ltd \""
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "70",
+    "text": "Micon"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "69",
+    "text": "North Bengal Engineering "
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "68",
+    "text": "NEC money transfer Ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "67",
+    "text": "National Electric"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "66",
+    "text": "Optimal Technology"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "65",
+    "text": "Orange Bangladesh"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "64",
+    "text": "OK GO Digital"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "63",
+    "text": "One Ummah"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "62",
+    "text": "Promec"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "61",
+    "text": "Pure Diagonstic"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "63",
+        "text": "Head Office"
+      }
+    ],
+    "value": "60",
+    "text": "PMASPIRE "
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "59",
+    "text": "Precisa Techno Trade"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "58",
+    "text": "Real capita group"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "57",
+    "text": "Rainbow"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "56",
+    "text": "RPM Motors"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "55",
+    "text": "Rising Group"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "54",
+    "text": "SAKA Intenational Ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "53",
+    "text": "Sushi Samurai and Supplies"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "52",
+    "text": "Simec System Ltd."
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "51",
+    "text": "SKYWALK"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "50",
+    "text": "Somotot concrete tech"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "49",
+    "text": "STRATIV"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "48",
+    "text": "Stone Assurance"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "47",
+    "text": "SkyView Online"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "46",
+    "text": "San Corporatin"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "45",
+    "text": "(S.O.C) Save Our Country "
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "44",
+    "text": "SMS Bangladesh"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "43",
+    "text": "Taltola.  Net"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "79",
+        "text": "Head office"
+      }
+    ],
+    "value": "42",
+    "text": "Tokyo Development Engineers Ltd."
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "41",
+    "text": "Travelzoo Bangladesh LTD"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "40",
+    "text": "Trusty Distribution "
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "39",
+    "text": "Unicorn Energy Services"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "1580",
+        "text": "ABC"
+      }
+    ],
+    "value": "38",
+    "text": "UND LTD"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "37",
+    "text": "Uddom Business Service"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "36",
+    "text": "VX Services Ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "35",
+    "text": " Wire DIgital multimedia Marketing"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "74",
+        "text": "Head office gulshan"
+      }
+    ],
+    "value": "34",
+    "text": "Wintel Ltd"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "33",
+    "text": "Zoo INFO TECH"
+  },
+  {
+    "customer_branch_sli": [],
+    "value": "32",
+    "text": "Zantrik"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "147",
+        "text": "H"
+      }
+    ],
+    "value": "31",
+    "text": "Your Trip mate"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "21",
+        "text": "3S Impex Bangladesh"
+      }
+    ],
+    "value": "30",
+    "text": " 3s Impex"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "20",
+        "text": "Green Housing and Energy Ltd"
+      }
+    ],
+    "value": "29",
+    "text": "Green Housing & Energy Limited "
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "19",
+        "text": "NEC money "
+      }
+    ],
+    "value": "28",
+    "text": "NEC Money"
+  },
+  {
+    "customer_branch_sli": [
+      {
+        "value": "1",
+        "text": "Testing Customer Branch 1"
+      },
+      {
+        "value": "2",
+        "text": "Testing Customer Branch 2"
+      },
+      {
+        "value": "148",
+        "text": "v3"
+      }
+    ],
+    "value": "1",
+    "text": "V3"
+  }
+]

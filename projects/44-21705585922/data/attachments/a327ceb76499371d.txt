@@ -1,0 +1,8 @@
+✅ Restored session for employee on viva.pihr.xyz
+✅ Clicked [First Edit Button in Asset Table @ Desktop] → "First Edit Button in Asset Table"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset-category/categories-sli | Status: 200
+✅ Clicked [Description Input @ Desktop] → "Description Input"
+✅ Clicked [Save Button @ Desktop] → "Save"
+🌐 Captured API → POST https://api.pihr.xyz/api/v2/asset-requisition/request | Status: 201
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset-category/categories-sli | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/asset-requisition/employee-requisitions?page_size=10&page_number=1 | Status: 200

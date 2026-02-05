@@ -1,0 +1,570 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - generic [ref=e3]:
+    - navigation [ref=e4]:
+      - generic [ref=e5]:
+        - link [ref=e7] [cursor=pointer]:
+          - /url: /dashboard
+          - img [ref=e8]
+        - navigation [ref=e9]:
+          - button [ref=e10] [cursor=pointer]:
+            - img [ref=e11]
+          - list [ref=e13]:
+            - listitem [ref=e14]:
+              - group [ref=e15]:
+                - generic "Attendance" [ref=e16] [cursor=pointer]:
+                  - generic [ref=e17]: Attendance
+                  - img [ref=e19]
+            - listitem [ref=e21]:
+              - group [ref=e22]:
+                - generic "Leave" [ref=e23] [cursor=pointer]:
+                  - generic [ref=e24]: Leave
+                  - img [ref=e26]
+            - listitem [ref=e28]:
+              - group [ref=e29]:
+                - generic "Salary" [ref=e30] [cursor=pointer]:
+                  - generic [ref=e31]: Salary
+                  - img [ref=e33]
+            - listitem [ref=e35]:
+              - group [ref=e36]:
+                - generic "Employee" [ref=e37] [cursor=pointer]:
+                  - generic [ref=e38]: Employee
+                  - img [ref=e40]
+            - listitem [ref=e42]:
+              - group [ref=e43]:
+                - generic "Tax" [ref=e44] [cursor=pointer]:
+                  - generic [ref=e45]: Tax
+                  - img [ref=e47]
+            - listitem [ref=e49]:
+              - group [ref=e50]:
+                - generic "Settings" [ref=e51] [cursor=pointer]:
+                  - generic [ref=e52]: Settings
+                  - img [ref=e54]
+        - list [ref=e57]:
+          - listitem [ref=e58]:
+            - paragraph [ref=e59] [cursor=pointer]:
+              - generic [ref=e60]: Attendance
+              - img [ref=e61]
+          - listitem [ref=e63]:
+            - paragraph [ref=e64] [cursor=pointer]:
+              - generic [ref=e65]: Leave
+              - img [ref=e66]
+          - listitem [ref=e68]:
+            - paragraph [ref=e69] [cursor=pointer]:
+              - generic [ref=e70]: Salary
+              - img [ref=e71]
+          - listitem [ref=e73]:
+            - paragraph [ref=e74] [cursor=pointer]:
+              - generic [ref=e75]: Employee
+              - img [ref=e76]
+          - listitem [ref=e78]:
+            - paragraph [ref=e79] [cursor=pointer]:
+              - generic [ref=e80]: Tax
+              - img [ref=e81]
+          - listitem [ref=e83]:
+            - paragraph [ref=e84] [cursor=pointer]:
+              - generic [ref=e85]: Settings
+              - img [ref=e86]
+      - generic [ref=e88]:
+        - generic [ref=e90] [cursor=pointer]:
+          - img [ref=e93]
+          - generic:
+            - generic:
+              - generic:
+                - generic:
+                  - generic:
+                    - textbox "Search..."
+        - generic [ref=e97] [cursor=pointer]:
+          - img [ref=e99]
+          - generic [ref=e102]: "299"
+        - generic [ref=e103]:
+          - generic [ref=e105]:
+            - generic:
+              - generic:
+                - generic:
+                  - img
+                  - heading "Meet Our AI Assistant!" [level=3]
+                - generic:
+                  - generic:
+                    - img
+                    - generic: Intelligent responses in seconds
+                  - generic:
+                    - img
+                    - generic: 24/7 instant support
+                - button "Start Chatting":
+                  - text: Start Chatting
+                  - img
+            - button [ref=e109]:
+              - img [ref=e110]
+            - button [ref=e112] [cursor=pointer]:
+              - img [ref=e113]
+          - img "profile" [ref=e117] [cursor=pointer]
+    - generic [ref=e120]:
+      - generic [ref=e121]:
+        - generic [ref=e122]:
+          - generic [ref=e123]:
+            - link "Claim" [ref=e124] [cursor=pointer]:
+              - /url: /salary/claim
+            - img [ref=e125]
+            - link "Claim" [ref=e128] [cursor=pointer]:
+              - /url: /salary/claim
+          - heading "Claim" [level=3] [ref=e129]
+        - generic [ref=e130]:
+          - button [ref=e133] [cursor=pointer]:
+            - img [ref=e134]
+          - button [ref=e137] [cursor=pointer]:
+            - img [ref=e138]
+          - button [ref=e142] [cursor=pointer]:
+            - img [ref=e143]
+          - generic [ref=e150] [cursor=pointer]:
+            - generic [ref=e152]: All Wings
+            - img [ref=e153]
+      - generic [ref=e156]:
+        - generic [ref=e157]:
+          - generic [ref=e158]:
+            - generic [ref=e163]:
+              - textbox "Search" [ref=e164]
+              - img [ref=e166]
+            - generic [ref=e170]:
+              - img [ref=e171] [cursor=pointer]
+              - textbox "From Date - To Date" [ref=e184]: 06-01-2026 - 05-02-2026
+            - generic [ref=e186] [cursor=pointer]:
+              - textbox "Select Status" [ref=e189]: Claimed
+              - generic [ref=e190]: ×
+              - img [ref=e191]
+          - button "Add New" [ref=e196] [cursor=pointer]:
+            - img [ref=e197]
+            - generic [ref=e198]: Add New
+        - generic [ref=e200]:
+          - table [ref=e202]:
+            - rowgroup [ref=e203]:
+              - row "Claim No. Employee Name Branch Advanced Date Claim Date Claim Categories Advanced Amount Claim Amount Approved Amount Remaining Amount Sanctioned Amount Status Action" [ref=e204]:
+                - cell [ref=e205]:
+                  - generic [ref=e208] [cursor=pointer]:
+                    - checkbox [ref=e209]
+                    - generic:
+                      - img
+                - cell "Claim No." [ref=e210]
+                - cell "Employee Name" [ref=e211]
+                - cell "Branch" [ref=e212]
+                - cell "Advanced Date" [ref=e213]
+                - cell "Claim Date" [ref=e214]
+                - cell "Claim Categories" [ref=e215]
+                - cell "Advanced Amount" [ref=e216]
+                - cell "Claim Amount" [ref=e217]
+                - cell "Approved Amount" [ref=e218]
+                - cell "Remaining Amount" [ref=e219]
+                - cell "Sanctioned Amount" [ref=e220]
+                - cell "Status" [ref=e221]
+                - cell "Action" [ref=e222]
+            - rowgroup [ref=e223]:
+              - row "006469 Tanzim Emon Banani - 05-02-2026 Advance 0 738 0 738 0 Claimed" [ref=e224] [cursor=pointer]:
+                - cell [ref=e225]:
+                  - generic [ref=e228]:
+                    - checkbox [ref=e229]
+                    - generic:
+                      - img
+                - cell "006469" [ref=e230]:
+                  - generic [ref=e231]: "006469"
+                - cell "Tanzim Emon" [ref=e232]:
+                  - generic [ref=e233]: Tanzim Emon
+                - cell "Banani" [ref=e234]:
+                  - generic [ref=e235]: Banani
+                - cell "-" [ref=e236]:
+                  - generic [ref=e238]: "-"
+                - cell "05-02-2026" [ref=e239]:
+                  - generic [ref=e240]: 05-02-2026
+                - cell "Advance" [ref=e241]:
+                  - generic [ref=e242]: Advance
+                - cell "0" [ref=e243]:
+                  - generic [ref=e244]: "0"
+                - cell "738" [ref=e245]:
+                  - generic [ref=e246]: "738"
+                - cell "0" [ref=e247]:
+                  - generic [ref=e248]: "0"
+                - cell "738" [ref=e249]:
+                  - generic [ref=e250]: "738"
+                - cell "0" [ref=e251]:
+                  - generic [ref=e252]: "0"
+                - cell "Claimed" [ref=e253]:
+                  - generic [ref=e255]: Claimed
+                - cell [ref=e256]:
+                  - generic [ref=e258]:
+                    - generic:
+                      - generic:
+                        - generic:
+                          - img
+              - row "006468 Tanzim Emon Banani - 05-02-2026 Advance 0 592 0 592 0 Claimed" [ref=e259] [cursor=pointer]:
+                - cell [ref=e260]:
+                  - generic [ref=e263]:
+                    - checkbox [ref=e264]
+                    - generic:
+                      - img
+                - cell "006468" [ref=e265]:
+                  - generic [ref=e266]: "006468"
+                - cell "Tanzim Emon" [ref=e267]:
+                  - generic [ref=e268]: Tanzim Emon
+                - cell "Banani" [ref=e269]:
+                  - generic [ref=e270]: Banani
+                - cell "-" [ref=e271]:
+                  - generic [ref=e273]: "-"
+                - cell "05-02-2026" [ref=e274]:
+                  - generic [ref=e275]: 05-02-2026
+                - cell "Advance" [ref=e276]:
+                  - generic [ref=e277]: Advance
+                - cell "0" [ref=e278]:
+                  - generic [ref=e279]: "0"
+                - cell "592" [ref=e280]:
+                  - generic [ref=e281]: "592"
+                - cell "0" [ref=e282]:
+                  - generic [ref=e283]: "0"
+                - cell "592" [ref=e284]:
+                  - generic [ref=e285]: "592"
+                - cell "0" [ref=e286]:
+                  - generic [ref=e287]: "0"
+                - cell "Claimed" [ref=e288]:
+                  - generic [ref=e290]: Claimed
+                - cell [ref=e291]:
+                  - img [ref=e297]
+              - row "006466 Tanzim Emon Banani - 05-02-2026 Advance 0 96 0 96 0 Claimed" [ref=e301] [cursor=pointer]:
+                - cell [ref=e302]:
+                  - generic [ref=e305]:
+                    - checkbox [ref=e306]
+                    - generic:
+                      - img
+                - cell "006466" [ref=e307]:
+                  - generic [ref=e308]: "006466"
+                - cell "Tanzim Emon" [ref=e309]:
+                  - generic [ref=e310]: Tanzim Emon
+                - cell "Banani" [ref=e311]:
+                  - generic [ref=e312]: Banani
+                - cell "-" [ref=e313]:
+                  - generic [ref=e315]: "-"
+                - cell "05-02-2026" [ref=e316]:
+                  - generic [ref=e317]: 05-02-2026
+                - cell "Advance" [ref=e318]:
+                  - generic [ref=e319]: Advance
+                - cell "0" [ref=e320]:
+                  - generic [ref=e321]: "0"
+                - cell "96" [ref=e322]:
+                  - generic [ref=e323]: "96"
+                - cell "0" [ref=e324]:
+                  - generic [ref=e325]: "0"
+                - cell "96" [ref=e326]:
+                  - generic [ref=e327]: "96"
+                - cell "0" [ref=e328]:
+                  - generic [ref=e329]: "0"
+                - cell "Claimed" [ref=e330]:
+                  - generic [ref=e332]: Claimed
+                - cell [ref=e333]:
+                  - img [ref=e339]
+              - row "006463 Md. Ariful Islam Banani - 21-01-2026 Bank 0 1 0 1 0 Claimed" [ref=e343] [cursor=pointer]:
+                - cell [ref=e344]:
+                  - generic [ref=e347]:
+                    - checkbox [ref=e348]
+                    - generic:
+                      - img
+                - cell "006463" [ref=e349]:
+                  - generic [ref=e350]: "006463"
+                - cell "Md. Ariful Islam" [ref=e351]:
+                  - generic [ref=e352]: Md. Ariful Islam
+                - cell "Banani" [ref=e353]:
+                  - generic [ref=e354]: Banani
+                - cell "-" [ref=e355]:
+                  - generic [ref=e357]: "-"
+                - cell "21-01-2026" [ref=e358]:
+                  - generic [ref=e359]: 21-01-2026
+                - cell "Bank" [ref=e360]:
+                  - generic [ref=e361]: Bank
+                - cell "0" [ref=e362]:
+                  - generic [ref=e363]: "0"
+                - cell "1" [ref=e364]:
+                  - generic [ref=e365]: "1"
+                - cell "0" [ref=e366]:
+                  - generic [ref=e367]: "0"
+                - cell "1" [ref=e368]:
+                  - generic [ref=e369]: "1"
+                - cell "0" [ref=e370]:
+                  - generic [ref=e371]: "0"
+                - cell "Claimed" [ref=e372]:
+                  - generic [ref=e374]: Claimed
+                - cell [ref=e375]:
+                  - img [ref=e381]
+              - row "006462 Md. Ariful Islam Banani - 20-01-2026 Bank 0 1 0 1 0 Claimed" [ref=e385] [cursor=pointer]:
+                - cell [ref=e386]:
+                  - generic [ref=e389]:
+                    - checkbox [ref=e390]
+                    - generic:
+                      - img
+                - cell "006462" [ref=e391]:
+                  - generic [ref=e392]: "006462"
+                - cell "Md. Ariful Islam" [ref=e393]:
+                  - generic [ref=e394]: Md. Ariful Islam
+                - cell "Banani" [ref=e395]:
+                  - generic [ref=e396]: Banani
+                - cell "-" [ref=e397]:
+                  - generic [ref=e399]: "-"
+                - cell "20-01-2026" [ref=e400]:
+                  - generic [ref=e401]: 20-01-2026
+                - cell "Bank" [ref=e402]:
+                  - generic [ref=e403]: Bank
+                - cell "0" [ref=e404]:
+                  - generic [ref=e405]: "0"
+                - cell "1" [ref=e406]:
+                  - generic [ref=e407]: "1"
+                - cell "0" [ref=e408]:
+                  - generic [ref=e409]: "0"
+                - cell "1" [ref=e410]:
+                  - generic [ref=e411]: "1"
+                - cell "0" [ref=e412]:
+                  - generic [ref=e413]: "0"
+                - cell "Claimed" [ref=e414]:
+                  - generic [ref=e416]: Claimed
+                - cell [ref=e417]:
+                  - img [ref=e423]
+              - row "006461 S.M Shamiun Noor PiHR - 19-01-2026 Conveyance, Conveyance 0 800 0 800 0 Claimed" [ref=e427] [cursor=pointer]:
+                - cell [ref=e428]:
+                  - generic [ref=e431]:
+                    - checkbox [ref=e432]
+                    - generic:
+                      - img
+                - cell "006461" [ref=e433]:
+                  - generic [ref=e434]: "006461"
+                - cell "S.M Shamiun Noor" [ref=e435]:
+                  - generic [ref=e436]: S.M Shamiun Noor
+                - cell "PiHR" [ref=e437]:
+                  - generic [ref=e438]: PiHR
+                - cell "-" [ref=e439]:
+                  - generic [ref=e441]: "-"
+                - cell "19-01-2026" [ref=e442]:
+                  - generic [ref=e443]: 19-01-2026
+                - cell "Conveyance, Conveyance" [ref=e444]:
+                  - generic [ref=e445]: Conveyance, Conveyance
+                - cell "0" [ref=e446]:
+                  - generic [ref=e447]: "0"
+                - cell "800" [ref=e448]:
+                  - generic [ref=e449]: "800"
+                - cell "0" [ref=e450]:
+                  - generic [ref=e451]: "0"
+                - cell "800" [ref=e452]:
+                  - generic [ref=e453]: "800"
+                - cell "0" [ref=e454]:
+                  - generic [ref=e455]: "0"
+                - cell "Claimed" [ref=e456]:
+                  - generic [ref=e458]: Claimed
+                - cell [ref=e459]:
+                  - img [ref=e465]
+              - row "006460 Md.Shoukut Akbar Shuvo PiHR - 12-01-2026 Conveyance 0 455 0 455 0 Claimed" [ref=e469] [cursor=pointer]:
+                - cell [ref=e470]:
+                  - generic [ref=e473]:
+                    - checkbox [ref=e474]
+                    - generic:
+                      - img
+                - cell "006460" [ref=e475]:
+                  - generic [ref=e476]: "006460"
+                - cell "Md.Shoukut Akbar Shuvo" [ref=e477]:
+                  - generic [ref=e478]: Md.Shoukut Akbar Shuvo
+                - cell "PiHR" [ref=e479]:
+                  - generic [ref=e480]: PiHR
+                - cell "-" [ref=e481]:
+                  - generic [ref=e483]: "-"
+                - cell "12-01-2026" [ref=e484]:
+                  - generic [ref=e485]: 12-01-2026
+                - cell "Conveyance" [ref=e486]:
+                  - generic [ref=e487]: Conveyance
+                - cell "0" [ref=e488]:
+                  - generic [ref=e489]: "0"
+                - cell "455" [ref=e490]:
+                  - generic [ref=e491]: "455"
+                - cell "0" [ref=e492]:
+                  - generic [ref=e493]: "0"
+                - cell "455" [ref=e494]:
+                  - generic [ref=e495]: "455"
+                - cell "0" [ref=e496]:
+                  - generic [ref=e497]: "0"
+                - cell "Claimed" [ref=e498]:
+                  - generic [ref=e500]: Claimed
+                - cell [ref=e501]:
+                  - img [ref=e507]
+          - generic [ref=e511]:
+            - generic [ref=e512]:
+              - generic [ref=e513]: Items per page
+              - generic [ref=e516]: "10"
+            - generic [ref=e518]:
+              - generic [ref=e519]:
+                - generic [ref=e520]: 1 - 7
+                - generic [ref=e521]:
+                  - generic [ref=e522]: of
+                  - generic [ref=e523]: "7"
+              - navigation [ref=e524]:
+                - list [ref=e525]:
+                  - listitem [ref=e526]:
+                    - button [ref=e527] [cursor=pointer]:
+                      - img [ref=e529]
+                  - listitem [ref=e532]:
+                    - button "Previous" [ref=e533] [cursor=pointer]:
+                      - img [ref=e535]
+                      - generic [ref=e537]: Previous
+                  - listitem [ref=e538]:
+                    - button "1" [ref=e539] [cursor=pointer]
+                  - listitem [ref=e540]:
+                    - button "Next" [ref=e541] [cursor=pointer]:
+                      - generic [ref=e542]: Next
+                      - img [ref=e544]
+                  - listitem [ref=e546]:
+                    - button [ref=e547] [cursor=pointer]:
+                      - img [ref=e549]
+  - generic [ref=e552]:
+    - generic [ref=e554] [cursor=pointer]:
+      - button "Edit" [ref=e556]
+      - main [ref=e558]:
+        - generic [ref=e559]:
+          - generic [ref=e560]:
+            - heading "Update Claim" [level=2] [ref=e561]
+            - button [ref=e562]:
+              - img [ref=e563]
+          - separator [ref=e565]
+          - generic [ref=e567]:
+            - generic [ref=e569]:
+              - generic [ref=e570]:
+                - generic [ref=e571]:
+                  - generic [ref=e573]:
+                    - generic [ref=e575]:
+                      - text: Employee
+                      - generic [ref=e576]: "*"
+                    - generic [ref=e577]:
+                      - generic [ref=e579]: Tanzim Emon
+                      - generic [ref=e580]: ×
+                      - img [ref=e581]
+                    - generic [ref=e583]: Employee is required
+                  - generic [ref=e585]:
+                    - generic [ref=e586]: Advanced Amount
+                    - spinbutton [ref=e590]: "0"
+                  - generic [ref=e592]:
+                    - generic [ref=e593]: Advanced Date
+                    - generic [ref=e596]:
+                      - img [ref=e597]
+                      - textbox "Select Advance Date" [ref=e610]
+                - generic [ref=e611]:
+                  - generic [ref=e613]:
+                    - generic [ref=e614]: Total Claim Amount
+                    - spinbutton [disabled] [ref=e618]: "738"
+                  - generic [ref=e620]:
+                    - generic [ref=e621]: Claim Date*
+                    - generic [ref=e622]:
+                      - generic [ref=e624]:
+                        - img [ref=e625]
+                        - textbox "Select Claim Date" [ref=e638]: 05-02-2026
+                      - generic [ref=e639]: Claim Date is required
+                  - generic [ref=e641]:
+                    - generic [ref=e642]: Total Approved Amount
+                    - spinbutton [disabled] [ref=e646]: "0"
+                - generic [ref=e647]:
+                  - generic [ref=e649]:
+                    - generic [ref=e650]: Disbursed / Sanctioned Amount
+                    - spinbutton [ref=e654]: "0"
+                  - generic [ref=e656]:
+                    - generic [ref=e657]: Description
+                    - textbox [ref=e659]
+              - generic [ref=e660]:
+                - generic [ref=e661]: Claim Status
+                - generic [ref=e663]:
+                  - generic [ref=e664]:
+                    - radio [checked] [ref=e665]
+                    - generic [ref=e666]: Claimed
+                  - generic [ref=e667]:
+                    - radio [ref=e668]
+                    - generic [ref=e669]: Under Process
+                  - generic [ref=e670]:
+                    - radio [ref=e671]
+                    - generic [ref=e672]: Approved by Supervisor
+                  - generic [ref=e673]:
+                    - radio [ref=e674]
+                    - generic [ref=e675]: Approved
+                  - generic [ref=e676]:
+                    - radio [ref=e677]
+                    - generic [ref=e678]: Disbursed
+                  - generic [ref=e679]:
+                    - radio [ref=e680]
+                    - generic [ref=e681]: Rejected
+              - generic [ref=e682]:
+                - generic [ref=e684]:
+                  - generic [ref=e685]:
+                    - generic [ref=e687]:
+                      - generic [ref=e689]:
+                        - text: Claim Category
+                        - generic [ref=e690]: "*"
+                      - generic [ref=e691]:
+                        - textbox "Select Category" [ref=e694]
+                        - img [ref=e695]
+                    - generic [ref=e698]:
+                      - generic [ref=e699]: Claim Amount*
+                      - spinbutton [ref=e703]: "0"
+                    - generic [ref=e705]:
+                      - generic [ref=e706]: Approved Amount
+                      - spinbutton [ref=e710]: "0"
+                  - generic [ref=e711]:
+                    - generic [ref=e713]:
+                      - generic [ref=e714]: From Date*
+                      - generic [ref=e717]:
+                        - img [ref=e718]
+                        - textbox "Select From Date" [ref=e731]
+                    - generic [ref=e733]:
+                      - generic [ref=e734]: To Date*
+                      - generic [ref=e737]:
+                        - img [ref=e738]
+                        - textbox "Select To Date" [ref=e751]
+                    - generic [ref=e753]:
+                      - generic [ref=e754]: Description
+                      - textbox [ref=e756]
+                  - generic [ref=e759]:
+                    - generic [ref=e760]: Attachments
+                    - generic [ref=e761]:
+                      - text: Choose File
+                      - img [ref=e762]
+                - button "Add Now" [ref=e765]:
+                  - img [ref=e766]
+                  - generic [ref=e767]: Add Now
+                - generic [ref=e768]:
+                  - generic [ref=e769]: Claim Details
+                  - table [ref=e772]:
+                    - rowgroup [ref=e773]:
+                      - row "Claim Category Claim Amount From Date To Date Approved Amount Description Attachments Action" [ref=e774]:
+                        - cell "Claim Category" [ref=e775]
+                        - cell "Claim Amount" [ref=e776]
+                        - cell "From Date" [ref=e777]
+                        - cell "To Date" [ref=e778]
+                        - cell "Approved Amount" [ref=e779]
+                        - cell "Description" [ref=e780]
+                        - cell "Attachments" [ref=e781]
+                        - cell "Action" [ref=e782]
+                    - rowgroup [ref=e783]:
+                      - row "Advance 738 29-01-2026 05-02-2026 0 -" [ref=e784]:
+                        - cell "Advance" [ref=e785]:
+                          - generic [ref=e786]: Advance
+                        - cell "738" [ref=e787]:
+                          - generic [ref=e788]: "738"
+                        - cell "29-01-2026" [ref=e789]:
+                          - generic [ref=e790]: 29-01-2026
+                        - cell "05-02-2026" [ref=e791]:
+                          - generic [ref=e792]: 05-02-2026
+                        - cell "0" [ref=e793]:
+                          - generic [ref=e794]: "0"
+                        - cell [ref=e795]
+                        - cell "-" [ref=e796]:
+                          - generic [ref=e797]: "-"
+                        - cell [ref=e798]:
+                          - generic [ref=e799]:
+                            - img [ref=e801]
+                            - img [ref=e805]
+            - separator [ref=e808]
+            - generic [ref=e809]:
+              - button "Cancel" [ref=e811]
+              - button "Save" [active] [ref=e812]:
+                - generic [ref=e813]: Save
+    - listitem [ref=e814] [cursor=pointer]: Details Report
+    - listitem [ref=e815] [cursor=pointer]: Details Double Report
+    - generic [ref=e819] [cursor=pointer]: Delete
+```

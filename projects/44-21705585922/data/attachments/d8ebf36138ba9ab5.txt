@@ -1,0 +1,37 @@
+✅ Restored session for supervisor on viva.pihr.xyz
+✅ Clicked [Status Filter @ Desktop] → "Status"
+✅ Clicked [Select Status: Pending @ Desktop] → "Pending"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026&task_status_id=1 | Status: 200
+Filter "Pending" applied: 3 tasks
+✅ Clicked [Status Filter @ Desktop] → "Status"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/departments?page_size=10&page_number=1 | Status: 403
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task-categories/dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task-priorities/dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/task-status | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026 | Status: 200
+✅ Clicked [Select Status: In Progress @ Desktop] → "In Progress"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026&task_status_id=2 | Status: 200
+Filter "In Progress" applied: 6 tasks
+✅ Clicked [Status Filter @ Desktop] → "Status"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026 | Status: 200
+✅ Clicked [Select Status: Completed @ Desktop] → "Completed"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026&task_status_id=3 | Status: 200
+Filter "Completed" applied: 0 tasks
+✅ Clicked [Status Filter @ Desktop] → "Status"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/departments?page_size=10&page_number=1 | Status: 403
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task-categories/dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task-priorities/dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/task-status | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026 | Status: 200
+✅ Clicked [Select Status: Uncompleted  @ Desktop] → "Uncompleted"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026&task_status_id=4 | Status: 200
+Filter "Uncompleted " applied: 0 tasks
+✅ Clicked [Status Filter @ Desktop] → "Status"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/departments?page_size=10&page_number=1 | Status: 403
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task-categories/dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task-priorities/dropdown | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/task-status | Status: 200
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026 | Status: 200
+✅ Clicked [Select Status: Need More Time @ Desktop] → "Need More Time"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/task/employee-tasks?page_size=100&page_number=1&start_date=05-01-2026&end_date=05-02-2026&task_status_id=15 | Status: 200
+Filter "Need More Time" applied: 0 tasks
