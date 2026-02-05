@@ -1,0 +1,11 @@
+✅ Restored session for employee on viva.pihr.xyz
+Break already started
+✅ Restored session for admin on viva.pihr.xyz
+✅ Clicked [On Break Now card @ Desktop] → "On Break Now
+1"
+🌐 Captured API → GET https://api.pihr.xyz/api/v2/dashboard/on-break-now?page_size=10 | Status: 200
+✅ Clicked [Employee cell: Tanzim @ Desktop] → "Tanzim Emon
+
+Banani"
+✅ Clicked [Employee break details button @ Desktop] → "Employee break details button"
+Admin can see break status for Tanzim successfully
