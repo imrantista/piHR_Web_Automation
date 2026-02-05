@@ -152,14 +152,15 @@ jobs:
       - name: Restore Allure history
         if: always()
         run: |
-          if [ -d gh-pages/projects/${PROJECT_ID}/history ]; then
-            echo "" Restoring Allure history from gh-pages/projects/${PROJECT_ID}/history"
+          if [ -d "gh-pages/projects/${PROJECT_ID}/history" ]; then
+            echo "Restoring Allure history from gh-pages/projects/${PROJECT_ID}/history"
             rm -rf allure-history
             mkdir -p allure-history
-            cp -r gh-pages/projects/${PROJECT_ID}/history allure-history
+            cp -r "gh-pages/projects/${PROJECT_ID}/history" allure-history
           else
-            echo " No previous history found"
+            echo "No previous history found"
           fi
+
 
       - name: Generate Allure Report for Pages
         if: always()
